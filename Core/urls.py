@@ -16,8 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-# from CampusFlow import urls as CampusFlowUrls
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('CampusFlow.urls'))
+    path('', include('CampusFlow.urls'))
 ]

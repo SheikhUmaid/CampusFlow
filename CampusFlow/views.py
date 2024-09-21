@@ -1,6 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from CampusFlow.validators import PHONE_NUMBER_VALIDATOR, USN_VALIDATOR
 from CampusFlow.constants import STATE_CHOICES
 from CampusFlow.models import Profile
@@ -8,7 +11,8 @@ from CampusFlow.models import Profile
 
 
 def register_view(request):
-
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method == "POST":
         usn = request.POST['usn']
         name = request.POST['name']
@@ -61,4 +65,35 @@ def register_view(request):
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    if request.method == "POST":
+        usn = request.POST.get('usn')
+        password = request.POST.get('password')
+        if not usn:
+            messages.error(request, "USN is required to Login")
+            return redirect("login")
+        if not password:
+            messages.error(request, "Password is required to Login")
+            return redirect("login")
+        user = authenticate(username = usn, password = password)
+        if user is None:
+            messages.error(request, "Wrong Credentials")
+            return redirect("login")
+        login(request,user)
+        return redirect('home')
     return render(request, "authentication/login.html")
+
+
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
+
+    
+@login_required
+def home_view(request):
+    return HttpResponse(f"<h1>Hello User {request.user.profile.name}</h1>")
