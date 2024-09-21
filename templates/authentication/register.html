@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link your CSS file here -->
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% if messages %}
+            {% for message in messages %}
+            <h1>{{message}}</h1>
+            {% endfor %}
+            {% endif %}
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="usn">USN</label>
+                <input type="text" name="usn" id="usn" required maxlength="12" placeholder="Enter your USN">
+            </div>
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" name="name" id="name" required maxlength="35" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="password1">Password</label>
+                <input type="password" name="password1" id="password1" required placeholder="Enter your password">
+            </div>
+            <div class="form-group">
+                <label for="password2">Confirm Password</label>
+                <input type="password" name="password2" id="password2" required placeholder="Confirm your password">
+            </div>
+            <div class="form-group">
+                <label for="phone_number">Phone Number</label>
+                <input type="text" name="phone_number" id="phone_number" required maxlength="10" placeholder="Enter your phone number">
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <select name="location" id="location">
+                    <option value="" disabled selected>Select your state</option>
+                    {% for code, name in state_choices %}
+                        <option value="{{ code }}">{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>
