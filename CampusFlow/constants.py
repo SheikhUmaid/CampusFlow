@@ -28,3 +28,17 @@ STATE_CHOICES = [
     ('UT', 'Uttarakhand'),
     ('WB', 'West Bengal'),
 ]
+
+
+
+
+CAMPUS_LOCATIONS = [
+    ('OC','Outside Campus'),
+    ('GT','Ganesh Temple'),
+    ('KT','Knowledge Tree'),
+    ('SC','Suruchi'),
+    ('CF','Cafe'),
+    ('FC','Food Court'),
+    ('MS','Mess'),
+    ('LB','Library'),
+]
