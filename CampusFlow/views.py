@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -94,6 +95,112 @@ def logout_view(request):
 
 
     
+@login_required
+def edit_profile_view(request):
+    current_profile = Profile.objects.get(user = request.user)
+    if request.method== 'POST':
+        name = request.POST.get('name')
+        bio = request.POST.get('bio')
+        phone_number = request.POST.get('phone')
+        image = request.FILES.get('image')
+        location = request.POST.get('location')
+
+        if not name:
+            messages.error(request, "name is required")
+            return redirect("edit_profile")
+        if not phone_number:
+            messages.error(request, "phone is required")
+            return redirect("edit_profile")
+        if not location:
+            messages.error(request, "location is required")
+            return redirect("edit_profile")
+        
+
+
+
+        current_profile.name = name
+        current_profile.phone_number = phone_number
+        current_profile.location = location
+        if bio:
+            current_profile.bio = bio
+        if image:
+            current_profile.profile_picture = image
+
+        current_profile.save()
+        messages.success(request, "updated successfully")
+        return redirect("edit_profile")
+    
+    context = {
+        'state_choices': STATE_CHOICES
+    }@login_required
+def edit_profile_view(request):
+    current_profile = Profile.objects.get(user = request.user)
+    if request.method== 'POST':
+        name = request.POST.get('name')
+        bio = request.POST.get('bio')
+        phone_number = request.POST.get('phone')
+        image = request.FILES.get('image')
+        location = request.POST.get('location')
+
+        if not name:
+            messages.error(request, "name is required")
+            return redirect("edit_profile")
+        if not phone_number:
+            messages.error(request, "phone is required")
+            return redirect("edit_profile")
+        if not location:
+            messages.error(request, "location is required")
+            return redirect("edit_profile")
+        
+
+
+
+        current_profile.name = name
+        current_profile.phone_number = phone_number
+        current_profile.location = location
+        if bio:
+            current_profile.bio = bio
+        if image:
+            current_profile.profile_picture = image
+
+        current_profile.save()
+        messages.success(request, "updated successfully")
+        return redirect("edit_profile")
+    
+    context = {
+        'state_choices': STATE_CHOICES
+    }
+    return render(request, "authentication/edit_profile.html", context)
+    return render(request, "authentication/edit_profile.html", context)
+
+
+
+
+
+
+
+@login_required
+def change_password_view(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Update session to prevent logout after password change
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    
+    context = {
+        'form': form,
+    }
+    return render(request, 'authentication/change_password.html', context)
+
+
+
 @login_required
 def home_view(request):
     return HttpResponse(f"<h1>Hello User {request.user.profile.name}</h1>")

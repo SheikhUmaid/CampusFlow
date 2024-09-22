@@ -37,15 +37,6 @@
                 <label for="phone_number">Phone Number</label>
                 <input type="text" name="phone_number" id="phone_number" required maxlength="10" placeholder="Enter your phone number">
             </div>
-            <div class="form-group">
-                <label for="location">Location</label>
-                <select name="location" id="location">
-                    <option value="" disabled selected>Select your state</option>
-                    {% for code, name in state_choices %}
-                        <option value="{{ code }}">{{ name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
             <button type="submit">Register</button>
         </form>
     </div>
