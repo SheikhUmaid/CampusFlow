@@ -12,6 +12,12 @@ from CampusFlow.models import Profile, Post, Comment
 # Create your views here.
 
 
+
+def landing_view(request):
+    return render(request, "base/landing_page.html")
+
+
+
 def register_view(request):
     if request.user.is_authenticated:
         return redirect("home")

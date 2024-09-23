@@ -8,11 +8,13 @@ from CampusFlow.views import (
     change_password_view,
     post_detail_view,
     add_comment,
-    toggle_like
+    toggle_like,
+    landing_view
 )
 
 
 urlpatterns = [
+    path("", landing_view, name="landing"),
     path("auth/register/", register_view, name="register"),
     path("auth/login/", login_view, name="login"),
     path("auth/logout/", logout_view, name="logout"),
