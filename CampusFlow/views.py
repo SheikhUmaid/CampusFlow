@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from CampusFlow.validators import PHONE_NUMBER_VALIDATOR, USN_VALIDATOR
-from CampusFlow.constants import STATE_CHOICES
+from CampusFlow.constants import STATE_CHOICES, CAMPUS_LOCATIONS
 from CampusFlow.models import Profile, Post, Comment
 
 # Create your views here.
@@ -202,3 +202,51 @@ def toggle_like(request, post_id):
         
     post.save()
     return redirect("post_detail", post_id= post_id)
+
+
+
+
+@login_required
+def upload_post_view(request):
+    user = request.user
+    profile = user.profile
+    if request.method == "POST":
+        image = request.FILES.get('image')
+        caption = request.POST.get('caption')
+        location = request.POST.get('location')        
+        if not image:
+            messages.error(request, "Image is required to upload a post.")
+            return redirect("upload_post")
+        if not location:
+            messages.error(request, "Please select a location.")
+            return redirect("upload_post")
+        post = Post.objects.create(user = profile, image = image, location=location)
+        if caption:
+            post.caption = caption
+        post.save()
+        
+        messages.success(request, "Post uploaded successfully.")
+        return redirect("post_detail", post.pk)
+    context = {"locations": CAMPUS_LOCATIONS}
+    return render(request, "media/post_upload.html", context)
+
+
+@login_required
+def delete_post(request, post_id):
+    user = request.user
+    profile = user.profile
+    post = get_object_or_404(Post, pk = post_id)
+    if post.user != profile:
+        messages.error(request, "You're Not authorized to perform this action")
+        return redirect("home")
+    post.delete()
+    
+    messages.success(request, "Post deleted successfully.")
+
+    # Redirect to the home or profile page
+    return redirect("home")
+    
+    
+
+        
+        

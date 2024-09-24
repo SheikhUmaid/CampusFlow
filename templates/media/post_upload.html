@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image and Caption Upload</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .upload-form {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f5f5f5;
+        }
+        
+        .upload-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .upload-form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .upload-form input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .upload-form textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .upload-form button {
+            display: block;
+            margin: 20px auto 0;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-form">
+        <h2>Upload Image and Caption</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="image">Select Image:</label>
+            <input type="file" name="image" id="image" onchange="previewImage(event)">
+            <label for="category">Select Location:</label>
+            <select name="location" id="category">
+                {% for code, name in locations %}
+                    <option value="{{ code }}">
+                        {{ name }}
+                    </option>
+                {% endfor %}
+                </select>
+            
+            <label for="caption">Enter Caption:</label>
+            <textarea name="caption" id="caption"></textarea>
+
+            <div id="image-preview">
+                <img id="preview-image">
+            </div>
+
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
+    <script src="script.js">
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('preview-image').src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>
