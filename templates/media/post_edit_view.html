@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Detail View</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .post-container {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .post-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .post-caption {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .post-likes {
+            margin-top: 10px;
+            font-size: 12px;
+        }
+
+        .post-location {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .post-comments {
+            margin-top: 15px;
+        }
+
+        .comment {
+            margin-bottom: 5px;
+        }
+
+        .comment-form {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="post-container">
+            <img class="post-image" src="{{ post.image.url }}" alt="Post Image">
+            <!-- If the user has not liked the post, show "Like" -->
+          {% if request.user.is_authenticated %}
+            <form class="comment-form" method="POST">
+                {% csrf_token %}
+                <textarea class="form-control" name="caption" rows="3" placeholder="Edit Caption" required>{{post.caption}}</textarea>
+                <select id="location" name="location" required>
+                    <option value="" disabled selected>Select your state</option>
+                    {% for code, name in locations %}
+                        <option value="{{ code }}">
+                            {{ name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-sm btn-primary mt-2">Edit</button>
+            </form>
+            {% else %}
+            <p>Please log in to comment.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

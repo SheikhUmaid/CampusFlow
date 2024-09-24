@@ -159,7 +159,9 @@ def change_password_view(request):
 
 @login_required
 def home_view(request):
-    return HttpResponse(f"<h1>Hello User {request.user.profile.name}</h1>")
+    posts = Post.objects.all()
+    context={"posts":posts}
+    return render(request, "base/home_page.html", context)
 
 
 @login_required
@@ -248,5 +250,35 @@ def delete_post(request, post_id):
     
     
 
+@login_required
+def edit_post_view(request, post_id):
+    user = request.user
+    profile = user.profile
+    post = get_object_or_404(Post, pk=post_id)
+    
+    # Ensure only the owner can edit the post
+    if post.user != profile:
+        messages.error(request, "You are not authorized to perform this action.")
+        return redirect("home")
+    
+    if request.method == "POST":
+        caption = request.POST.get("caption")
+        location = request.POST.get("location")
         
+        # Handle empty caption or location
+        if caption:
+            post.caption = caption
+        else:
+            messages.warning(request, "Caption was left unchanged.")
         
+        if location:
+            post.location = location
+        else:
+            messages.warning(request, "Location was left unchanged.")
+        
+        post.save()
+        messages.success(request, "Post has been updated successfully.")
+        return redirect("post_detail", post_id=post.id)  # Redirect after updating
+    
+    context = {"post": post, "locations": CAMPUS_LOCATIONS}
+    return render(request, "media/post_edit_view.html", context)

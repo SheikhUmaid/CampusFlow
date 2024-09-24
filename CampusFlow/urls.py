@@ -10,7 +10,9 @@ from CampusFlow.views import (
     add_comment,
     toggle_like,
     landing_view,
-    upload_post_view
+    upload_post_view,
+    delete_post,
+    edit_post_view,
 )
 
 
@@ -25,5 +27,7 @@ urlpatterns = [
     path("post/post-comment/<int:post_id>", add_comment, name="add_comment"),
     path("post/post-like/<int:post_id>", toggle_like, name="toggle_like"),
     path("post/upload", upload_post_view, name="upload_post"),
+    path("post/delete/<int:post_id>", delete_post, name="delete_post"),
+    path("post/edit/<int:post_id>", edit_post_view, name="edit_post"),
     path("home/", home_view, name="home"),
 ]

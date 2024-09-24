@@ -1,0 +1,141 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <title>Instagram</title>
+  <style>body{
+	background-color: #fafafa;
+	padding: 60px;
+	font-family: 'Droid Sans', sans-serif;
+
+}
+
+a{
+  text-decoration: none;
+}
+
+.instagram-card{
+	background: #ffffff;
+	border: 1px solid #f2f2f2;
+	border-radius: 3px;
+	width: 100%;
+	max-width: 600px;
+	margin: auto;
+}
+
+.instagram-card-header{
+	padding: 20px;
+	height: 40px;
+}
+
+.instagram-card-user-image{
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	vertical-align: middle;
+}
+
+.instagram-card-time{
+	float: right;
+	width: 80px;
+	padding-top:10px;
+	text-align: right;
+	color: #999;
+}
+
+.instagram-card-user-name{
+	margin-left:20px;
+	font-weight:bold;
+  color: #262626;
+}
+
+.instagram-card-content{
+  padding: 20px;
+}
+
+.likes{
+  font-weight: bold;
+}
+
+.instagram-card-content-user{
+  font-weight: bold;
+  color: #262626;
+}
+
+.hashtag{
+  color: #003569;
+}
+
+.comments{
+  color:#999;
+}
+
+.user-comment{
+  color: #003569;
+}
+
+.instagram-card-footer{
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+hr{
+  border: none;
+  border-bottom: 1px solid #ccc;
+  margin-top: 30px;
+  margin-bottom: 0px;
+ 
+}
+
+
+.footer-action-icons{
+  font-size: 16px;
+  color: #ccc;
+}
+
+.comments-input{
+  border: none;
+  margin-left: 10px;
+  width: 100%;
+}
+
+</style>
+</head>
+<body>
+    {% for post in posts %}
+    
+    <div class="instagram-card">
+        <div class="instagram-card-header">
+      <img src="{{post.user.profile_picture.url}}" class="instagram-card-user-image"/>
+      <a class="instagram-card-user-name" href="https://www.instagram.com/followmeto/">{{post.user.usn}}</a>
+      <div class="instagram-card-time">58 min</div>
+    </div>
+  
+    <div class="intagram-card-image">
+      <img src="{{post.image.url}}" height="600px"/>
+    </div>
+  
+    <div class="instagram-card-content">
+      <p class="likes">{{post.likes.count}} likes</p>
+      <p><a class="instagram-card-content-user" href="https://www.instagram.com/followmeto/">followmeto</a> {{post.caption}} <a class="hashtag" href="https://www.instagram.com/explore/tags/visitkemi/">#visitkemi</a></p>
+      <p class="comments">ver los 48 comentarios</p>
+      <br><a class="user-comment" href="https://www.instagram.com/anitzakm/">sanguine.j@loaf_made</a> wowwwwww</br>
+      <br><a class="user-comment" href="https://www.instagram.com/anitzakm/">spainstakeoverWow</a> 😍</br>
+      <br><a class="user-comment" href="https://www.instagram.com/anitzakm/">edieandottotravelsSo</a> cool ❄️</br>
+    <hr>
+    </div>
+    
+    <div class="instagram-card-footer">
+        <a class="footer-action-icons" href="{% url 'toggle_like' post.pk %}"><i class="fa fa-heart-o"></i></a>
+        <input class="comments-input" type="text" placeholder="Añade un comentario..."/>
+        <a class="footer-action-icons" href="#"><i class="fa fa-ellipsis-h"></i></a>
+    </div>
+    
+</div>
+{% endfor %}
+</body>
+</html>

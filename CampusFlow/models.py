@@ -16,6 +16,7 @@ def get_post_image_upload_path(instance, filename):
     # This will save the post images in the directory "post_images/<usn>/<filename>"
     return os.path.join(f"post_images/{instance.user.user.username}/", filename)
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     usn = models.CharField(max_length=12,unique=True, validators=[USN_VALIDATOR])
@@ -30,6 +31,9 @@ class Profile(models.Model):
     def __str__(self):
         return f"{self.usn} - {self.name}"
     
+    
+    def get_location_name():
+        return
     
 
 class Post(models.Model):
