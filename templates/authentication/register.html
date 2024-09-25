@@ -1,10 +1,10 @@
+{% extends "base/base.html" %}
 {% load static %}
 
 
 
 
-
-<!DOCTYPE html>
+{% block body %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -165,7 +165,7 @@
             <input type="text" name="phone_number" id="phone-number" placeholder="Enter your phone number" required>
             
             <label for="location">Location</label>
-            <select id="location" required>
+            <select id="location" name="location" required>
                 <option value="" disabled selected>Select your state</option>
                 {% for code, name in state_choices %}
                     <option value="{{ code }}">
@@ -187,6 +187,8 @@
 </body>
 </html>
 
+
+{% endblock body %}
 
 
 

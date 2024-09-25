@@ -9,9 +9,6 @@ from CampusFlow.validators import PHONE_NUMBER_VALIDATOR, USN_VALIDATOR
 from CampusFlow.constants import STATE_CHOICES, CAMPUS_LOCATIONS
 from CampusFlow.models import Profile, Post, Comment
 
-# Create your views here.
-
-
 
 def landing_view(request):
     return render(request, "base/landing_page.html")
@@ -204,8 +201,6 @@ def toggle_like(request, post_id):
         
     post.save()
     return redirect("post_detail", post_id= post_id)
-
-
 
 
 @login_required

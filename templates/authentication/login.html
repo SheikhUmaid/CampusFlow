@@ -1,3 +1,4 @@
+{% extends "base/base.html" %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link your CSS file here -->
 </head>
 <body>
+    {% block body %}
     <div class="container">
         <h2>Login</h2>
         <form method="POST" enctype="multipart/form-data">
@@ -28,5 +30,7 @@
             <button type="submit">Login</button>
         </form>
     </div>
+    {% endblock body %}
+
 </body>
 </html>

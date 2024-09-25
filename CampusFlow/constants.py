@@ -42,3 +42,11 @@ CAMPUS_LOCATIONS = [
     ('MS','Mess'),
     ('LB','Library'),
 ]
+
+ADVERTISEMENT_LOCATIONS = [
+    ('SM','Seminar Hall'),
+    ('MS','MBA Seminar Hall'),
+    ('CF','Cafe'),
+    ('FC','Food Court'),
+    ('LB','Library'),
+]
