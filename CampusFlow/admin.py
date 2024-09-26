@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Post, Comment,Advertisement
+from .models import Profile, Post, Comment,Advertisement, RapportRequest
 
 
 # Register your models here.
@@ -17,3 +17,4 @@ admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Post)
 admin.site.register(Comment)
 admin.site.register(Advertisement)
+admin.site.register(RapportRequest)

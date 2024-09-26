@@ -13,6 +13,9 @@ from CampusFlow.views import (
     upload_post_view,
     delete_post,
     edit_post_view,
+    profile_page_view,
+    notifications_view,
+    accept_rapport_request
 )
 
 
@@ -31,6 +34,14 @@ urlpatterns = [
     path("post/upload/", upload_post_view, name="upload_post"),
     path("post/delete/<int:post_id>/", delete_post, name="delete_post"),
     path("post/edit/<int:post_id>/", edit_post_view, name="edit_post"),
+    
+
+    path("user/<int:user_id>", profile_page_view, name="profile_view"),
+    path("user/notifications", notifications_view, name="notifications"),
+    path("user/rapport/accept/<int:request_id>", accept_rapport_request, name="accept_rapport"),
+    
+    
+    
     
     path("home/", home_view, name="home"),
 ]

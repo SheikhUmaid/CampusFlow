@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from CampusFlow.validators import PHONE_NUMBER_VALIDATOR, USN_VALIDATOR
 from CampusFlow.constants import STATE_CHOICES, CAMPUS_LOCATIONS
-from CampusFlow.models import Profile, Post, Comment
+from CampusFlow.models import Profile, Post, Comment, RapportRequest
 
 
 def landing_view(request):
@@ -277,3 +277,43 @@ def edit_post_view(request, post_id):
     
     context = {"post": post, "locations": CAMPUS_LOCATIONS}
     return render(request, "media/post_edit_view.html", context)
+
+
+
+
+@login_required
+def profile_page_view(request, user_id):
+    current_user = request.user
+    current_profile = current_user.profile
+    
+    target_user = get_object_or_404(Profile, pk = user_id)
+    
+    context = {"user":target_user}
+    
+    return render(request, "user/profile.html")
+    
+    
+@login_required
+def notifications_view(request):
+    requests = RapportRequest.objects.filter(to_user= request.user.profile)
+    context = {"requests":requests}
+    return render(request,"user/notifications.html", context)
+    
+    
+@login_required
+def accept_rapport_request(request, request_id):
+    rapport_request = get_object_or_404(RapportRequest, id=request_id)
+
+    if rapport_request.to_user != request.user.profile:
+        messages.error(request, "You are not authorized to accept this request.")
+        return redirect("notifications")
+
+    # Add rapport relationship (mutual following)
+    rapport_request.to_user.rapport.add(rapport_request.by_user)
+    rapport_request.by_user.rapport.add(rapport_request.to_user)
+
+    # Delete the rapport request as it is now accepted
+    rapport_request.delete()
+
+    messages.success(request, f"You are now connected with {rapport_request.by_user.name}!")
+    return redirect("notifications")

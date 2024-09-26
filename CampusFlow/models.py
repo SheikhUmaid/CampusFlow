@@ -5,8 +5,6 @@ from CampusFlow.constants import STATE_CHOICES, CAMPUS_LOCATIONS,ADVERTISEMENT_L
 import os
 # Create your models here.
 
-
-
 def get_profile_image_upload_path(instance, filename):
     # This will save the file in the directory "profile_images/<usn>/<filename>"
     return os.path.join(f"profile_images/{instance.usn}/", filename)
@@ -24,16 +22,14 @@ class Profile(models.Model):
     bio = models.TextField(blank=True)
     profile_picture = models.ImageField(upload_to=get_profile_image_upload_path, blank=True)
     phone_number = models.CharField(max_length=10,unique=True, validators=[PHONE_NUMBER_VALIDATOR])
+    email = models.EmailField(max_length=254, blank=True)
     join_date = models.DateField(auto_now_add=True)
     location = models.CharField(max_length=2, choices=STATE_CHOICES, blank=True)
-
+    rapport = models.ManyToManyField('self', blank=True, symmetrical=True)
 
     def __str__(self):
         return f"{self.usn} - {self.name}"
-    
-    
-    def get_location_name():
-        return
+
     
 
 class Post(models.Model):
@@ -66,4 +62,16 @@ class Advertisement(models.Model):
     
     def __str__(self):
         return f"{self.title} - {self.event_date}"
+    
+
+class RapportRequest(models.Model):
+    by_user = models.ForeignKey(Profile, related_name='sent_requests', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(Profile, related_name='received_requests', on_delete=models.CASCADE)
+    subject = models.CharField(max_length=255,blank=True)
+    status = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('accepted', 'Accepted'), ('rejected', 'Rejected')], default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"Request from {self.by_user} to {self.to_user} ({self.status})"
+    
     
