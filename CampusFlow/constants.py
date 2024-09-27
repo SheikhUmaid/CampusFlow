@@ -50,3 +50,5 @@ ADVERTISEMENT_LOCATIONS = [
     ('FC','Food Court'),
     ('LB','Library'),
 ]
+
+RAPPORT_REQUEST_STATUSES = [('pending', 'Pending'), ('accepted', 'Accepted'), ('rejected', 'Rejected')]

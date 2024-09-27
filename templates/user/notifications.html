@@ -10,13 +10,12 @@
 {% if messages %}
  {% for message in messages %}
  <div class="alert alert-primary" role="alert">
-
     {{message}}
 </div>
  {% endfor %}
 {% endif %}
-
-{% for rapport_request in requests %}<div class="alert alert-primary" role="alert">
+{{requests.count}} pending requests
+{% for rapport_request in requests %}
 <div class="alert alert-primary" role="alert">
 
     You have a Rapport Request from {{rapport_request.by_user.name}}
@@ -24,8 +23,7 @@
         <p>{{rapport_request.subject}}</p>
     {% endif %}
     <a href="{% url 'accept_rapport' rapport_request.pk %}"><button type="button" class="btn btn-success">Accept</button></a>
-    
-    <button type="button" class="btn btn-danger">Reject</button>
+    <a href="{% url 'reject_rapport' rapport_request.pk %}"><button type="button" class="btn btn-danger">Reject</button></a>
 </div>
 {% endfor %}
 

@@ -259,7 +259,7 @@
           height="100"
         />
 
-        <div class="name">{{request.user.profile.name}}</div>
+        <div class="name">{{user.name}}</div>
         <div class="job">Web Developer</div>
       </div>
 
@@ -269,14 +269,27 @@
           <hr align="center" />
         </div>
         <div class="url">
-          <a href="#settings">Settings</a>
+          <a href="{% url 'edit_profile' %}">Settings</a>
+          <hr align="center" />
+        </div>
+        <div class="url">
+            {% if is_friend %}
+            <a href="">you're in Rapport</a>
+
+            {% else %}
+            {% if existing_request %}
+            <a href="">Request Sent</a>
+            {% else %}
+            <a href="{% url 'send_rapport_request' user.pk %}">Send Rapport Request</a>
+            {% endif %}
+            {% endif %}
           <hr align="center" />
         </div>
       </div>
     </div>
     <!-- End -->
 
-    <!-- Main -->
+    <!-- Main -->edit_profile
     <div class="main">
       <h2>IDENTITY</h2>
       <div class="card">
@@ -287,27 +300,27 @@
               <tr>
                 <td>Name</td>
                 <td>:</td>
-                <td>{{request.user.profile.name}}</td>
+                <td>{{user.name}}</td>
               </tr>
               <tr>
                 <td>Email</td>
                 <td>:</td>
-                <td>{{request.user.profile.email}}</td>
+                <td>{{user.email}}</td>
               </tr>
               <tr>
                 <td>Address</td>
                 <td>:</td>
-                <td>{{request.user.profile.get_location_display}}</td>
+                <td>{{user.get_location_display}}</td>
               </tr>
               <tr>
                 <td>Phone</td>
                 <td>:</td>
-                <td>{{request.user.profile.phone_number}}</td>
+                <td>{{user.phone_number}}</td>
               </tr>
               <tr>
                 <td>Followers</td>
                 <td>:</td>
-                <td>{{request.user.profile.follower.count}}</td>
+                <td>{{user.follower.count}}</td>
               </tr>
               <tr>
                 <td>Followings</td>

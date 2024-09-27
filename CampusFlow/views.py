@@ -94,7 +94,7 @@ def login_view(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return redirect("login")
+    return redirect("landing")
 
 
 @login_required
@@ -282,15 +282,30 @@ def edit_post_view(request, post_id):
 
 
 @login_required
+@login_required
 def profile_page_view(request, user_id):
-    current_user = request.user
-    current_profile = current_user.profile
+    target_user = get_object_or_404(Profile, pk=user_id)
     
-    target_user = get_object_or_404(Profile, pk = user_id)
+    # Check if a pending request exists
+    existing_request = RapportRequest.objects.filter(
+        by_user=request.user.profile, to_user=target_user, status='pending'
+    ).exists()
+
+    # Check if the current user and the target user are already friends
+    is_friend = request.user.profile in target_user.rapport.all()
+
+    # Set flags for the template context
+    request_exists = 1 if existing_request else 0
+    friend_status = 1 if is_friend else 0
+
+    context = {
+        "user": target_user,
+        "existing_request": request_exists,
+        "is_friend": friend_status,
+    }
     
-    context = {"user":target_user}
-    
-    return render(request, "user/profile.html")
+    return render(request, "user/profile.html", context)
+
     
     
 @login_required
@@ -298,10 +313,43 @@ def notifications_view(request):
     requests = RapportRequest.objects.filter(to_user= request.user.profile)
     context = {"requests":requests}
     return render(request,"user/notifications.html", context)
+
+  
+@login_required
+def send_rapport_request(request, user_id):
+    profile = request.user.profile
+    target_user = get_object_or_404(Profile, pk=user_id)
+
+    # Check if there is already a pending request between these two users
+    existing_request = RapportRequest.objects.filter(
+        by_user=profile, to_user=target_user, status='pending'
+    ).exists()
+
+    if existing_request:
+        messages.error(request, "Rapport request already sent.")
+        return redirect("profile_view", user_id=target_user.pk)
+
+    # Check if the target user has already sent a request to the current user
+    reverse_request = RapportRequest.objects.filter(
+        by_user=target_user, to_user=profile, status='pending'
+    ).exists()
+
+    if reverse_request:
+        messages.error(request, "The target user has already sent you a request.")
+        return redirect("profile_view", user_id=target_user.pk)
+
+    # If no requests exist, create a new rapport request
+    rapport_request = RapportRequest.objects.create(by_user=profile, to_user=target_user)
+    messages.success(request, "Rapport request sent successfully.")
+    return redirect("profile_view", user_id=target_user.pk)
+
+
+    
     
     
 @login_required
 def accept_rapport_request(request, request_id):
+    
     rapport_request = get_object_or_404(RapportRequest, id=request_id)
 
     if rapport_request.to_user != request.user.profile:
@@ -313,7 +361,23 @@ def accept_rapport_request(request, request_id):
     rapport_request.by_user.rapport.add(rapport_request.to_user)
 
     # Delete the rapport request as it is now accepted
-    rapport_request.delete()
+    rapport_request.status = "accepted"
+    rapport_request.save()
 
     messages.success(request, f"You are now connected with {rapport_request.by_user.name}!")
+    return redirect("notifications")
+
+
+@login_required
+def reject_rapport_request(request, request_id):
+    rapport_request = get_object_or_404(RapportRequest, id=request_id)
+
+    if rapport_request.to_user != request.user.profile:
+        messages.error(request, "You are not authorized to accept this request.")
+        return redirect("notifications")
+
+    # Delete the rapport request as it is now accepted
+    rapport_request.delete()
+
+    messages.success(request, f"{rapport_request.by_user.name}'s Request has been rejected successfully")
     return redirect("notifications")
