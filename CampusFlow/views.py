@@ -4,11 +4,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from CampusFlow.validators import PHONE_NUMBER_VALIDATOR, USN_VALIDATOR
 from CampusFlow.constants import STATE_CHOICES, CAMPUS_LOCATIONS
 from CampusFlow.models import Profile, Post, Comment, RapportRequest
-
 
 def landing_view(request):
     return render(request, "base/landing_page.html")
@@ -106,7 +106,6 @@ def edit_profile_view(request):
         phone_number = request.POST.get("phone")
         image = request.FILES.get("image")
         location = request.POST.get("location")
-
         if not name:
             messages.error(request, "name is required")
             return redirect("edit_profile")
@@ -282,10 +281,8 @@ def edit_post_view(request, post_id):
 
 
 @login_required
-@login_required
 def profile_page_view(request, user_id):
     target_user = get_object_or_404(Profile, pk=user_id)
-    
     # Check if a pending request exists
     existing_request = RapportRequest.objects.filter(
         by_user=request.user.profile, to_user=target_user, status='pending'
@@ -310,7 +307,7 @@ def profile_page_view(request, user_id):
     
 @login_required
 def notifications_view(request):
-    requests = RapportRequest.objects.filter(to_user= request.user.profile)
+    requests = RapportRequest.objects.filter(to_user= request.user.profile, status="pending")
     context = {"requests":requests}
     return render(request,"user/notifications.html", context)
 
@@ -343,10 +340,6 @@ def send_rapport_request(request, user_id):
     messages.success(request, "Rapport request sent successfully.")
     return redirect("profile_view", user_id=target_user.pk)
 
-
-    
-    
-    
 @login_required
 def accept_rapport_request(request, request_id):
     
@@ -367,9 +360,9 @@ def accept_rapport_request(request, request_id):
     messages.success(request, f"You are now connected with {rapport_request.by_user.name}!")
     return redirect("notifications")
 
-
 @login_required
 def reject_rapport_request(request, request_id):
+
     rapport_request = get_object_or_404(RapportRequest, id=request_id)
 
     if rapport_request.to_user != request.user.profile:
@@ -381,3 +374,23 @@ def reject_rapport_request(request, request_id):
 
     messages.success(request, f"{rapport_request.by_user.name}'s Request has been rejected successfully")
     return redirect("notifications")
+
+@login_required
+def user_search_view(request):
+    query = request.GET.get('q')
+    results = None
+    print(query)
+    
+    if query:
+        results = Profile.objects.filter(
+            Q(name__icontains=query) |
+            Q(usn__icontains = query) |
+            Q(location__icontains = query) 
+        )
+        
+    context = {
+        'results': results,
+        'query': query,
+    }
+    
+    return render(request, "user/search.html",context)

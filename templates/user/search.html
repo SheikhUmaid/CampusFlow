@@ -1,0 +1,37 @@
+{% extends "base/base.html" %} {% block body %}
+
+
+<div class="container m-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form class="d-flex" method="get">
+          <input class="form-control me-2" name="q"  value="{{query}}" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% if results %}
+
+<div class="container">
+  <div class="row">
+    {% for profile in results %}
+    <div class="col-md-4 col-sm-6">
+      <div class="card">
+        <img src="{{profile.profile_picture.url}}" class="card-img-top" alt="Card image" />
+        <div class="card-body">
+          <h5 class="card-title">{{profile.name}}</h5>
+          <p class="card-text">
+            {{profile.bio}}
+          </p>
+          <a href="{% url 'profile_view' profile.pk %}" class="btn btn-primary">Visit Profile</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+<h1>No Results Found</h1>
+{% endif %} {% endblock body %}
