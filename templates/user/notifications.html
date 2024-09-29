@@ -7,13 +7,7 @@
 
 {% block body %}
 
-{% if messages %}
- {% for message in messages %}
- <div class="alert alert-primary" role="alert">
-    {{message}}
-</div>
- {% endfor %}
-{% endif %}
+{% include "base/message.html" %}
 {{requests.count}} pending requests
 {% for rapport_request in requests %}
 <div class="alert alert-primary" role="alert">

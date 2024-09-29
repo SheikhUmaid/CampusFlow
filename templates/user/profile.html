@@ -1,4 +1,6 @@
+{% extends "base/base.html" %}
 <!DOCTYPE html>
+{% block body %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -318,14 +320,9 @@
                 <td>{{user.phone_number}}</td>
               </tr>
               <tr>
-                <td>Followers</td>
+                <td>Rapports</td>
                 <td>:</td>
-                <td>{{user.follower.count}}</td>
-              </tr>
-              <tr>
-                <td>Followings</td>
-                <td>:</td>
-                <td>{{request.user.profile.following.count}}</td>
+                <td>{{user.rapport.count}}</td>
               </tr>
             </tbody>
           </table>
@@ -372,3 +369,5 @@
     <!-- End -->
   </body>
 </html>
+
+{% endblock body %}

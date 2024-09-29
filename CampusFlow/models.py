@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from CampusFlow.validators import (USN_VALIDATOR,PHONE_NUMBER_VALIDATOR)
 from CampusFlow.constants import STATE_CHOICES, CAMPUS_LOCATIONS,ADVERTISEMENT_LOCATIONS,RAPPORT_REQUEST_STATUSES
 import os
+from PIL import Image
 # Create your models here.
 
 def get_profile_image_upload_path(instance, filename):
@@ -35,6 +36,20 @@ class Post(models.Model):
     likes = models.ManyToManyField(User, related_name="liked_posts",blank=True)
     location = models.CharField(max_length=2,choices=CAMPUS_LOCATIONS, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.image.path)
+
+        # Define a maximum size, e.g., 800x800
+        max_size = (800, 800)
+
+        # Resize the image, keeping the aspect ratio
+        img.thumbnail(max_size)
+
+        # Save the resized image
+        img.save(self.image.path)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')

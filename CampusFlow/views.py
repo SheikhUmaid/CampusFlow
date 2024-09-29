@@ -1,19 +1,19 @@
 from django.contrib.auth.forms import PasswordChangeForm
-from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from CampusFlow.validators import PHONE_NUMBER_VALIDATOR, USN_VALIDATOR
 from CampusFlow.constants import STATE_CHOICES, CAMPUS_LOCATIONS
 from CampusFlow.models import Profile, Post, Comment, RapportRequest
 
 def landing_view(request):
+    if request.user.is_authenticated:
+        return redirect("home")
     return render(request, "base/landing_page.html")
-
-
 
 def register_view(request):
     if request.user.is_authenticated:
@@ -69,7 +69,6 @@ def register_view(request):
     context = {"state_choices": STATE_CHOICES}
     return render(request, "authentication/register.html", context)
 
-
 def login_view(request):
     if request.user.is_authenticated:
         return redirect("home")
@@ -90,12 +89,10 @@ def login_view(request):
         return redirect("home")
     return render(request, "authentication/login.html")
 
-
 @login_required
 def logout_view(request):
     logout(request)
     return redirect("landing")
-
 
 @login_required
 def edit_profile_view(request):
@@ -105,6 +102,7 @@ def edit_profile_view(request):
         bio = request.POST.get("bio")
         phone_number = request.POST.get("phone")
         image = request.FILES.get("image")
+        email = request.POST.get("email")
         location = request.POST.get("location")
         if not name:
             messages.error(request, "name is required")
@@ -119,10 +117,13 @@ def edit_profile_view(request):
         current_profile.name = name
         current_profile.phone_number = phone_number
         current_profile.location = location
+        
         if bio:
             current_profile.bio = bio
         if image:
             current_profile.profile_picture = image
+        if email:
+            current_profile.email = email
 
         current_profile.save()
         messages.success(request, "updated successfully")
@@ -130,7 +131,6 @@ def edit_profile_view(request):
 
     context = {"state_choices": STATE_CHOICES}
     return render(request, "authentication/edit_profile.html", context)
-
 
 @login_required
 def change_password_view(request):
@@ -152,13 +152,13 @@ def change_password_view(request):
     }
     return render(request, "authentication/change_password.html", context)
 
-
 @login_required
 def home_view(request):
-    posts = Post.objects.all()
+    rapports = request.user.profile.rapport.all()
+    print(rapports)
+    posts = Post.objects.filter(user__in=rapports)
     context={"posts":posts}
     return render(request, "base/home_page.html", context)
-
 
 @login_required
 def post_detail_view(request, post_id):
@@ -185,7 +185,6 @@ def add_comment(request, post_id):
         return redirect("post_detail", post_id=post_id)
     return redirect("post_detail", post_id=post_id)
 
-
 @login_required
 def toggle_like(request, post_id):
     user = request.user
@@ -200,7 +199,6 @@ def toggle_like(request, post_id):
         
     post.save()
     return redirect("post_detail", post_id= post_id)
-
 
 @login_required
 def upload_post_view(request):
@@ -226,7 +224,6 @@ def upload_post_view(request):
     context = {"locations": CAMPUS_LOCATIONS}
     return render(request, "media/post_upload.html", context)
 
-
 @login_required
 def delete_post(request, post_id):
     user = request.user
@@ -241,8 +238,6 @@ def delete_post(request, post_id):
 
     # Redirect to the home or profile page
     return redirect("home")
-    
-    
 
 @login_required
 def edit_post_view(request, post_id):
@@ -277,9 +272,6 @@ def edit_post_view(request, post_id):
     context = {"post": post, "locations": CAMPUS_LOCATIONS}
     return render(request, "media/post_edit_view.html", context)
 
-
-
-
 @login_required
 def profile_page_view(request, user_id):
     target_user = get_object_or_404(Profile, pk=user_id)
@@ -303,15 +295,12 @@ def profile_page_view(request, user_id):
     
     return render(request, "user/profile.html", context)
 
-    
-    
 @login_required
 def notifications_view(request):
     requests = RapportRequest.objects.filter(to_user= request.user.profile, status="pending")
     context = {"requests":requests}
     return render(request,"user/notifications.html", context)
 
-  
 @login_required
 def send_rapport_request(request, user_id):
     profile = request.user.profile
@@ -384,8 +373,7 @@ def user_search_view(request):
     if query:
         results = Profile.objects.filter(
             Q(name__icontains=query) |
-            Q(usn__icontains = query) |
-            Q(location__icontains = query) 
+            Q(usn__icontains = query)
         )
         
     context = {

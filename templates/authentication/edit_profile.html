@@ -1,8 +1,11 @@
-
+{% extends "base/base.html" %}
 {% load static %}
-<!DOCTYPE html>
+
+
+{% block body %}
+
 <html lang="en">
-<head>
+    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
@@ -64,11 +67,14 @@ button {
     border: none;
     cursor: pointer;
 }
-    </style>
+</style>
 </head>
 <body>
-    <h1>Edit profile</h1>
-    <div class="profile-container">
+    {% include "base/message.html" %}
+    <div class="container">
+
+        <h1>Edit profile</h1>
+        <div class="profile-container">
         <!-- <div class="profile-image">
             <img src="profile-image.jpg" alt="Profile Image">
         </div> -->
@@ -81,14 +87,15 @@ button {
                 <input type="file" name="image">
                 <input type="text" placeholder="USN" value="{{request.user.username}}" readonly>
                 <input type="text" placeholder="Name" value="{{request.user.profile.name}}" name="name"required>
+                <input type="email" placeholder="Email" value="{{request.user.profile.email}}" name="email"required>
                 <textarea placeholder="Bio" name="bio">{{request.user.profile.bio}}</textarea>
                 <input type="text" value="{{request.user.profile.phone_number}}" name="phone" required>
                 <select name="location" id="location">
                     <option value="" disabled>Select your state</option>
                     {% for code, name in state_choices %}
-                        <option value="{{ code }}" {% if code == request.user.profile.location %}selected{% endif %}>
-                            {{ name }}
-                        </option>
+                    <option value="{{ code }}" {% if code == request.user.profile.location %}selected{% endif %}>
+                        {{ name }}
+                    </option>
                     {% endfor %}
                 </select>
                 
@@ -97,4 +104,6 @@ button {
         </div>
     </div>
 </body>
+</div>
 </html>
+{% endblock body %}
