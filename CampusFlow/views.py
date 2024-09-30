@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from CampusFlow.validators import PHONE_NUMBER_VALIDATOR, USN_VALIDATOR
 from CampusFlow.constants import STATE_CHOICES, CAMPUS_LOCATIONS
 from CampusFlow.models import Profile, Post, Comment, RapportRequest
+from django.db.models import Count
 
 def landing_view(request):
     if request.user.is_authenticated:
@@ -382,3 +383,16 @@ def user_search_view(request):
     }
     
     return render(request, "user/search.html",context)
+
+
+
+
+def explore_view(request):
+    # public_profiles = Profile.objects.filter(exclusive=False)
+    # random_posts = Post.objects.filter(user__in=public_profiles)
+    
+
+    public_profiles = Profile.objects.filter(exclusive=False)
+    random_posts = Post.objects.filter(user__in=public_profiles).order_by('?')
+    context = {"posts": random_posts}
+    return render(request,"media/explore.html", context)

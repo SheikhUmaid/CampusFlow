@@ -25,6 +25,7 @@ class Profile(models.Model):
     join_date = models.DateField(auto_now_add=True)
     location = models.CharField(max_length=2, choices=STATE_CHOICES, blank=True)
     rapport = models.ManyToManyField('self', blank=True, symmetrical=True)
+    exclusive = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.usn} - {self.name}"

@@ -1,0 +1,37 @@
+{% extends "base/base.html" %} {% block body %}
+
+
+<div class="container m-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form class="d-flex" method="get" action="{% url 'user_search' %}">
+          <input class="form-control me-2" name="q"  value="" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% if posts %}
+
+<div class="container">
+  <div class="row">
+    {% for post in posts %}
+    <div class="col-md-4 col-sm-6">
+      <div class="card">
+        <img src="{{post.image.url}}" class="card-img-top" alt="Card image" />
+        <div class="card-body">
+          <h5 class="card-title">{{post.user.name}}</h5>
+          <p class="card-text">
+           
+          </p>
+          <a href="{% url 'post_detail' post.pk %}" class="btn btn-primary">Visit Profile</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+<h1>No Results Found</h1>
+{% endif %} {% endblock body %}
