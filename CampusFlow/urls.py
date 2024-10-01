@@ -19,7 +19,8 @@ from CampusFlow.views import (
     send_rapport_request,
     reject_rapport_request,
     user_search_view,
-    explore_view
+    explore_view,
+    create_random_post
 )
 
 
@@ -47,6 +48,6 @@ urlpatterns = [
     path('user/rapport/reject/<int:request_id>/',reject_rapport_request, name="reject_rapport"),
     path('user/explore/',explore_view, name="explore"),
     
-    
+    path("dev/create-random-post/", create_random_post, name="create_random_post"),
     path("home/", home_view, name="home"),
 ]
