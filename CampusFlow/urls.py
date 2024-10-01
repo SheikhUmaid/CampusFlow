@@ -19,11 +19,11 @@ from CampusFlow.views import (
     send_rapport_request,
     reject_rapport_request,
     user_search_view,
-<<<<<<< HEAD
+# <<<<<<< HEAD
     explore_view,
     create_random_post
-=======
->>>>>>> parent of 6d21573 (Add Explore View with Search Feature and Account Exclusvity)
+# =======
+# >>>>>>> parent of 6d21573 (Add Explore View with Search Feature and Account Exclusvity)
 )
 
 
