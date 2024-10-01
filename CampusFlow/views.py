@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from CampusFlow.validators import PHONE_NUMBER_VALIDATOR, USN_VALIDATOR
 from CampusFlow.constants import STATE_CHOICES, CAMPUS_LOCATIONS
 from CampusFlow.models import Profile, Post, Comment, RapportRequest
+<<<<<<< HEAD
 from django.db.models import Count
 from .integrations import safe_search_detection
 
@@ -19,6 +20,8 @@ from PIL import Image
 import requests
 from io import BytesIO
 
+=======
+>>>>>>> parent of 6d21573 (Add Explore View with Search Feature and Account Exclusvity)
 
 def landing_view(request):
     if request.user.is_authenticated:
@@ -402,6 +405,7 @@ def user_search_view(request):
         'query': query,
     }
     
+<<<<<<< HEAD
     return render(request, "user/search.html",context)
 
 @login_required
@@ -439,3 +443,6 @@ def create_random_post(request):
         return HttpResponse("Post Created Successfully")
     else:
         return HttpResponse("Failed to fetch the image", status=400)
+=======
+    return render(request, "user/search.html",context)
+>>>>>>> parent of 6d21573 (Add Explore View with Search Feature and Account Exclusvity)

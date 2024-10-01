@@ -19,8 +19,11 @@ from CampusFlow.views import (
     send_rapport_request,
     reject_rapport_request,
     user_search_view,
+<<<<<<< HEAD
     explore_view,
     create_random_post
+=======
+>>>>>>> parent of 6d21573 (Add Explore View with Search Feature and Account Exclusvity)
 )
 
 
@@ -46,7 +49,6 @@ urlpatterns = [
     path("user/rapport/accept/<int:request_id>/", accept_rapport_request, name="accept_rapport"),
     path('user/rapport/send/<int:user_id>/',send_rapport_request, name="send_rapport_request"),
     path('user/rapport/reject/<int:request_id>/',reject_rapport_request, name="reject_rapport"),
-    path('user/explore/',explore_view, name="explore"),
     
     path("dev/create-random-post/", create_random_post, name="create_random_post"),
     path("home/", home_view, name="home"),
