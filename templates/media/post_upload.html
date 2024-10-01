@@ -59,7 +59,7 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="image">Select Image:</label>
-            <input type="file" name="image" id="image" onchange="previewImage(event)">
+            <input type="file" name="image" id="image" onchange="previewImage(event)" required>
             <label for="category">Select Location:</label>
             <select name="location" id="category">
                 {% for code, name in locations %}

@@ -50,6 +50,14 @@ class Post(models.Model):
 
         # Save the resized image
         img.save(self.image.path)
+        
+        
+    def delete(self, *args, **kwargs):
+        # Delete the image file from the filesystem
+        if self.image:
+            if os.path.isfile(self.image.path):
+                os.remove(self.image.path)
+        super().delete(*args, **kwargs)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')

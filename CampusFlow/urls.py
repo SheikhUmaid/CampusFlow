@@ -19,7 +19,9 @@ from CampusFlow.views import (
     send_rapport_request,
     reject_rapport_request,
     user_search_view,
-    explore_view
+    explore_view,
+    create_random_post,
+    
 )
 
 

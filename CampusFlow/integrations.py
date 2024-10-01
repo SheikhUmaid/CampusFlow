@@ -2,8 +2,9 @@ import os
 from google.cloud import vision
 
 
-os.environ["GOOGLE_CLOUD_PROJECT"] = "your-project-id"
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "CampusFlow/credentials/campus-flow-31415-a053d7c1460a.json"
+os.environ["GOOGLE_CLOUD_PROJECT"] = "campus-flow-31415"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "CampusFlow/credentials/campus-flow-31415-5b9e1fe34470.json"
+
 
 
 def safe_search_detection(image_path):

@@ -3,13 +3,15 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from CampusFlow.validators import PHONE_NUMBER_VALIDATOR, USN_VALIDATOR
 from CampusFlow.constants import STATE_CHOICES, CAMPUS_LOCATIONS
 from CampusFlow.models import Profile, Post, Comment, RapportRequest
-from django.db.models import Count
+from CampusFlow.integrations import safe_search_detection
+
 
 def landing_view(request):
     if request.user.is_authenticated:
@@ -224,7 +226,7 @@ def upload_post_view(request):
         safe = safe_search_detection(post.image.path)
         
         print(safe.adult)
-        if safe.adult == "VERY_LIKELY" or safe.adult == "LIKELY" or safe.adult == "POSSIBLE":
+        if safe.adult>=3:
             messages.error(request, "The uploaded image contains adult content.")
             post.delete()
             return redirect("upload_post")
@@ -408,3 +410,30 @@ def explore_view(request):
     random_posts = Post.objects.filter(user__in=public_profiles).order_by('?')
     context = {"posts": random_posts}
     return render(request,"media/explore.html", context)
+
+
+def create_random_post(request):
+    # Generate a random image URL (using picsum.photos)
+    image_url = "https://picsum.photos/800/800"
+    
+    fake = Faker()
+    user = choice(Profile.objects.all())  # Select a random user from profiles
+    
+    # Fetch the image from the URL
+    response = requests.get(image_url)
+    
+    if response.status_code == 200:
+        # Open the image using BytesIO and Pillow
+        image = Image.open(BytesIO(response.content))
+        
+        # Save the image temporarily
+        image_name = f"temp_{fake.uuid4()}.jpg"  # Use a unique name for each image
+        image.save(f"media/{image_name}")  # Save in the media folder or a specific path
+        
+        # Create the Post object with the saved image
+        post = Post.objects.create(user=user, image=f"{image_name}")
+        post.save()
+
+        return HttpResponse("Post Created Successfully")
+    else:
+        return HttpResponse("Failed to fetch the image", status=400)
