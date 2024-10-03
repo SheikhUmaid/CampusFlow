@@ -25,6 +25,9 @@ class Profile(models.Model):
     join_date = models.DateField(auto_now_add=True)
     location = models.CharField(max_length=2, choices=STATE_CHOICES, blank=True)
     rapport = models.ManyToManyField('self', blank=True, symmetrical=True)
+    # Rapport = models.ManyToManyField('self', blank=True, symmetrical=True)
+    # test = models.CharField(max_length=35, blank=True )
+    exclusive = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.usn} - {self.name}"
@@ -71,9 +74,9 @@ class Comment(models.Model):
     
 class Advertisement(models.Model):
     title = models.CharField(max_length=20)
-    descriprion = models.TextField()
+    description = models.TextField()
     image = models.ImageField(upload_to="ads",)
-    event_date = models.DateField()
+    event_date = models.DateField(auto_now_add=True)
     location = models.CharField(max_length=2,choices=ADVERTISEMENT_LOCATIONS,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

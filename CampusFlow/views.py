@@ -9,9 +9,17 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from CampusFlow.validators import PHONE_NUMBER_VALIDATOR, USN_VALIDATOR
 from CampusFlow.constants import STATE_CHOICES, CAMPUS_LOCATIONS
-from CampusFlow.models import Profile, Post, Comment, RapportRequest
+from CampusFlow.models import Profile, Post, Comment, RapportRequest, Advertisement
 from CampusFlow.integrations import safe_search_detection
 
+
+import requests
+from PIL import Image
+from io import BytesIO
+from faker import Faker
+from random import choice
+import random
+import os
 
 def landing_view(request):
     if request.user.is_authenticated:
@@ -160,7 +168,8 @@ def home_view(request):
     rapports = request.user.profile.rapport.all()
     print(rapports)
     posts = Post.objects.filter(user__in=rapports)
-    context={"posts":posts}
+    ads = Advertisement.objects.all()
+    context={"posts":posts, "ads":ads}
     return render(request, "base/home_page.html", context)
 
 @login_required
@@ -223,13 +232,24 @@ def upload_post_view(request):
             
             
         # Perform SafeSearch detection on the uploaded image
-        safe = safe_search_detection(post.image.path)
+        try:
+            safe = safe_search_detection(post.image.path)
         
-        print(safe.adult)
-        if safe.adult>=3:
-            messages.error(request, "The uploaded image contains adult content.")
+            print(safe.adult)
+            if safe.adult>=3:
+                messages.error(request, "The uploaded image contains adult content.")
+                post.delete()
+                return redirect("upload_post")
+            if safe.racy>=2:
+                messages.error(request, "The uploaded image contains racy content.")
+                post.delete()
+                return redirect("upload_post")
+        except Exception as e:
+            print(e)
+            messages.error(request, "The uploaded image contains racy content. safe upload fail check")
             post.delete()
             return redirect("upload_post")
+        
         
         post.save()
         
@@ -428,12 +448,48 @@ def create_random_post(request):
         
         # Save the image temporarily
         image_name = f"temp_{fake.uuid4()}.jpg"  # Use a unique name for each image
-        image.save(f"media/{image_name}")  # Save in the media folder or a specific path
+        
+        #check whether the directory is there or not f"media/post_images/{user.user.username}/"
+        
+        directory_path = f"media/post_images/{user.user.username}/"
+
+        # Check if the directory exists, and create it if it does not
+        if not os.path.exists(directory_path):
+            os.makedirs(directory_path)
+            print("Directory created")
+        else:
+            print("Directory already exists")
+        image.save(f"{directory_path}{image_name}")  # Save in the media folder or a specific path
         
         # Create the Post object with the saved image
-        post = Post.objects.create(user=user, image=f"{image_name}")
+        post = Post.objects.create(user=user, image=f"post_images/{user.user.username}/{image_name}")
         post.save()
 
         return HttpResponse("Post Created Successfully")
     else:
         return HttpResponse("Failed to fetch the image", status=400)
+    
+    
+    
+    
+    
+def create_random_add(request):
+    fake = Faker()
+    title = fake.sentence(nb_words=3)
+    description = fake.text()
+    image_url = "https://picsum.photos/1080/300"
+    event_date = fake.date_this_year
+    
+    response = requests.get(image_url)
+    
+    if response.status_code == 200:
+        image = Image.open(BytesIO(response.content))
+        image_name = f"temp_{fake.uuid4()}.jpg"
+        image.save(f"media/{image_name}")
+        
+        add = Advertisement.objects.create(title=title, description=description, image=f"{image_name}", event_date=event_date)
+        add.save()
+        
+        return HttpResponse("Advertisement Created Successfully")
+    else:
+        return HttpResponse("Failed to fetch the image", status=400)    

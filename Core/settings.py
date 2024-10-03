@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'CampusFlow'
+    'CampusFlow',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [

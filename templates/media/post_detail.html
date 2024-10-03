@@ -1,18 +1,23 @@
+{% extends "base/base.html" %}
 {% load static %}
 <!DOCTYPE html>
+
+{% block body %}
+
+
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post Detail View</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Post Detail View</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <style>
         .post-container {
             margin-bottom: 20px;
             border: 1px solid #ccc;
             padding: 10px;
         }
-
+        
         .post-image {
             max-width: 100%;
             height: auto;
@@ -27,17 +32,17 @@
             margin-top: 10px;
             font-size: 12px;
         }
-
+        
         .post-location {
             margin-top: 5px;
             font-size: 12px;
             color: #777;
         }
-
+        
         .post-comments {
             margin-top: 15px;
         }
-
+        
         .comment {
             margin-bottom: 5px;
         }
@@ -56,10 +61,10 @@
             {% if request.user in post.likes.all %}
             <!-- If the user has already liked the post, show "Unlike" -->
             <a href="{% url 'toggle_like' post.pk %}" class="btn btn-sm btn-danger">Unlike</a>
-        {% else %}
+            {% else %}
             <!-- If the user has not liked the post, show "Like" -->
             <a href="{% url 'toggle_like' post.pk %}" class="btn btn-sm btn-primary">Like</a>
-        {% endif %}
+            {% endif %}
             
             <div class="post-comments">
                 {% for comment in comments %}
@@ -68,7 +73,7 @@
                 </div>
                 {% endfor %}
             </div>
-          {% if request.user.is_authenticated %}
+            {% if request.user.is_authenticated %}
             <form class="comment-form" method="POST" action="{% url 'add_comment' post.pk %}">
                 {% csrf_token %}
                 <textarea class="form-control" name="content" rows="3" placeholder="Add a comment" required></textarea>
@@ -81,3 +86,4 @@
     </div>
 </body>
 </html>
+{% endblock body %}
