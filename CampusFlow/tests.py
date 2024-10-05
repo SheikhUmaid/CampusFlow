@@ -21,3 +21,17 @@ class IndexPageTestCase(TestCase):
         
 # how to run these tests?
 # python manage.py test
+
+
+class LoginPageTestCase(TestCase):
+    def test_login_page(self):
+        response = self.client.get('/login/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'base/login.html')
+        self.assertContains(response, 'Login')
+        self.assertContains(response, 'Username')
+        self.assertContains(response, 'Password')
+        self.assertContains(response, 'Register')
+        self.assertContains(response, 'Forgot Password?')
+        self.assertContains(response, 'Sign in')
+        self.assertContains(response, 'SDM CampusFlow')
