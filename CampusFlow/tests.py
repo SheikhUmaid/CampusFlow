@@ -35,3 +35,21 @@ class LoginPageTestCase(TestCase):
         self.assertContains(response, 'Forgot Password?')
         self.assertContains(response, 'Sign in')
         self.assertContains(response, 'SDM CampusFlow')
+        
+        
+
+
+class RegisterPageTestCase(TestCase):
+    def test_register_page(self):
+        response = self.client.get('/register/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'base/register.html')
+        self.assertContains(response, 'Register')
+        self.assertContains(response, 'Username')
+        self.assertContains(response, 'Email')
+        self.assertContains(response, 'Password')
+        self.assertContains(response, 'Confirm Password')
+        self.assertContains(response, 'Already have an account?')
+        self.assertContains(response, 'Login')
+        self.assertContains(response, 'SDM CampusFlow')
+        
