@@ -53,3 +53,20 @@ class RegisterPageTestCase(TestCase):
         self.assertContains(response, 'Login')
         self.assertContains(response, 'SDM CampusFlow')
         
+
+
+
+
+class AboutPageTestCase(TestCase):
+    def test_about_page(self):
+        response = self.client.get('/about/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'base/about.html')
+        self.assertContains(response, 'About')
+        self.assertContains(response, 'SDM CampusFlow')
+        self.assertContains(response, 'Home')
+        self.assertContains(response, 'About')
+        self.assertContains(response, 'Contact')
+        self.assertContains(response, 'register')
+        self.assertContains(response, 'login')
+        self.assertContains(response, ' SDM CampusFlow')
