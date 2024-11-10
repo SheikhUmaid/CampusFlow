@@ -1,0 +1,53 @@
+@startuml
+
+actor Student
+actor Admin
+entity System
+
+' Registration Flow
+Student -> System : Enter registration details (USN, Name, etc.)
+System -> System : Validate details (regex for USN, check database)
+System --> Student : Registration successful (Pending admin approval)
+Admin -> System : Verify user details (Check USN, Name)
+System -> Admin : Show user details
+Admin -> System : Approve/Reject user account
+System --> Student : Account approved/rejected
+
+' Login Flow
+Student -> System : Enter login credentials (USN, Password)
+System -> System : Validate credentials (Check password, USN)
+System --> Student : Login successful
+System --> Student : Show homepage (Feed, Notifications)
+
+' Post Content Flow
+Student -> System : Create post (Text, Image, etc.)
+System -> System : Validate content (Check post length, media)
+System --> Student : Post successful (Display in feed)
+
+' Comment on Post Flow
+Student -> System : Write comment on post
+System -> System : Validate comment
+System --> Student : Comment successful (Display under post)
+
+' Follow User Flow
+Student -> System : Send follow request to another user
+System -> System : Check if follow is valid (Check if already following)
+System --> Student : Follow request successful (User now followed)
+
+' Join Community Flow
+Student -> System : Join community (e.g., interest-based)
+System -> System : Validate community (Check if user is already a member)
+System --> Student : Join successful (Community feed displayed)
+
+' Advertise Event Flow
+Student -> System : Create event (Text, Image, Date, Location)
+System -> System : Validate event (Check event details)
+System --> Student : Event created successfully (Display in event feed)
+
+' Admin Moderation Flow
+Admin -> System : View flagged content (Post, Comment)
+System -> System : Show content needing moderation
+Admin -> System : Approve/Reject content
+System --> Admin : Content actioned (Approved/Rejected)
+
+@enduml

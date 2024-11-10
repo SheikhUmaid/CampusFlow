@@ -1,11 +1,266 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 
 
-{% block body %}
+{% block title %}Home{% endblock title %}
 
 
 
+{% block advertisement %}
+
+<div class="mx-auto max-w-[1170px] px-4 sm:px-8 xl:px-0 relative z-1">
+  <div class="flex flex-wrap gap-x-7.5 gap-y-9">
+    <!-- Hero item -->
+    <div
+      class="max-w-[1170px] w-full flex flex-col lg:flex-row lg:items-center gap-7.5 lg:gap-11 bg-white shadow-1 rounded-xl p-4 lg:p-2.5"
+    >
+      <div class="lg:max-w-[536px] w-full">
+        <a href="blog-single.html">
+          <img
+            class="w-full"
+            src="{% static 'images/hero-01.png' %}"
+            alt="hero"
+          />
+        </a>
+      </div>
+
+      <div class="lg:max-w-[540px] w-full">
+        <a
+          href="category.html"
+          class="inline-flex text-purple-dark bg-purple/[0.08] font-medium text-sm py-1 px-3 rounded-full mb-4"
+          >ADVERTISEMENT</a
+        >
+        <h1
+          class="font-bold text-custom-4 xl:text-heading-4 text-dark mb-4"
+        >
+          <a href="blog-single.html">
+            Begin here to obtain a brief summary encompassing all the
+            essential
+          </a>
+        </h1>
+        <p class="max-w-[524px]">
+          This comprehensive post serves as your cheat-sheet to swiftly
+          familiarize yourself with Ghost. Packed with crucial...
+        </p>
+        <div class="flex items-center gap-2.5 mt-5">
+          <a href="author.html" class="flex items-center gap-3">
+            <div class="flex w-6 h-6 rounded-full overflow-hidden">
+              <img src="{% static 'images/user-01.png' %}" alt="user" />
+            </div>
+            <p class="text-sm">Adrio Devid</p>
+          </a>
+
+          <span
+            class="flex w-[3px] h-[3px] rounded-full bg-dark-2"
+          ></span>
+
+          <p class="text-sm">Sep 10, 2025</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero item -->
+    <div
+      class="lg:max-w-[570px] w-full flex flex-col sm:flex-row sm:items-center gap-6 bg-white shadow-1 rounded-xl p-2.5"
+    >
+      <div class="lg:max-w-[238px] w-full">
+        <a href="blog-single.html">
+          <img
+            class="w-full"
+            src="{% static 'images/hero-02.png' %}"
+            alt="hero"
+          />
+        </a>
+      </div>
+
+      <div class="lg:max-w-[272px] w-full">
+        <a
+          href="category.html"
+          class="inline-flex text-blue bg-blue/[0.08] font-medium text-sm py-1 px-3 rounded-full mb-4"
+          >Technology</a
+        >
+        <h2 class="font-semibold text-custom-lg text-dark mb-3">
+          <a href="blog-single.html">
+            14 Innovative Architectural Designs to Create a Vast
+            Interior Space
+          </a>
+        </h2>
+        <div class="flex items-center gap-2.5">
+          <p class="text-sm">
+            <a href="author.html">By Adrio Devid</a>
+          </p>
+
+          <span
+            class="flex w-[3px] h-[3px] rounded-full bg-dark-2"
+          ></span>
+
+          <p class="text-sm">Sep 10, 2025</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero item -->
+    <div
+      class="lg:max-w-[570px] w-full flex flex-col sm:flex-row sm:items-center gap-6 bg-white shadow-1 rounded-xl p-2.5"
+    >
+      <div class="lg:max-w-[238px] w-full">
+        <a href="blog-single.html">
+          <img
+            class="w-full"
+            src="{% static 'images/hero-03.png' %}"
+            alt="hero"
+          />
+        </a>
+      </div>
+
+      <div class="lg:max-w-[272px] w-full">
+        <a
+          href="category.html"
+          class="inline-flex text-green-dark bg-green/[0.08] font-medium text-sm py-1 px-3 rounded-full mb-4"
+          >Travel</a
+        >
+        <h2 class="font-semibold text-custom-lg text-dark mb-3">
+          <a href="blog-single.html">
+            Traveller Visiting Ice Cave With Amazing Eye-catching view
+            with nature
+          </a>
+        </h2>
+        <div class="flex items-center gap-2.5">
+          <p class="text-sm">
+            <a href="author.html">By Adrio Devid</a>
+          </p>
+
+          <span
+            class="flex w-[3px] h-[3px] rounded-full bg-dark-2"
+          ></span>
+
+          <p class="text-sm">Sep 10, 2025</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock advertisement %}
+
+
+
+
+
+
+{% block main %}
+
+<section class="pt-20 lg:pt-25 pb-15">
+  <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+    <!-- section title -->
+    <div class="mb-12.5 text-center">
+      <h2
+        class="text-dark mb-3.5 text-2xl font-bold sm:text-4xl xl:text-heading-3"
+      >
+        By Your Reports
+      </h2>
+      <p>Posts with Similar interests</p>
+    </div>
+      <!-- Blog Categories Tab End -->
+
+      <!-- Blog Categories Content Start -->
+      <div>
+        <!-- All content start -->
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-11 gap-x-7.5"
+          >
+
+
+
+          {% for post in posts %}
+          <!-- blog item -->
+          <div class="group">
+            <div
+              class="mb-6 overflow-hidden rounded-[10px] transition-all group-hover:scale-105"
+            >
+              <a href="{% url 'post_detail' post.pk %}">
+                <img
+                  src="{{post.image.url}}"
+                  alt="image"
+                  class="w-full"
+                />
+              </a>
+            </div>
+
+            <h3>
+              <a
+                href="blog-single.html"
+                class="block text-dark font-bold text-xl mb-3.5"
+              >
+                <span
+                  class="bg-gradient-to-r from-primary/50 to-primary/40 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
+                >
+                  {{post.title}}
+                </span>
+              </a>
+            </h3>
+            <p>
+              {{post.caption}}
+            </p>
+
+            <div
+              class="flex flex-wrap gap-3 items-center justify-between mt-4.5"
+            >
+              <div class="flex items-center gap-2.5">
+                <a href="author.html" class="flex items-center gap-3">
+                  <div
+                    class="flex w-6 h-6 rounded-full overflow-hidden"
+                  >
+                    <img src="{{post.user.profile_picture.url}}" alt="user" />
+                  </div>
+                  <p class="text-sm">{{post.user.name}}</p>
+                </a>
+
+                <span
+                  class="flex w-[3px] h-[3px] rounded-full bg-dark-2"
+                ></span>
+
+                <p class="text-sm">{{post.created_at}}</p>
+              </div>
+              <a
+                href="category.html"
+                class="inline-flex text-blue bg-blue/[0.08] font-medium text-sm py-1 px-3 rounded-full"
+                >{{post.get_location_display }}</a
+              >
+            </div>
+          </div>
+          {% endfor %}
+            
+
+            
+            
+          </div>
+      
+        <!-- Culture content end -->
+      </div>
+      <!-- Blog Categories Content End -->
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} 
 <div id="carouselExample" class="carousel slide">
   <div class="carousel-inner">
     {% for ad in ads %}
@@ -22,33 +277,9 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
-</div>
+</div> {% endcomment %}
 
 
-<div class="container m-auto my-4 text-center">
-  <div class="alert alert-info" role="alert">
-    Some Recommended Posts by your Rapports
-  </div>
-</div>
 
 
-<div class="container">
-  <div class="row">
-    {% for post in posts %}
-    <div class="col-md-4 col-sm-6">
-      <div class="card">
-        <img src="{{post.image.url}}" class="card-img-top" alt="Card image" />
-        <div class="card-body">
-          <h5 class="card-title">by <a href="{% url 'profile_view' post.user.pk %}">{{post.user.name}}</a></h5>
-          <p class="card-text">
-            {{post.bio}}
-          </p>
-          <a href="{% url 'post_detail' post.pk %}" class="btn btn-primary">Read Post</a>
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-</div>
-
-{% endblock body %}
+{% endblock main %}

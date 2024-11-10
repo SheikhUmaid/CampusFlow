@@ -13,6 +13,7 @@ from CampusFlow.models import Profile, Post, Comment, RapportRequest, Advertisem
 from CampusFlow.integrations import safe_search_detection
 
 
+# dev modules
 import requests
 from PIL import Image
 from io import BytesIO
@@ -30,7 +31,7 @@ def register_view(request):
     if request.user.is_authenticated:
         return redirect("home")
     if request.method == "POST":
-        usn = request.POST["usn"]
+        usn = request.POST.get("usn")
         name = request.POST["name"]
         password1 = request.POST["password1"]
         password2 = request.POST["password2"]
@@ -217,6 +218,7 @@ def upload_post_view(request):
     user = request.user
     profile = user.profile
     if request.method == "POST":
+        title = request.POST.get('title')
         image = request.FILES.get('image')
         caption = request.POST.get('caption')
         location = request.POST.get('location')        
@@ -226,29 +228,29 @@ def upload_post_view(request):
         if not location:
             messages.error(request, "Please select a location.")
             return redirect("upload_post")
-        post = Post.objects.create(user = profile, image = image, location=location)
+        post = Post.objects.create(title= title, user = profile, image = image, location=location)
         if caption:
             post.caption = caption
             
             
         # Perform SafeSearch detection on the uploaded image
-        try:
-            safe = safe_search_detection(post.image.path)
+        # try:
+        #     safe = safe_search_detection(post.image.path)
         
-            print(safe.adult)
-            if safe.adult>=3:
-                messages.error(request, "The uploaded image contains adult content.")
-                post.delete()
-                return redirect("upload_post")
-            if safe.racy>=2:
-                messages.error(request, "The uploaded image contains racy content.")
-                post.delete()
-                return redirect("upload_post")
-        except Exception as e:
-            print(e)
-            messages.error(request, "The uploaded image contains racy content. safe upload fail check")
-            post.delete()
-            return redirect("upload_post")
+        #     print(safe.adult)
+        #     if safe.adult>=3:
+        #         messages.error(request, "The uploaded image contains adult content.")
+        #         post.delete()
+        #         return redirect("upload_post")
+        #     if safe.racy>=2:
+        #         messages.error(request, "The uploaded image contains racy content.")
+        #         post.delete()
+        #         return redirect("upload_post")
+        # except Exception as e:
+        #     print(e)
+        #     messages.error(request, "The uploaded image contains racy content. safe upload fail check")
+        #     post.delete()
+        #     return redirect("upload_post")
         
         
         post.save()
@@ -432,42 +434,105 @@ def explore_view(request):
     return render(request,"media/explore.html", context)
 
 
+
+
+
+
+
+
+
 def create_random_post(request):
-    # Generate a random image URL (using picsum.photos)
-    image_url = "https://picsum.photos/800/800"
     
-    fake = Faker()
-    user = choice(Profile.objects.all())  # Select a random user from profiles
-    
-    # Fetch the image from the URL
-    response = requests.get(image_url)
-    
-    if response.status_code == 200:
-        # Open the image using BytesIO and Pillow
-        image = Image.open(BytesIO(response.content))
-        
-        # Save the image temporarily
-        image_name = f"temp_{fake.uuid4()}.jpg"  # Use a unique name for each image
-        
-        #check whether the directory is there or not f"media/post_images/{user.user.username}/"
-        
-        directory_path = f"media/post_images/{user.user.username}/"
+    def create():
+        fake = Faker()
+        user = random.choice(Profile.objects.all())  # Select a random user from profiles
 
-        # Check if the directory exists, and create it if it does not
-        if not os.path.exists(directory_path):
-            os.makedirs(directory_path)
-            print("Directory created")
+        # Generate random data for the post fields
+        title = fake.sentence(nb_words=5)
+        caption = fake.paragraph(nb_sentences=3)
+        location = random.choice([choice[0] for choice in CAMPUS_LOCATIONS])  # Choose a random campus location
+
+        # Generate a random image URL (using picsum.photos)
+        image_url = "https://picsum.photos/800/800"
+
+        # Fetch the image from the URL
+        response = requests.get(image_url)
+        if response.status_code == 200:
+            # Open the image using BytesIO and Pillow
+            image = Image.open(BytesIO(response.content))
+            
+            # Save the image temporarily with a unique name
+            image_name = f"{fake.uuid4()}.jpg"
+            
+            # Define the directory path
+            directory_path = f"media/post_images/{user.user.username}/"
+            
+            # Check if the directory exists, and create it if it does not
+            if not os.path.exists(directory_path):
+                os.makedirs(directory_path)
+
+            # Save the image to the directory
+            image.save(f"{directory_path}{image_name}")
+            
+            # Create the Post object with the saved image and additional fields
+            post = Post.objects.create(
+                title=title,
+                user=user,
+                image=f"post_images/{user.user.username}/{image_name}",
+                caption=caption,
+                location=location,
+            )
+            
+            return HttpResponse("Post Created Successfully")
         else:
-            print("Directory already exists")
-        image.save(f"{directory_path}{image_name}")  # Save in the media folder or a specific path
+            return HttpResponse("Failed to fetch the image", status=400)
+    for i in range(10):
+        create()
+    return HttpResponse("Failed to fetch the image", status=400)
+    
+            
         
-        # Create the Post object with the saved image
-        post = Post.objects.create(user=user, image=f"post_images/{user.user.username}/{image_name}")
-        post.save()
+        
+        
+    
+    
+    
+    
+    # # Generate a random image URL (using picsum.photos)
+    # image_url = "https://picsum.photos/800/800"
+    
+    # fake = Faker()
+    # user = choice(Profile.objects.all())  # Select a random user from profiles
+    
+    # # Fetch the image from the URL
+    # response = requests.get(image_url)
+    
+    # if response.status_code == 200:
+    #     # Open the image using BytesIO and Pillow
+    #     image = Image.open(BytesIO(response.content))
+        
+    #     # Save the image temporarily
+    #     image_name = f"temp_{fake.uuid4()}.jpg"  # Use a unique name for each image
+        
+    #     #check whether the directory is there or not f"media/post_images/{user.user.username}/"
+        
+    #     directory_path = f"media/post_images/{user.user.username}/"
 
-        return HttpResponse("Post Created Successfully")
-    else:
-        return HttpResponse("Failed to fetch the image", status=400)
+    #     # Check if the directory exists, and create it if it does not
+    #     if not os.path.exists(directory_path):
+    #         os.makedirs(directory_path)
+    #         print("Directory created")
+    #     else:
+    #         print("Directory already exists")
+    #     image.save(f"{directory_path}{image_name}")  # Save in the media folder or a specific path
+        
+    #     # Create the Post object with the saved image
+    #     post = Post.objects.create(user=user, image=f"post_images/{user.user.username}/{image_name}")
+    #     post.save()
+
+    #     return HttpResponse("Post Created Successfully")
+    # else:
+    #     return HttpResponse("Failed to fetch the image", status=400)
     
     
     

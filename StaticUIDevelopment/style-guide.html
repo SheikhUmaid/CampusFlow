@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Style Guide Page | Clarity - Tailwind CSS Template for Blog</title>
+  <link rel="icon" href="favicon.ico"><link href="style.css" rel="stylesheet"></head>
+
+  <body
+    x-data="{ page: 'style-guide', 'loaded': true, 'modalNewsletter': false, 'modalSearch': false, 'stickyMenu': false, 'navigationOpen': false, 'scrollTop': false }"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <div
+  x-show="loaded"
+  x-init="window.addEventListener('DOMContentLoaded', () => {setTimeout(() => loaded = false, 500)})"
+  class="fixed left-0 top-0 z-999999 flex h-screen w-screen items-center justify-center bg-white"
+>
+  <div
+    class="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"
+  ></div>
+</div>
+
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Header Start ===== -->
+    <header
+  class="fixed left-0 top-0 w-full z-9999 bg-white py-7 lg:py-0 transition-all ease-in-out duration-300"
+  :class="{ 'shadow !py-4 lg:!py-0' : stickyMenu }"
+  @scroll.window="stickyMenu = (window.scrollY > 0) ? true : false"
+>
+  <div
+    class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0 lg:flex items-center justify-between relative"
+  >
+    <div class="w-full lg:w-3/12 flex items-center justify-between">
+      <a href="index.html">
+        <img src="images/logo.svg" alt="Logo" />
+      </a>
+
+      <!-- Hamburger Toggle BTN -->
+      <button
+        id="menuToggler"
+        aria-label="button for menu toggle"
+        class="lg:hidden block"
+        @click="navigationOpen = !navigationOpen"
+      >
+        <span class="block relative cursor-pointer w-5.5 h-5.5">
+          <span class="du-block absolute right-0 w-full h-full">
+            <span
+              class="block relative top-0 left-0 bg-dark rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-[0]"
+              :class="{ '!w-full delay-300': !navigationOpen }"
+            ></span>
+            <span
+              class="block relative top-0 left-0 bg-dark rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-150"
+              :class="{ '!w-full delay-400': !navigationOpen }"
+            ></span>
+            <span
+              class="block relative top-0 left-0 bg-dark rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-200"
+              :class="{ '!w-full delay-500': !navigationOpen }"
+            ></span>
+          </span>
+          <span class="du-block absolute right-0 w-full h-full rotate-45">
+            <span
+              class="block bg-dark rounded-sm ease-in-out duration-200 delay-300 absolute left-2.5 top-0 w-0.5 h-full"
+              :class="{ '!h-0 delay-[0]': !navigationOpen }"
+            ></span>
+            <span
+              class="block bg-dark rounded-sm ease-in-out duration-200 delay-400 absolute left-0 top-2.5 w-full h-0.5"
+              :class="{ '!h-0 dealy-200': !navigationOpen }"
+            ></span>
+          </span>
+        </span>
+      </button>
+      <!-- Hamburger Toggle BTN -->
+    </div>
+
+    <div
+      class="w-full lg:w-9/12 h-0 lg:h-auto invisible lg:visible lg:flex items-center justify-between"
+      :class="{ '!visible bg-white shadow-lgrelative !h-auto max-h-[400px] overflow-y-scroll rounded-md mt-4 p-7.5': navigationOpen }"
+    >
+      <!-- Main Nav Start -->
+      <nav>
+        <ul class="flex lg:items-center flex-col lg:flex-row gap-5 lg:gap-10">
+          <li
+            class="group relative lg:py-6.5"
+            :class="{ 'lg:!py-4' : stickyMenu }"
+            x-data="{ dropdown: false }"
+          >
+            <a
+              href="#"
+              class="hover:text-dark flex items-center justify-between gap-3"
+              @click.prevent="dropdown = !dropdown"
+              :class="{ '!text-dark': page === 'personal-blog' || page === 'home' }"
+            >
+              Home
+
+              <svg
+                class="fill-current w-3 h-3 cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                />
+              </svg>
+            </a>
+
+            <!-- Dropdown Start -->
+            <ul class="dropdown" :class="{ 'flex': dropdown }">
+              <li>
+                <a
+                  href="index.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'home' }"
+                  >Business Blog</a
+                >
+              </li>
+              <li>
+                <a
+                  href="personal-blog.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'personal-blog' }"
+                  >Personal Blog</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li
+            class="group relative lg:py-6.5"
+            :class="{ 'lg:!py-4' : stickyMenu }"
+            x-data="{ dropdown: false }"
+          >
+            <a
+              href="#"
+              class="hover:text-dark flex items-center justify-between gap-3"
+              @click.prevent="dropdown = !dropdown"
+              :class="{ '!text-dark': page === 'category' || page === 'about' || page === 'author' || page === 'search' || page === 'privacy-policy' || page === 'style-guide' || page === 'signin' || page === 'signup' || page === '404' }"
+            >
+              Pages
+
+              <svg
+                class="fill-current w-3 h-3 cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                />
+              </svg>
+            </a>
+
+            <!-- Dropdown Start -->
+            <ul class="dropdown" :class="{ 'flex': dropdown }">
+              <li>
+                <a
+                  href="category.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'category' }"
+                  >Category Page</a
+                >
+              </li>
+              <li>
+                <a
+                  href="about.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'about' }"
+                  >About Us</a
+                >
+              </li>
+              <li>
+                <a
+                  href="author.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'author' }"
+                  >Author Page</a
+                >
+              </li>
+              <li>
+                <a
+                  href="search.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'search' }"
+                  >Search Page</a
+                >
+              </li>
+              <li>
+                <a
+                  href="signin.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'signin' }"
+                  >Sign In</a
+                >
+              </li>
+              <li>
+                <a
+                  href="signup.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'signup' }"
+                  >Sign Up</a
+                >
+              </li>
+              <li>
+                <a
+                  href="style-guide.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'style-guide' }"
+                  >Style Guide Page</a
+                >
+              </li>
+              <li>
+                <a
+                  href="privacy-policy.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'privacy-policy' }"
+                  >Privacy & Policy Page</a
+                >
+              </li>
+              <li>
+                <a
+                  href="404.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === '404' }"
+                  >Error Page</a
+                >
+              </li>
+            </ul>
+            <!-- Dropdown End -->
+          </li>
+          <li
+            class="group relative lg:py-6.5"
+            :class="{ 'lg:!py-4' : stickyMenu }"
+            x-data="{ dropdown: false }"
+          >
+            <a
+              href="#"
+              class="hover:text-dark flex items-center justify-between gap-3"
+              @click.prevent="dropdown = !dropdown"
+              :class="{ '!text-dark': page === 'blog-single' || page === 'blog-single-2' || page === 'blog-single-3' || page === 'archive' }"
+            >
+              Blogs
+
+              <svg
+                class="fill-current w-3 h-3 cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                />
+              </svg>
+            </a>
+
+            <!-- Dropdown Start -->
+            <ul class="dropdown" :class="{ 'flex': dropdown }">
+              <li>
+                <a
+                  href="blog-single.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'blog-single' }"
+                  >Blog Details One</a
+                >
+              </li>
+              <li>
+                <a
+                  href="blog-single-2.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'blog-single-2' }"
+                  >Blog Details Two</a
+                >
+              </li>
+              <li>
+                <a
+                  href="blog-single-3.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'blog-single-3' }"
+                  >Blog Details Three</a
+                >
+              </li>
+              <li>
+                <a
+                  href="blog-archive.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'archive' }"
+                  >Blog Archive Page</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="nav__menu lg:py-6.5" :class="{ 'lg:!py-4' : stickyMenu }">
+            <a href="signin.html" class="hover:text-dark">Support</a>
+          </li>
+        </ul>
+      </nav>
+      <!-- Main Nav End -->
+
+      <!--=== Nav Right Start ===-->
+      <div class="flex flex-wrap items-center gap-8.5 mt-7 lg:mt-0">
+        <!-- Social Links start -->
+        <div class="flex items-center gap-1.5">
+          <a
+            id="facebookBtn"
+            aria-label="facebook social link"
+            href="#"
+            class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:duration-200 hover:text-dark"
+          >
+            <svg
+              class="fill-current"
+              width="19"
+              height="18"
+              viewBox="0 0 19 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.4 8.58585V6.07664C10.4 5.10529 11.2059 4.31785 12.2 4.31785H14V1.67966L11.5565 1.50912C9.47255 1.36368 7.7 2.97636 7.7 5.01777V8.58585H5V11.224H7.7V16.5H10.4V11.224H13.1L14 8.58585H10.4Z"
+                fill=""
+              />
+            </svg>
+          </a>
+          <a
+            id="twitterBtn"
+            aria-label="twitter social link"
+            href="#"
+            class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:duration-200 hover:text-dark"
+          >
+            <svg
+              class="fill-current"
+              width="19"
+              height="18"
+              viewBox="0 0 19 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_739_364)">
+                <path
+                  d="M16.2781 4.30313L17.3469 2.95313C17.6562 2.5875 17.7406 2.30625 17.7688 2.16562C16.925 2.67188 16.1375 2.84063 15.6312 2.84063H15.4344L15.3219 2.72813C14.6469 2.1375 13.8031 1.82812 12.9031 1.82812C10.9344 1.82812 9.3875 3.45938 9.3875 5.34375C9.3875 5.45625 9.3875 5.625 9.41563 5.7375L9.5 6.3L8.90938 6.27188C5.30937 6.15938 2.35625 3.06563 1.87813 2.53125C1.09063 3.9375 1.54063 5.2875 2.01875 6.13125L2.975 7.70625L1.45625 6.8625C1.48438 8.04375 1.93437 8.97188 2.80625 9.64688L3.56562 10.2094L2.80625 10.5188C3.28437 11.9531 4.35313 12.5438 5.14062 12.7688L6.18125 13.05L5.19688 13.725C3.62188 14.85 1.65312 14.7656 0.78125 14.6813C2.55313 15.9188 4.6625 16.2 6.125 16.2C7.22188 16.2 8.0375 16.0875 8.23438 16.0031C16.1094 14.1469 16.475 7.11563 16.475 5.70938V5.5125L16.6438 5.4C17.6 4.5 17.9937 4.02188 18.2188 3.74063C18.1344 3.76875 18.0219 3.825 17.9094 3.85313L16.2781 4.30313Z"
+                  fill=""
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_739_364">
+                  <rect
+                    width="18"
+                    height="18"
+                    fill="white"
+                    transform="translate(0.5)"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
+          </a>
+          <a
+            id="linkedinBtn"
+            aria-label="linkedin social link"
+            href="#"
+            class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:duration-200 hover:text-dark"
+          >
+            <svg
+              class="fill-current"
+              width="19"
+              height="18"
+              viewBox="0 0 19 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5.50004 3.50068C5.49976 4.11141 5.12924 4.661 4.56318 4.89028C3.99713 5.11957 3.34858 4.98277 2.92335 4.54439C2.49812 4.10601 2.38114 3.45359 2.62755 2.89478C2.87397 2.33597 3.43458 1.98236 4.04504 2.00068C4.85584 2.02502 5.5004 2.68951 5.50004 3.50068ZM5.54504 6.11068H2.54504V15.5007H5.54504V6.11068ZM10.2851 6.11068H7.30004V15.5007H10.2551V10.5732C10.2551 7.82816 13.8326 7.57316 13.8326 10.5732V15.5007H16.7951V9.55316C16.7951 4.92568 11.5001 5.09818 10.2551 7.37066L10.2851 6.11068Z"
+                fill=""
+              />
+            </svg>
+          </a>
+          <a
+            id="pinterestBtn"
+            aria-label="pinterest social link"
+            href="#"
+            class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:duration-200 hover:text-dark"
+          >
+            <svg
+              class="fill-current"
+              width="19"
+              height="18"
+              viewBox="0 0 19 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.00623 9.02818C1.06248 11.6438 2.27186 14.2594 4.32497 15.8344C4.97185 16.3126 5.67497 16.5938 6.40622 16.9032C6.09685 14.9063 6.85622 12.9094 7.2781 10.9407C7.33435 10.7438 7.36247 10.5188 7.36247 10.2938C7.36247 9.98443 7.24997 9.67505 7.1656 9.36568C7.08122 8.85943 7.13747 8.32505 7.36247 7.84693C7.67185 7.20005 8.4031 6.6938 9.04997 6.94693C9.6406 7.17193 9.8656 7.95943 9.7531 8.57818C9.6406 9.22505 9.3031 9.78755 9.13435 10.4063C8.93747 11.0251 8.9656 11.7844 9.4156 12.2063C9.83747 12.6001 10.5125 12.6282 11.0468 12.4032C11.8343 12.0657 12.3406 11.2782 12.65 10.4907C13.2125 9.02818 13.1 7.17193 11.9468 6.10318C11.4687 5.62505 10.7937 5.31568 10.0625 5.20318C8.82497 5.0063 7.47497 5.37193 6.6031 6.27193C5.73122 7.17193 5.33747 8.55005 5.7031 9.7313C5.8156 10.1251 6.0406 10.5188 6.12497 10.9126C6.20935 11.3063 6.18122 11.8126 5.89997 12.0938C5.87185 12.1219 5.84372 12.1501 5.78747 12.1782C5.73122 12.2063 5.64685 12.1501 5.5906 12.1219C5.05622 11.7844 4.63435 11.2501 4.38122 10.6876C3.59372 8.97193 3.98747 6.83443 5.22497 5.42818C6.46247 4.02193 8.45935 3.34693 10.3156 3.60005C12.0593 3.82505 13.775 4.86568 14.5062 6.4688C14.9562 7.42505 15.0406 8.52193 14.8718 9.56255C14.7031 10.6313 14.2812 11.6438 13.5781 12.4594C12.875 13.2751 11.8625 13.8376 10.7937 13.8938C9.92185 13.9501 8.99372 13.6407 8.54372 12.9094C8.26247 14.4282 7.7281 15.9188 6.9406 17.2407C6.91247 17.2969 8.7406 17.6907 8.90935 17.6907C10.9906 17.8594 13.2125 17.0438 14.8437 15.7501C19.3437 12.1782 18.8656 5.3438 14.4218 1.96881C12.1156 0.196933 9.38747 -0.140567 6.68747 0.815684C5.87185 1.09693 5.11247 1.57506 4.40935 2.08131C3.28436 2.92505 2.38436 4.02193 1.79373 5.28755C1.20311 6.44068 0.978106 7.73443 1.00623 9.02818Z"
+                fill=""
+              />
+            </svg>
+          </a>
+        </div>
+        <!-- Social Links end -->
+
+        <!-- Button Links start -->
+        <div class="flex items-center gap-4.5">
+          <button
+            id="searchModalButton"
+            aria-label="button for modal open"
+            @click="modalSearch = true"
+            class="flex items-center justify-center w-11 h-11 rounded-full bg-gray lg:transition-all lg:ease-linear lg:duration-200 hover:bg-gray-2 hover:text-dark"
+          >
+            <svg
+              class="fill-current"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19.1875 17.4063L14.0313 13.2188C16.1563 10.3125 15.9375 6.15625 13.2812 3.53125C11.875 2.125 10 1.34375 8 1.34375C6 1.34375 4.125 2.125 2.71875 3.53125C-0.1875 6.4375 -0.1875 11.1875 2.71875 14.0938C4.125 15.5 6 16.2813 8 16.2813C9.90625 16.2813 11.6875 15.5625 13.0938 14.2813L18.3125 18.5C18.4375 18.5938 18.5938 18.6563 18.75 18.6563C18.9688 18.6563 19.1562 18.5625 19.2812 18.4063C19.5312 18.0938 19.5 17.6563 19.1875 17.4063ZM8 14.875C6.375 14.875 4.875 14.25 3.71875 13.0938C1.34375 10.7188 1.34375 6.875 3.71875 4.53125C4.875 3.375 6.375 2.75 8 2.75C9.625 2.75 11.125 3.375 12.2812 4.53125C14.6562 6.90625 14.6562 10.75 12.2812 13.0938C11.1562 14.25 9.625 14.875 8 14.875Z"
+                fill=""
+              />
+            </svg>
+          </button>
+
+          <button
+            @click="modalNewsletter = true"
+            class="rounded-md text-white font-medium flex py-2.5 px-5.5 bg-dark hover:opacity-90 lg:transition-all lg:ease-linear lg:duration-200"
+          >
+            Subscribe
+          </button>
+        </div>
+        <!-- Button Links end -->
+      </div>
+      <!--=== Nav Right End ===-->
+    </div>
+  </div>
+</header>
+
+    <!-- ===== Header End ===== -->
+
+    <main>
+      <!-- ===== Style Guide Section Start ===== -->
+      <section class="pt-34 pb-17.5 bg-[#FAFAFC]">
+        <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+          <h2
+            class="font-bold text-dark text-heading-6 sm:text-heading-4 lg:text-heading-3 mb-12.5"
+          >
+            Typography
+          </h2>
+
+          <div
+            class="rounded-3xl shadow-2 bg-white py-7.5 lg:py-12.5 px-4 sm:px-7.5 xl:px-15"
+          >
+            <div class="flex flex-wrap items-center justify-between gap-5">
+              <div class="max-w-[582px] w-full">
+                <span class="block font-semibold text-heading-6 text-blue mb-4"
+                  >Free Font</span
+                >
+                <h2 class="font-black text-heading-1 text-dark mb-8">Inter</h2>
+                <h4 class="font-semibold text-heading-6 text-dark mb-4">
+                  5 font weights available
+                </h4>
+                <p class="text-custom-lg text-dark-2 mb-7.5">
+                  “Lorem ipsum dolor sit amet consectetur adipiscing elit at
+                  erat consectetur ultricies sapien facilisi euismod duis mauris
+                  a sed quam aliquet dui eros sit lacus vitae ut viverra at
+                  praesent.”
+                </p>
+                <a
+                  href="https://fonts.google.com/specimen/Inter"
+                  class="inline-block rounded-md font-medium text-lg bg-blue text-white py-4 px-8.5"
+                >
+                  Download Font
+                </a>
+              </div>
+              <div class="max-w-[381px] w-full">
+                <h1 class="font-bold text-[290px] leading-tight text-dark">
+                  Aa
+                </h1>
+              </div>
+            </div>
+          </div>
+
+          <!-- Heading Style Start -->
+          <div class="mb-15 border-b border-gray-4 pb-6 mt-10 lg:mt-20">
+            <h2
+              class="font-bold text-dark text-heading-6 sm:text-heading-4 lg:text-heading-3"
+            >
+              Special headings
+            </h2>
+          </div>
+
+          <div class="flex flex-col gap-7.5">
+            <!-- Heading Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[170px] w-full">
+                <h4 class="font-bold text-dark text-heading-4 mb-6">
+                  Heading H1
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">Inter Bold</p>
+                <p class="font-medium text-lg text-blue">60px / 72px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <h1 class="font-black text-heading-1 text-dark">
+                  Lorem ipsum dolor sit amet, adipiscing elit.
+                </h1>
+              </div>
+            </div>
+
+            <!-- Heading Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[180px] w-full">
+                <h4 class="font-bold text-dark text-heading-4 mb-6">
+                  Heading H2
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">Inter Bold</p>
+                <p class="font-medium text-lg text-blue">48px / 58px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <h2 class="font-bold text-heading-2 text-dark">
+                  Lorem ipsum dolor sit amet, adipiscing elit.
+                </h2>
+              </div>
+            </div>
+
+            <!-- Heading Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[180px] w-full">
+                <h4 class="font-bold text-dark text-heading-4 mb-6">
+                  Heading H3
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">Inter Bold</p>
+                <p class="font-medium text-lg text-blue">40px / 48px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <h3 class="font-bold text-heading-3 text-dark">
+                  Lorem ipsum dolor sit amet, adipiscing elit.
+                </h3>
+              </div>
+            </div>
+
+            <!-- Heading Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[180px] w-full">
+                <h4 class="font-bold text-dark text-heading-4 mb-6">
+                  Heading H4
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">Inter Bold</p>
+                <p class="font-medium text-lg text-blue">30px / 38px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <h4 class="font-bold text-heading-4 text-dark">
+                  Lorem ipsum dolor sit amet, adipiscing elit.
+                </h4>
+              </div>
+            </div>
+
+            <!-- Heading Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[180px] w-full">
+                <h4 class="font-bold text-dark text-heading-4 mb-6">
+                  Heading H5
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">Inter Bold</p>
+                <p class="font-medium text-lg text-blue">28px / 40px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <h5 class="font-semibold text-heading-5 text-dark">
+                  Lorem ipsum dolor sit amet, adipiscing elit.
+                </h5>
+              </div>
+            </div>
+
+            <!-- Heading Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[180px] w-full">
+                <h4 class="font-bold text-dark text-heading-4 mb-6">
+                  Heading H6
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">Inter Bold</p>
+                <p class="font-medium text-lg text-blue">24px / 30px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <h6 class="font-semibold text-heading-6 text-dark">
+                  Lorem ipsum dolor sit amet, adipiscing elit.
+                </h6>
+              </div>
+            </div>
+          </div>
+          <!-- Heading Style End -->
+
+          <!-- Body Large Style Start -->
+          <div class="mb-15 border-b border-gray-4 pb-6 mt-10 lg:mt-20">
+            <h2
+              class="font-bold text-dark text-heading-6 sm:text-heading-4 lg:text-heading-3"
+            >
+              Body Large Text
+            </h2>
+          </div>
+
+          <div class="flex flex-col gap-7.5">
+            <!-- Body Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[270px] w-full">
+                <h4 class="font-semibold text-dark text-heading-5 mb-6">
+                  Body Large Regular
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">
+                  Inter Regular
+                </p>
+                <p class="font-medium text-lg text-blue">18px / 28px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <p class="text-lg text-dark-2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
+                  proin ut vitae, felis. Mauris aliquet faucibus iaculis dui
+                  vitae ullamcorper ac enim mi pharetra amet.
+                </p>
+              </div>
+            </div>
+
+            <!-- Body Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[270px] w-full">
+                <h4 class="font-semibold text-dark text-heading-5 mb-6">
+                  Body Large Medium
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">
+                  Inter Regular
+                </p>
+                <p class="font-medium text-lg text-blue">18px / 28px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <p class="font-medium text-lg text-dark-2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
+                  proin ut vitae, felis. Mauris aliquet faucibus iaculis dui
+                  vitae ullamcorper ac enim mi pharetra amet.
+                </p>
+              </div>
+            </div>
+
+            <!-- Body Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[270px] w-full">
+                <h4 class="font-semibold text-dark text-heading-5 mb-6">
+                  Body Large Bold
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">
+                  Inter Regular
+                </p>
+                <p class="font-medium text-lg text-blue">18px / 28px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <p class="font-bold text-lg text-dark-2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
+                  proin ut vitae, felis. Mauris aliquet faucibus iaculis dui
+                  vitae ullamcorper ac enim mi pharetra amet.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Body Large Style End -->
+
+          <!-- Body Medium Style Start -->
+          <div class="mb-15 border-b border-gray-4 pb-6 mt-10 lg:mt-20">
+            <h2
+              class="font-bold text-dark text-heading-6 sm:text-heading-4 lg:text-heading-3"
+            >
+              Body Medium Text
+            </h2>
+          </div>
+
+          <div class="flex flex-col gap-7.5">
+            <!-- Body Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[270px] w-full">
+                <h4 class="font-semibold text-dark text-heading-5 mb-6">
+                  Body Medium Regular
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">
+                  Inter Regular
+                </p>
+                <p class="font-medium text-lg text-blue">16px / 24px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <p class="text-base text-dark-2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
+                  proin ut vitae, felis. Mauris aliquet faucibus iaculis dui
+                  vitae ullamcorper ac enim mi pharetra amet.
+                </p>
+              </div>
+            </div>
+
+            <!-- Body Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[270px] w-full">
+                <h4 class="font-semibold text-dark text-heading-5 mb-6">
+                  Body Medium Medium
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">Inter Medium</p>
+                <p class="font-medium text-lg text-blue">16px / 24px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <p class="font-medium text-base text-dark-2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
+                  proin ut vitae, felis. Mauris aliquet faucibus iaculis dui
+                  vitae ullamcorper ac enim mi pharetra amet.
+                </p>
+              </div>
+            </div>
+
+            <!-- Body Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[270px] w-full">
+                <h4 class="font-semibold text-dark text-heading-5 mb-6">
+                  Body Medium SemiBold
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">
+                  Inter SemiBold
+                </p>
+                <p class="font-medium text-lg text-blue">16px / 24px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <p class="font-semibold text-base text-dark-2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
+                  proin ut vitae, felis. Mauris aliquet faucibus iaculis dui
+                  vitae ullamcorper ac enim mi pharetra amet.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Body Medium Style End -->
+
+          <!-- Body Small Style Start -->
+          <div class="mb-15 border-b border-gray-4 pb-6 mt-10 lg:mt-20">
+            <h2
+              class="font-bold text-dark text-heading-6 sm:text-heading-4 lg:text-heading-3"
+            >
+              Body Small Text
+            </h2>
+          </div>
+
+          <div class="flex flex-col gap-7.5">
+            <!-- Body Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[270px] w-full">
+                <h4 class="font-semibold text-dark text-heading-5 mb-6">
+                  Body Small Regular
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">
+                  Inter Regular
+                </p>
+                <p class="font-medium text-lg text-blue">14px / 22px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <p class="text-custom-sm text-dark-2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
+                  proin ut vitae, felis. Mauris aliquet faucibus iaculis dui
+                  vitae ullamcorper ac enim mi pharetra amet.
+                </p>
+              </div>
+            </div>
+
+            <!-- Body Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[270px] w-full">
+                <h4 class="font-semibold text-dark text-heading-5 mb-6">
+                  Body Small Medium
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">Inter Medium</p>
+                <p class="font-medium text-lg text-blue">14px / 22px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <p class="font-medium text-custom-sm text-dark-2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
+                  proin ut vitae, felis. Mauris aliquet faucibus iaculis dui
+                  vitae ullamcorper ac enim mi pharetra amet.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Body Small Style End -->
+
+          <!-- Body Extra Small Style Start -->
+          <div class="mb-15 border-b border-gray-4 pb-6 mt-10 lg:mt-20">
+            <h2
+              class="font-bold text-dark text-heading-6 sm:text-heading-4 lg:text-heading-3"
+            >
+              Body Extra Small Text
+            </h2>
+          </div>
+
+          <div class="flex flex-col gap-7.5">
+            <!-- Body Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[270px] w-full">
+                <h4 class="font-semibold text-dark text-heading-5 mb-6">
+                  Body Extra Small Regular
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">
+                  Inter Regular
+                </p>
+                <p class="font-medium text-lg text-blue">12px / 20px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <p class="text-custom-xs text-dark-2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
+                  proin ut vitae, felis. Mauris aliquet faucibus iaculis dui
+                  vitae ullamcorper ac enim mi pharetra amet.
+                </p>
+              </div>
+            </div>
+
+            <!-- Body Item -->
+            <div class="flex flex-wrap justify-between gap-8">
+              <div class="max-w-[270px] w-full">
+                <h4 class="font-semibold text-dark text-heading-5 mb-6">
+                  Body Extra Small Medium
+                </h4>
+                <p class="font-medium text-lg text-dark-3 mb-2">Inter Medium</p>
+                <p class="font-medium text-lg text-blue">12px / 20px</p>
+              </div>
+
+              <div class="max-w-[805px] w-full">
+                <p class="font-medium text-custom-xs text-dark-2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet
+                  proin ut vitae, felis. Mauris aliquet faucibus iaculis dui
+                  vitae ullamcorper ac enim mi pharetra amet.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Body Extra Small Style End -->
+
+          <!-- Buttons Style Start -->
+          <div class="mb-15 border-b border-gray-4 pb-6 mt-10 lg:mt-20">
+            <h2
+              class="font-bold text-dark text-heading-6 sm:text-heading-4 lg:text-heading-3"
+            >
+              Buttons
+            </h2>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4">
+            <button
+              class="rounded-md text-white font-medium flex items-center py-2.5 px-5.5 bg-dark hover:opacity-90 lg:transition-all lg:ease-linear lg:duration-200"
+            >
+              Subscribe
+            </button>
+
+            <button
+              class="rounded-full border py-2.5 px-4.5 font-medium hover:bg-dark hover:border-dark hover:text-white ease-in duration-300"
+            >
+              Technology (03)
+            </button>
+
+            <button
+              type="submit"
+              class="rounded-md text-white font-medium inline-flex justify-center py-3.5 px-5 bg-primary hover:opacity-90 lg:transition-all lg:ease-linear lg:duration-300"
+            >
+              Subscribe
+            </button>
+
+            <button
+              class="inline-flex items-center justify-center gap-2.5 text-dark py-3.5 px-10 rounded-lg border border-gray-4 ease-in duration-200 hover:border-gray-5 hover:bg-gray"
+            >
+              <svg
+                width="23"
+                height="22"
+                viewBox="0 0 23 22"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_709_8846)">
+                  <path
+                    d="M22.5001 11.2438C22.5134 10.4876 22.4338 9.73256 22.2629 8.995H11.7246V13.0771H17.9105C17.7933 13.7929 17.5296 14.478 17.1352 15.0914C16.7409 15.7047 16.224 16.2335 15.6158 16.646L15.5942 16.7827L18.9264 19.3124L19.1571 19.335C21.2772 17.4161 22.4997 14.5926 22.4997 11.2438"
+                    fill="#4285F4"
+                  />
+                  <path
+                    d="M11.7245 22C14.755 22 17.2992 21.0221 19.1577 19.3355L15.6156 16.6464C14.6679 17.2944 13.3958 17.7467 11.7245 17.7467C10.3051 17.7385 8.92433 17.2926 7.77814 16.472C6.63195 15.6515 5.77851 14.4981 5.33892 13.1755L5.20737 13.1865L1.74255 15.8142L1.69727 15.9376C2.63043 17.7602 4.06252 19.2925 5.83341 20.3631C7.60429 21.4337 9.64416 22.0005 11.7249 22"
+                    fill="#34A853"
+                  />
+                  <path
+                    d="M5.33889 13.1755C5.09338 12.4753 4.96669 11.7404 4.96388 11C4.9684 10.2608 5.09041 9.52685 5.32552 8.8245L5.31927 8.67868L1.81196 6.00867L1.69724 6.06214C0.910039 7.5938 0.5 9.28491 0.5 10.9999C0.5 12.7148 0.910039 14.406 1.69724 15.9376L5.33889 13.1755Z"
+                    fill="#FBBC05"
+                  />
+                  <path
+                    d="M11.7249 4.25337C13.3333 4.22889 14.8888 4.8159 16.065 5.89121L19.2329 2.86003C17.2011 0.992106 14.5106 -0.0328008 11.7249 3.27798e-05C9.64418 -0.000452376 7.60433 0.566279 5.83345 1.63686C4.06256 2.70743 2.63046 4.23965 1.69727 6.06218L5.32684 8.82455C5.77077 7.50213 6.62703 6.34962 7.77491 5.5295C8.9228 4.70938 10.3044 4.26302 11.7249 4.25337Z"
+                    fill="#EB4335"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_709_8846">
+                    <rect
+                      width="22"
+                      height="22"
+                      fill="white"
+                      transform="translate(0.5)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+              Sign in with Google
+            </button>
+
+            <button
+              class="inline-flex justify-center font-medium text-dark border border-dark rounded-md py-3 px-7.5 hover:bg-dark hover:text-white ease-in duration-200"
+            >
+              Browse all Posts
+            </button>
+          </div>
+          <!-- Buttons Style End -->
+        </div>
+      </section>
+      <!-- ===== Style Guide Section End ===== -->
+    </main>
+    <!-- ===== Footer Start ===== -->
+    <!-- ====== Footer Section Start -->
+<footer class="relative z-10 py-8 border-t border-gray-3">
+  <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+    <div
+      class="flex flex-wrap items-center justify-center flex-col gap-4 lg:gap-0 lg:flex-row lg:justify-between"
+    >
+      <div>
+        <p class="text-custom-sm">&copy; 2025 Clarity. All rights reserved</p>
+      </div>
+
+      <div>
+        <ul class="flex flex-wrap items-center gap-2.5">
+          <li>
+            <a
+              href="privacy-policy.html"
+              class="group leading-none flex text-custom-sm ease-in duration-200 hover:text-dark"
+            >
+              <span
+                class="bg-gradient-to-r from-dark to-dark bg-[length:0px_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_1px]"
+                >Privacy</span
+              >
+            </a>
+          </li>
+          <li>
+            <span class="flex w-[3px] h-[3px] rounded-full bg-dark-2"></span>
+          </li>
+          <li>
+            <a
+              href="privacy-policy.html"
+              class="group leading-none flex text-custom-sm ease-in duration-200 hover:text-dark"
+            >
+              <span
+                class="bg-gradient-to-r from-dark to-dark bg-[length:0px_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_1px]"
+                >Terms</span
+              >
+            </a>
+          </li>
+          <li>
+            <span class="flex w-[3px] h-[3px] rounded-full bg-dark-2"></span>
+          </li>
+          <li>
+            <a
+              href="signup.html"
+              class="group leading-none flex text-custom-sm ease-in duration-200 hover:text-dark"
+            >
+              <span
+                class="bg-gradient-to-r from-dark to-dark bg-[length:0px_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_1px]"
+                >Contact</span
+              >
+            </a>
+          </li>
+          <li>
+            <span class="flex w-[3px] h-[3px] rounded-full bg-dark-2"></span>
+          </li>
+          <li>
+            <a
+              href="signup.html"
+              class="group leading-none flex text-custom-sm ease-in duration-200 hover:text-dark"
+            >
+              <span
+                class="bg-gradient-to-r from-dark to-dark bg-[length:0px_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_1px]"
+                >Contribute</span
+              >
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="flex items-center gap-3">
+          <p class="font-medium text-custom-sm text-dark">Follow Us:</p>
+
+          <!-- Social Links start -->
+          <div class="flex items-center gap-1.5">
+            <a
+              id="facebookFooterBtn"
+              aria-label="facebook social link"
+              href="#"
+              class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark"
+            >
+              <svg
+                class="fill-current"
+                width="19"
+                height="18"
+                viewBox="0 0 19 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10.4 8.58585V6.07664C10.4 5.10529 11.2059 4.31785 12.2 4.31785H14V1.67966L11.5565 1.50912C9.47255 1.36368 7.7 2.97636 7.7 5.01777V8.58585H5V11.224H7.7V16.5H10.4V11.224H13.1L14 8.58585H10.4Z"
+                  fill=""
+                />
+              </svg>
+            </a>
+            <a
+              id="twitterFooterBtn"
+              aria-label="twitter social link"
+              href="#"
+              class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark"
+            >
+              <svg
+                class="fill-current"
+                width="19"
+                height="18"
+                viewBox="0 0 19 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_739_364)">
+                  <path
+                    d="M16.2781 4.30313L17.3469 2.95313C17.6562 2.5875 17.7406 2.30625 17.7688 2.16562C16.925 2.67188 16.1375 2.84063 15.6312 2.84063H15.4344L15.3219 2.72813C14.6469 2.1375 13.8031 1.82812 12.9031 1.82812C10.9344 1.82812 9.3875 3.45938 9.3875 5.34375C9.3875 5.45625 9.3875 5.625 9.41563 5.7375L9.5 6.3L8.90938 6.27188C5.30937 6.15938 2.35625 3.06563 1.87813 2.53125C1.09063 3.9375 1.54063 5.2875 2.01875 6.13125L2.975 7.70625L1.45625 6.8625C1.48438 8.04375 1.93437 8.97188 2.80625 9.64688L3.56562 10.2094L2.80625 10.5188C3.28437 11.9531 4.35313 12.5438 5.14062 12.7688L6.18125 13.05L5.19688 13.725C3.62188 14.85 1.65312 14.7656 0.78125 14.6813C2.55313 15.9188 4.6625 16.2 6.125 16.2C7.22188 16.2 8.0375 16.0875 8.23438 16.0031C16.1094 14.1469 16.475 7.11563 16.475 5.70938V5.5125L16.6438 5.4C17.6 4.5 17.9937 4.02188 18.2188 3.74063C18.1344 3.76875 18.0219 3.825 17.9094 3.85313L16.2781 4.30313Z"
+                    fill=""
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_739_364">
+                    <rect
+                      width="18"
+                      height="18"
+                      fill="white"
+                      transform="translate(0.5)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </a>
+            <a
+              id="linkedinFooterBtn"
+              aria-label="linkedin social link"
+              href="#"
+              class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark"
+            >
+              <svg
+                class="fill-current"
+                width="19"
+                height="18"
+                viewBox="0 0 19 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5.50004 3.50068C5.49976 4.11141 5.12924 4.661 4.56318 4.89028C3.99713 5.11957 3.34858 4.98277 2.92335 4.54439C2.49812 4.10601 2.38114 3.45359 2.62755 2.89478C2.87397 2.33597 3.43458 1.98236 4.04504 2.00068C4.85584 2.02502 5.5004 2.68951 5.50004 3.50068ZM5.54504 6.11068H2.54504V15.5007H5.54504V6.11068ZM10.2851 6.11068H7.30004V15.5007H10.2551V10.5732C10.2551 7.82816 13.8326 7.57316 13.8326 10.5732V15.5007H16.7951V9.55316C16.7951 4.92568 11.5001 5.09818 10.2551 7.37066L10.2851 6.11068Z"
+                  fill=""
+                />
+              </svg>
+            </a>
+            <a
+              id="pinterestFooterBtn"
+              aria-label="pinterest social link"
+              href="#"
+              class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark"
+            >
+              <svg
+                class="fill-current"
+                width="19"
+                height="18"
+                viewBox="0 0 19 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1.00623 9.02818C1.06248 11.6438 2.27186 14.2594 4.32497 15.8344C4.97185 16.3126 5.67497 16.5938 6.40622 16.9032C6.09685 14.9063 6.85622 12.9094 7.2781 10.9407C7.33435 10.7438 7.36247 10.5188 7.36247 10.2938C7.36247 9.98443 7.24997 9.67505 7.1656 9.36568C7.08122 8.85943 7.13747 8.32505 7.36247 7.84693C7.67185 7.20005 8.4031 6.6938 9.04997 6.94693C9.6406 7.17193 9.8656 7.95943 9.7531 8.57818C9.6406 9.22505 9.3031 9.78755 9.13435 10.4063C8.93747 11.0251 8.9656 11.7844 9.4156 12.2063C9.83747 12.6001 10.5125 12.6282 11.0468 12.4032C11.8343 12.0657 12.3406 11.2782 12.65 10.4907C13.2125 9.02818 13.1 7.17193 11.9468 6.10318C11.4687 5.62505 10.7937 5.31568 10.0625 5.20318C8.82497 5.0063 7.47497 5.37193 6.6031 6.27193C5.73122 7.17193 5.33747 8.55005 5.7031 9.7313C5.8156 10.1251 6.0406 10.5188 6.12497 10.9126C6.20935 11.3063 6.18122 11.8126 5.89997 12.0938C5.87185 12.1219 5.84372 12.1501 5.78747 12.1782C5.73122 12.2063 5.64685 12.1501 5.5906 12.1219C5.05622 11.7844 4.63435 11.2501 4.38122 10.6876C3.59372 8.97193 3.98747 6.83443 5.22497 5.42818C6.46247 4.02193 8.45935 3.34693 10.3156 3.60005C12.0593 3.82505 13.775 4.86568 14.5062 6.4688C14.9562 7.42505 15.0406 8.52193 14.8718 9.56255C14.7031 10.6313 14.2812 11.6438 13.5781 12.4594C12.875 13.2751 11.8625 13.8376 10.7937 13.8938C9.92185 13.9501 8.99372 13.6407 8.54372 12.9094C8.26247 14.4282 7.7281 15.9188 6.9406 17.2407C6.91247 17.2969 8.7406 17.6907 8.90935 17.6907C10.9906 17.8594 13.2125 17.0438 14.8437 15.7501C19.3437 12.1782 18.8656 5.3438 14.4218 1.96881C12.1156 0.196933 9.38747 -0.140567 6.68747 0.815684C5.87185 1.09693 5.11247 1.57506 4.40935 2.08131C3.28436 2.92505 2.38436 4.02193 1.79373 5.28755C1.20311 6.44068 0.978106 7.73443 1.00623 9.02818Z"
+                  fill=""
+                />
+              </svg>
+            </a>
+          </div>
+          <!-- Social Links end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- ====== Footer Section End -->
+
+    <!-- ===== Footer End ===== -->
+
+    <!-- Modals start -->
+    <div
+  x-show="modalNewsletter"
+  :class="modalNewsletter && 'z-99999'"
+  class="fixed top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-[#000]/25 backdrop-blur-sm px-4 py-5"
+>
+  <div
+    x-show="modalNewsletter"
+    x-transition
+    @click.outside="modalNewsletter = false"
+    class="w-full max-w-[600px] rounded-2xl shadow-box-2 bg-white p-4 sm:p-7.5 xl:p-12.5 relative transform transition-all scale-100"
+  >
+    <button
+      @click="modalNewsletter = false"
+      class="absolute top-6 right-6 flex items-center justify-center w-9 h-9 rounded-full ease-in duration-150 hover:text-dark hover:bg-gray-2"
+    >
+      <svg
+        class="fill-current"
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M1.22505 1.22474C1.46912 0.980668 1.86486 0.980668 2.10893 1.22474L10.0003 9.1161L17.8917 1.22474C18.1358 0.980668 18.5315 0.980668 18.7756 1.22474C19.0197 1.46882 19.0197 1.86455 18.7756 2.10863L10.8842 10L18.7756 17.8914C19.0197 18.1355 19.0197 18.5312 18.7756 18.7753C18.5315 19.0194 18.1358 19.0194 17.8917 18.7753L10.0003 10.8839L2.10893 18.7753C1.86486 19.0194 1.46912 19.0194 1.22505 18.7753C0.980973 18.5312 0.980973 18.1355 1.22505 17.8914L9.11641 10L1.22505 2.10863C0.980973 1.86455 0.980973 1.46882 1.22505 1.22474Z"
+          fill=""
+        />
+      </svg>
+    </button>
+    <h3 class="font-semibold text-dark text-heading-5 mb-1.5">Newsletter</h3>
+    <p>Subscribe to my newsletter to get updated posts</p>
+
+    <div class="mt-7.5">
+      <form>
+        <div class="mb-5.5">
+          <label for="email" class="block font-medium text-dark mb-2.5"
+            >Email</label
+          >
+          <input
+            type="email"
+            placeholder="Enter your email"
+            class="rounded-md border border-gray-4 bg-white placeholder:text-dark-3 w-full py-3.5 px-5 outline-none ease-in duration-300 focus:shadow-input focus:ring-2 focus:ring-dark-4/20 focus:border-transparent"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full rounded-md text-white font-medium flex justify-center py-3.5 px-5 bg-primary hover:opacity-90 lg:transition-all lg:ease-linear lg:duration-300"
+        >
+          Subscribe
+        </button>
+
+        <p class="text-center mt-4.5">Don't worry, I don't spam</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+    <div
+  x-show="modalSearch"
+  :class="modalSearch && 'z-99999'"
+  class="fixed inset-0 flex items-center justify-center px-4 py-5"
+>
+  <div
+    class="fixed inset-0 bg-[#000]/25 backdrop-blur-sm transition-opacity"
+  ></div>
+  <div
+    x-show="modalSearch"
+    x-transition
+    @click.outside="modalSearch = false"
+    class="w-full max-w-[700px] rounded-lg overflow-hidden shadow-box-2 bg-white relative ease-in duration-200"
+  >
+    <div class="">
+      <form>
+        <div class="relative">
+          <button
+            class="flex items-center justify-center absolute left-0 top-0 pl-7 pr-3 py-6.5"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19.1875 17.4063L14.0313 13.2188C16.1563 10.3125 15.9375 6.15625 13.2813 3.53125C11.875 2.125 10 1.34375 8 1.34375C6 1.34375 4.125 2.125 2.71875 3.53125C-0.1875 6.4375 -0.1875 11.1875 2.71875 14.0938C4.125 15.5 6 16.2813 8 16.2813C9.90625 16.2813 11.6875 15.5625 13.0938 14.2813L18.3125 18.5C18.4375 18.5938 18.5938 18.6563 18.75 18.6563C18.9688 18.6563 19.1563 18.5625 19.2813 18.4063C19.5313 18.0938 19.5 17.6563 19.1875 17.4063ZM8 14.875C6.375 14.875 4.875 14.25 3.71875 13.0938C1.34375 10.7188 1.34375 6.875 3.71875 4.53125C4.875 3.375 6.375 2.75 8 2.75C9.625 2.75 11.125 3.375 12.2813 4.53125C14.6563 6.90625 14.6563 10.75 12.2813 13.0938C11.1563 14.25 9.625 14.875 8 14.875Z"
+                fill="#15171A"
+              />
+            </svg>
+          </button>
+
+          <input
+            type="search"
+            name="search"
+            id="search"
+            placeholder="Search posts, tags and authors"
+            autocomplete="off"
+            class="w-full rounded-t-lg bg-white text-body pl-15 pr-3 py-6 outline-none ease-in duration-300 placeholder:text-dark-3"
+          />
+
+          <button
+            @click="modalSearch = false"
+            class="absolute top-4.5 right-7 flex items-center justify-center w-9 h-9 rounded-full ease-in duration-150 hover:text-dark hover:bg-gray-2"
+          >
+            <svg
+              class="fill-current"
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_724_5430)">
+                <path
+                  d="M7.7001 6.99998L13.0376 1.66248C13.2345 1.4656 13.2345 1.15935 13.0376 0.962476C12.8407 0.765601 12.5345 0.765601 12.3376 0.962476L7.0001 6.29998L1.6626 0.962476C1.46572 0.765601 1.15947 0.765601 0.962598 0.962476C0.765723 1.15935 0.765723 1.4656 0.962598 1.66248L6.3001 6.99998L0.962598 12.3375C0.765723 12.5344 0.765723 12.8406 0.962598 13.0375C1.0501 13.125 1.18135 13.1906 1.3126 13.1906C1.44385 13.1906 1.5751 13.1469 1.6626 13.0375L7.0001 7.69998L12.3376 13.0375C12.4251 13.125 12.5563 13.1906 12.6876 13.1906C12.8188 13.1906 12.9501 13.1469 13.0376 13.0375C13.2345 12.8406 13.2345 12.5344 13.0376 12.3375L7.7001 6.99998Z"
+                  fill=""
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_724_5430">
+                  <rect width="14" height="14" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <div class="border-y border-gray-3 py-3 lg:py-4.5 px-4 lg:px-7">
+        <h5 class="font-medium text-dark">Posts</h5>
+      </div>
+
+      <div class="py-3.5">
+        <div
+          class="cursor-pointer ease-in duration-300 hover:bg-gray py-3.5 px-4 lg:px-7"
+        >
+          <h6 class="font-medium text-dark mb-1.5">
+            Writing and managing content in Clarity, an advanced guide
+          </h6>
+          <p class="text-custom-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing...
+          </p>
+        </div>
+
+        <div
+          class="cursor-pointer ease-in duration-300 hover:bg-gray py-3.5 px-4 lg:px-7"
+        >
+          <h6 class="font-medium text-dark mb-1.5">
+            Writing and managing content in Clarity, an advanced guide
+          </h6>
+          <p class="text-custom-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing...
+          </p>
+        </div>
+
+        <div
+          class="cursor-pointer ease-in duration-300 hover:bg-gray py-3.5 px-4 lg:px-7"
+        >
+          <h6 class="font-medium text-dark mb-1.5">
+            Writing and managing content in Clarity, an advanced guide
+          </h6>
+          <p class="text-custom-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing...
+          </p>
+        </div>
+
+        <div
+          class="cursor-pointer ease-in duration-300 hover:bg-gray py-3.5 px-4 lg:px-7"
+        >
+          <h6 class="font-medium text-dark mb-1.5">
+            Writing and managing content in Clarity, an advanced guide
+          </h6>
+          <p class="text-custom-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing...
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Modals end -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <button
+  class="hidden items-center justify-center w-10 h-10 rounded-[4px] shadow-solid-5 bg-dark hover:opacity-95 fixed bottom-8 right-8 z-999"
+  @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+  @scroll.window="scrollTop = (window.pageYOffset > 50) ? true : false"
+  :class="{ '!flex' : scrollTop }"
+>
+  <svg
+    class="fill-white w-5 h-5"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 512 512"
+  >
+    <path
+      d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
+    />
+  </svg>
+</button>
+
+    <!-- ====== Back To Top End ===== -->
+  <script defer src="bundle.js"></script></body>
+</html>

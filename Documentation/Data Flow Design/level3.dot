@@ -1,0 +1,85 @@
+digraph SDM_CampusFlow_DFD_Level3 {
+    // Graph settings
+    graph [fontsize=10 fontname="Helvetica" compound=true];
+
+    // Main Processes (expanded view)
+    subgraph cluster_UserManagement {
+        label = "User Management (Level 3)";
+        color = lightgrey;
+
+        RegisterUser [label="Register User" shape=ellipse style=filled color=white];
+        VerifyUSN [label="Verify USN" shape=ellipse style=filled color=white];
+        SaveUserProfile [label="Save Profile" shape=ellipse style=filled color=white];
+        
+        LoginUser [label="Login User" shape=ellipse style=filled color=white];
+        CheckCredentials [label="Check Credentials" shape=ellipse style=filled color=white];
+        
+        EditProfileData [label="Edit Profile Data" shape=ellipse style=filled color=white];
+        
+        SendRapportRequest [label="Send Rapport Request" shape=ellipse style=filled color=white];
+        AcceptRapport [label="Accept Rapport Request" shape=ellipse style=filled color=white];
+    }
+
+    subgraph cluster_ContentManagement {
+        label = "Content Management (Level 3)";
+        color = lightgrey;
+
+        CreatePost [label="Create Post" shape=ellipse style=filled color=white];
+        AddCaption [label="Add Caption" shape=ellipse style=filled color=white];
+        UploadImage [label="Upload Image" shape=ellipse style=filled color=white];
+        
+        LikePost [label="Like Post" shape=ellipse style=filled color=white];
+        CommentOnPost [label="Comment on Post" shape=ellipse style=filled color=white];
+        
+        ViewFeed [label="View Feed" shape=ellipse style=filled color=white];
+        DisplayPosts [label="Display Posts" shape=ellipse style=filled color=white];
+    }
+
+    // External Entities
+    Users [label="Users (Students/Faculty)" shape=rect style=filled color=lightblue];
+
+    // Data Stores
+    UserDB [label="User Database" shape=cylinder style=filled color=lightyellow];
+    PostDB [label="Post Database" shape=cylinder style=filled color=lightyellow];
+    RapportDB [label="Rapport Database" shape=cylinder style=filled color=lightyellow];
+    NotificationDB [label="Notification Database" shape=cylinder style=filled color=lightyellow];
+
+    // User Management Data Flows
+    Users -> RegisterUser [label="Registration Details"];
+    RegisterUser -> VerifyUSN [label="USN"];
+    VerifyUSN -> SaveUserProfile [label="Verified Profile"];
+    SaveUserProfile -> UserDB [label="Store Profile Data"];
+    
+    Users -> LoginUser [label="Login Request"];
+    LoginUser -> CheckCredentials [label="Credentials"];
+    CheckCredentials -> UserDB [label="Validate User"];
+    CheckCredentials -> LoginUser [label="Login Success/Failure"];
+
+    Users -> EditProfileData [label="Edit Profile Request"];
+    EditProfileData -> UserDB [label="Update Profile"];
+
+    Users -> SendRapportRequest [label="Friend Request"];
+    SendRapportRequest -> RapportDB [label="Store Rapport Request"];
+    Users -> AcceptRapport [label="Accept Request"];
+    AcceptRapport -> RapportDB [label="Update Rapport Data"];
+    AcceptRapport -> NotificationDB [label="Notify of New Connection"];
+
+    // Content Management Data Flows
+    Users -> CreatePost [label="Post Content"];
+    CreatePost -> AddCaption [label="Caption"];
+    CreatePost -> UploadImage [label="Image"];
+    UploadImage -> PostDB [label="Store Image"];
+    AddCaption -> PostDB [label="Store Caption"];
+    
+    Users -> LikePost [label="Like"];
+    LikePost -> PostDB [label="Update Like Count"];
+    LikePost -> NotificationDB [label="Notify Post Owner"];
+
+    Users -> CommentOnPost [label="Comment"];
+    CommentOnPost -> PostDB [label="Store Comment"];
+    CommentOnPost -> NotificationDB [label="Notify Post Owner"];
+
+    Users -> ViewFeed [label="View Posts"];
+    ViewFeed -> DisplayPosts [label="Retrieve Feed"];
+    DisplayPosts -> PostDB [label="Fetch Posts"];
+}

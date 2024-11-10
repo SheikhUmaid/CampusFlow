@@ -1,0 +1,46 @@
+@startuml
+left to right direction
+
+actor User as "Student User"
+actor Admin as "Administrator"
+
+rectangle "SDM CampusFlow System" {
+    usecase "User Database" as UserDatabase
+    usecase "Post Database" as PostDatabase
+    usecase "Comment Database" as CommentDatabase
+    usecase "Like Database" as LikeDatabase
+    usecase "Rapport Database" as RapportDatabase
+    usecase "Rapport Request Database" as RapportRequestDatabase
+    usecase "Notification Database" as NotificationDatabase
+    usecase "Event Database" as EventDatabase
+}
+
+' User Management interactions
+User --> "SDM CampusFlow System": Register/Login
+User --> UserDatabase: Profile Management
+User --> RapportRequestDatabase: Send Rapport Request
+RapportRequestDatabase --> RapportDatabase: Update Rapport on Acceptance
+UserDatabase --> NotificationDatabase: Notify User on Rapport Acceptance
+
+' Content Management interactions
+User --> PostDatabase: Create Post
+User --> LikeDatabase: Like/Comment on Post
+PostDatabase --> CommentDatabase: Store Comments
+PostDatabase --> LikeDatabase: Store Likes
+LikeDatabase --> NotificationDatabase: Notify on Likes/Comments
+
+' Event Management interactions
+Admin --> EventDatabase: Create/Manage Events
+EventDatabase --> NotificationDatabase: Notify Users of New Events
+User --> EventDatabase: View Events
+
+' Admin interactions
+Admin --> UserDatabase: Verify/Manage Users
+Admin --> PostDatabase: Moderate Content
+Admin --> NotificationDatabase: Manage Notifications
+
+' View Interactions
+User --> NotificationDatabase: View Notifications
+User --> PostDatabase: View Feed
+
+@enduml

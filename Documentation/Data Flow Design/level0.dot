@@ -1,0 +1,38 @@
+digraph SDM_CampusFlow_DFD_Level0 {
+    // Graph settings
+    graph [fontsize=12 fontname="Helvetica" compound=true];
+
+    // External entities
+    Users [label="Users (Students/Faculty)" shape=rect style=filled color=lightblue];
+    Admin [label="Admin" shape=rect style=filled color=lightblue];
+
+    // Main processes
+    UserManagement [label="User Management" shape=ellipse style=filled color=lightgrey];
+    ContentManagement [label="Content Management" shape=ellipse style=filled color=lightgrey];
+    NotificationSystem [label="Notification System" shape=ellipse style=filled color=lightgrey];
+    EventManagement [label="Event Management" shape=ellipse style=filled color=lightgrey];
+
+    // Data stores
+    UserDB [label="User Database" shape=cylinder style=filled color=lightyellow];
+    PostDB [label="Post Database" shape=cylinder style=filled color=lightyellow];
+    NotificationDB [label="Notification Database" shape=cylinder style=filled color=lightyellow];
+    EventDB [label="Event Database" shape=cylinder style=filled color=lightyellow];
+
+    // Connections
+    Users -> UserManagement [label="Register/Login, Profile Management, Rapport Requests"];
+    Users -> ContentManagement [label="Create Posts, Likes, Comments"];
+    Users -> NotificationSystem [label="Receive Notifications"];
+    Users -> EventManagement [label="View Events, RSVP"];
+    
+    Admin -> UserManagement [label="Verify Accounts, Monitor Activity"];
+    Admin -> EventManagement [label="Create & Manage Events"];
+
+    UserManagement -> UserDB [dir=both label="Store & Retrieve User Data"];
+    ContentManagement -> PostDB [dir=both label="Store & Retrieve Posts"];
+    NotificationSystem -> NotificationDB [dir=both label="Store & Retrieve Notifications"];
+    EventManagement -> EventDB [dir=both label="Store & Retrieve Event Data"];
+
+    // Inter-process connections
+    UserManagement -> NotificationSystem [label="Notify on Rapport Request Acceptance"];
+    ContentManagement -> NotificationSystem [label="Notify on New Posts, Likes, Comments"];
+}

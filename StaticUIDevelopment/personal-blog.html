@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Blog | Clarity - Tailwind CSS Template for Blog</title>
+  <link rel="icon" href="favicon.ico"><link href="style.css" rel="stylesheet"></head>
+
+  <body
+    x-data="{ page: 'personal-blog', 'loaded': true, 'modalNewsletter': false, 'modalSearch': false, 'stickyMenu': false, 'navigationOpen': false, 'scrollTop': false }"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <div
+  x-show="loaded"
+  x-init="window.addEventListener('DOMContentLoaded', () => {setTimeout(() => loaded = false, 500)})"
+  class="fixed left-0 top-0 z-999999 flex h-screen w-screen items-center justify-center bg-white"
+>
+  <div
+    class="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"
+  ></div>
+</div>
+
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Header Start ===== -->
+    <header
+  class="fixed left-0 top-0 w-full z-9999 bg-white py-7 lg:py-0 transition-all ease-in-out duration-300"
+  :class="{ 'shadow !py-4 lg:!py-0' : stickyMenu }"
+  @scroll.window="stickyMenu = (window.scrollY > 0) ? true : false"
+>
+  <div
+    class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0 lg:flex items-center justify-between relative"
+  >
+    <div class="w-full lg:w-3/12 flex items-center justify-between">
+      <a href="index.html">
+        <img src="images/logo.svg" alt="Logo" />
+      </a>
+
+      <!-- Hamburger Toggle BTN -->
+      <button
+        id="menuToggler"
+        aria-label="button for menu toggle"
+        class="lg:hidden block"
+        @click="navigationOpen = !navigationOpen"
+      >
+        <span class="block relative cursor-pointer w-5.5 h-5.5">
+          <span class="du-block absolute right-0 w-full h-full">
+            <span
+              class="block relative top-0 left-0 bg-dark rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-[0]"
+              :class="{ '!w-full delay-300': !navigationOpen }"
+            ></span>
+            <span
+              class="block relative top-0 left-0 bg-dark rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-150"
+              :class="{ '!w-full delay-400': !navigationOpen }"
+            ></span>
+            <span
+              class="block relative top-0 left-0 bg-dark rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-200"
+              :class="{ '!w-full delay-500': !navigationOpen }"
+            ></span>
+          </span>
+          <span class="du-block absolute right-0 w-full h-full rotate-45">
+            <span
+              class="block bg-dark rounded-sm ease-in-out duration-200 delay-300 absolute left-2.5 top-0 w-0.5 h-full"
+              :class="{ '!h-0 delay-[0]': !navigationOpen }"
+            ></span>
+            <span
+              class="block bg-dark rounded-sm ease-in-out duration-200 delay-400 absolute left-0 top-2.5 w-full h-0.5"
+              :class="{ '!h-0 dealy-200': !navigationOpen }"
+            ></span>
+          </span>
+        </span>
+      </button>
+      <!-- Hamburger Toggle BTN -->
+    </div>
+
+    <div
+      class="w-full lg:w-9/12 h-0 lg:h-auto invisible lg:visible lg:flex items-center justify-between"
+      :class="{ '!visible bg-white shadow-lgrelative !h-auto max-h-[400px] overflow-y-scroll rounded-md mt-4 p-7.5': navigationOpen }"
+    >
+      <!-- Main Nav Start -->
+      <nav>
+        <ul class="flex lg:items-center flex-col lg:flex-row gap-5 lg:gap-10">
+          <li
+            class="group relative lg:py-6.5"
+            :class="{ 'lg:!py-4' : stickyMenu }"
+            x-data="{ dropdown: false }"
+          >
+            <a
+              href="#"
+              class="hover:text-dark flex items-center justify-between gap-3"
+              @click.prevent="dropdown = !dropdown"
+              :class="{ '!text-dark': page === 'personal-blog' || page === 'home' }"
+            >
+              Home
+
+              <svg
+                class="fill-current w-3 h-3 cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                />
+              </svg>
+            </a>
+
+            <!-- Dropdown Start -->
+            <ul class="dropdown" :class="{ 'flex': dropdown }">
+              <li>
+                <a
+                  href="index.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'home' }"
+                  >Business Blog</a
+                >
+              </li>
+              <li>
+                <a
+                  href="personal-blog.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'personal-blog' }"
+                  >Personal Blog</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li
+            class="group relative lg:py-6.5"
+            :class="{ 'lg:!py-4' : stickyMenu }"
+            x-data="{ dropdown: false }"
+          >
+            <a
+              href="#"
+              class="hover:text-dark flex items-center justify-between gap-3"
+              @click.prevent="dropdown = !dropdown"
+              :class="{ '!text-dark': page === 'category' || page === 'about' || page === 'author' || page === 'search' || page === 'privacy-policy' || page === 'style-guide' || page === 'signin' || page === 'signup' || page === '404' }"
+            >
+              Pages
+
+              <svg
+                class="fill-current w-3 h-3 cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                />
+              </svg>
+            </a>
+
+            <!-- Dropdown Start -->
+            <ul class="dropdown" :class="{ 'flex': dropdown }">
+              <li>
+                <a
+                  href="category.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'category' }"
+                  >Category Page</a
+                >
+              </li>
+              <li>
+                <a
+                  href="about.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'about' }"
+                  >About Us</a
+                >
+              </li>
+              <li>
+                <a
+                  href="author.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'author' }"
+                  >Author Page</a
+                >
+              </li>
+              <li>
+                <a
+                  href="search.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'search' }"
+                  >Search Page</a
+                >
+              </li>
+              <li>
+                <a
+                  href="signin.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'signin' }"
+                  >Sign In</a
+                >
+              </li>
+              <li>
+                <a
+                  href="signup.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'signup' }"
+                  >Sign Up</a
+                >
+              </li>
+              <li>
+                <a
+                  href="style-guide.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'style-guide' }"
+                  >Style Guide Page</a
+                >
+              </li>
+              <li>
+                <a
+                  href="privacy-policy.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'privacy-policy' }"
+                  >Privacy & Policy Page</a
+                >
+              </li>
+              <li>
+                <a
+                  href="404.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === '404' }"
+                  >Error Page</a
+                >
+              </li>
+            </ul>
+            <!-- Dropdown End -->
+          </li>
+          <li
+            class="group relative lg:py-6.5"
+            :class="{ 'lg:!py-4' : stickyMenu }"
+            x-data="{ dropdown: false }"
+          >
+            <a
+              href="#"
+              class="hover:text-dark flex items-center justify-between gap-3"
+              @click.prevent="dropdown = !dropdown"
+              :class="{ '!text-dark': page === 'blog-single' || page === 'blog-single-2' || page === 'blog-single-3' || page === 'archive' }"
+            >
+              Blogs
+
+              <svg
+                class="fill-current w-3 h-3 cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                />
+              </svg>
+            </a>
+
+            <!-- Dropdown Start -->
+            <ul class="dropdown" :class="{ 'flex': dropdown }">
+              <li>
+                <a
+                  href="blog-single.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'blog-single' }"
+                  >Blog Details One</a
+                >
+              </li>
+              <li>
+                <a
+                  href="blog-single-2.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'blog-single-2' }"
+                  >Blog Details Two</a
+                >
+              </li>
+              <li>
+                <a
+                  href="blog-single-3.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'blog-single-3' }"
+                  >Blog Details Three</a
+                >
+              </li>
+              <li>
+                <a
+                  href="blog-archive.html"
+                  class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  :class="{ 'text-primary bg-gray': page === 'archive' }"
+                  >Blog Archive Page</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="nav__menu lg:py-6.5" :class="{ 'lg:!py-4' : stickyMenu }">
+            <a href="signin.html" class="hover:text-dark">Support</a>
+          </li>
+        </ul>
+      </nav>
+      <!-- Main Nav End -->
+
+      <!--=== Nav Right Start ===-->
+      <div class="flex flex-wrap items-center gap-8.5 mt-7 lg:mt-0">
+        <!-- Social Links start -->
+        <div class="flex items-center gap-1.5">
+          <a
+            id="facebookBtn"
+            aria-label="facebook social link"
+            href="#"
+            class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:duration-200 hover:text-dark"
+          >
+            <svg
+              class="fill-current"
+              width="19"
+              height="18"
+              viewBox="0 0 19 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.4 8.58585V6.07664C10.4 5.10529 11.2059 4.31785 12.2 4.31785H14V1.67966L11.5565 1.50912C9.47255 1.36368 7.7 2.97636 7.7 5.01777V8.58585H5V11.224H7.7V16.5H10.4V11.224H13.1L14 8.58585H10.4Z"
+                fill=""
+              />
+            </svg>
+          </a>
+          <a
+            id="twitterBtn"
+            aria-label="twitter social link"
+            href="#"
+            class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:duration-200 hover:text-dark"
+          >
+            <svg
+              class="fill-current"
+              width="19"
+              height="18"
+              viewBox="0 0 19 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_739_364)">
+                <path
+                  d="M16.2781 4.30313L17.3469 2.95313C17.6562 2.5875 17.7406 2.30625 17.7688 2.16562C16.925 2.67188 16.1375 2.84063 15.6312 2.84063H15.4344L15.3219 2.72813C14.6469 2.1375 13.8031 1.82812 12.9031 1.82812C10.9344 1.82812 9.3875 3.45938 9.3875 5.34375C9.3875 5.45625 9.3875 5.625 9.41563 5.7375L9.5 6.3L8.90938 6.27188C5.30937 6.15938 2.35625 3.06563 1.87813 2.53125C1.09063 3.9375 1.54063 5.2875 2.01875 6.13125L2.975 7.70625L1.45625 6.8625C1.48438 8.04375 1.93437 8.97188 2.80625 9.64688L3.56562 10.2094L2.80625 10.5188C3.28437 11.9531 4.35313 12.5438 5.14062 12.7688L6.18125 13.05L5.19688 13.725C3.62188 14.85 1.65312 14.7656 0.78125 14.6813C2.55313 15.9188 4.6625 16.2 6.125 16.2C7.22188 16.2 8.0375 16.0875 8.23438 16.0031C16.1094 14.1469 16.475 7.11563 16.475 5.70938V5.5125L16.6438 5.4C17.6 4.5 17.9937 4.02188 18.2188 3.74063C18.1344 3.76875 18.0219 3.825 17.9094 3.85313L16.2781 4.30313Z"
+                  fill=""
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_739_364">
+                  <rect
+                    width="18"
+                    height="18"
+                    fill="white"
+                    transform="translate(0.5)"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
+          </a>
+          <a
+            id="linkedinBtn"
+            aria-label="linkedin social link"
+            href="#"
+            class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:duration-200 hover:text-dark"
+          >
+            <svg
+              class="fill-current"
+              width="19"
+              height="18"
+              viewBox="0 0 19 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5.50004 3.50068C5.49976 4.11141 5.12924 4.661 4.56318 4.89028C3.99713 5.11957 3.34858 4.98277 2.92335 4.54439C2.49812 4.10601 2.38114 3.45359 2.62755 2.89478C2.87397 2.33597 3.43458 1.98236 4.04504 2.00068C4.85584 2.02502 5.5004 2.68951 5.50004 3.50068ZM5.54504 6.11068H2.54504V15.5007H5.54504V6.11068ZM10.2851 6.11068H7.30004V15.5007H10.2551V10.5732C10.2551 7.82816 13.8326 7.57316 13.8326 10.5732V15.5007H16.7951V9.55316C16.7951 4.92568 11.5001 5.09818 10.2551 7.37066L10.2851 6.11068Z"
+                fill=""
+              />
+            </svg>
+          </a>
+          <a
+            id="pinterestBtn"
+            aria-label="pinterest social link"
+            href="#"
+            class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:duration-200 hover:text-dark"
+          >
+            <svg
+              class="fill-current"
+              width="19"
+              height="18"
+              viewBox="0 0 19 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.00623 9.02818C1.06248 11.6438 2.27186 14.2594 4.32497 15.8344C4.97185 16.3126 5.67497 16.5938 6.40622 16.9032C6.09685 14.9063 6.85622 12.9094 7.2781 10.9407C7.33435 10.7438 7.36247 10.5188 7.36247 10.2938C7.36247 9.98443 7.24997 9.67505 7.1656 9.36568C7.08122 8.85943 7.13747 8.32505 7.36247 7.84693C7.67185 7.20005 8.4031 6.6938 9.04997 6.94693C9.6406 7.17193 9.8656 7.95943 9.7531 8.57818C9.6406 9.22505 9.3031 9.78755 9.13435 10.4063C8.93747 11.0251 8.9656 11.7844 9.4156 12.2063C9.83747 12.6001 10.5125 12.6282 11.0468 12.4032C11.8343 12.0657 12.3406 11.2782 12.65 10.4907C13.2125 9.02818 13.1 7.17193 11.9468 6.10318C11.4687 5.62505 10.7937 5.31568 10.0625 5.20318C8.82497 5.0063 7.47497 5.37193 6.6031 6.27193C5.73122 7.17193 5.33747 8.55005 5.7031 9.7313C5.8156 10.1251 6.0406 10.5188 6.12497 10.9126C6.20935 11.3063 6.18122 11.8126 5.89997 12.0938C5.87185 12.1219 5.84372 12.1501 5.78747 12.1782C5.73122 12.2063 5.64685 12.1501 5.5906 12.1219C5.05622 11.7844 4.63435 11.2501 4.38122 10.6876C3.59372 8.97193 3.98747 6.83443 5.22497 5.42818C6.46247 4.02193 8.45935 3.34693 10.3156 3.60005C12.0593 3.82505 13.775 4.86568 14.5062 6.4688C14.9562 7.42505 15.0406 8.52193 14.8718 9.56255C14.7031 10.6313 14.2812 11.6438 13.5781 12.4594C12.875 13.2751 11.8625 13.8376 10.7937 13.8938C9.92185 13.9501 8.99372 13.6407 8.54372 12.9094C8.26247 14.4282 7.7281 15.9188 6.9406 17.2407C6.91247 17.2969 8.7406 17.6907 8.90935 17.6907C10.9906 17.8594 13.2125 17.0438 14.8437 15.7501C19.3437 12.1782 18.8656 5.3438 14.4218 1.96881C12.1156 0.196933 9.38747 -0.140567 6.68747 0.815684C5.87185 1.09693 5.11247 1.57506 4.40935 2.08131C3.28436 2.92505 2.38436 4.02193 1.79373 5.28755C1.20311 6.44068 0.978106 7.73443 1.00623 9.02818Z"
+                fill=""
+              />
+            </svg>
+          </a>
+        </div>
+        <!-- Social Links end -->
+
+        <!-- Button Links start -->
+        <div class="flex items-center gap-4.5">
+          <button
+            id="searchModalButton"
+            aria-label="button for modal open"
+            @click="modalSearch = true"
+            class="flex items-center justify-center w-11 h-11 rounded-full bg-gray lg:transition-all lg:ease-linear lg:duration-200 hover:bg-gray-2 hover:text-dark"
+          >
+            <svg
+              class="fill-current"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19.1875 17.4063L14.0313 13.2188C16.1563 10.3125 15.9375 6.15625 13.2812 3.53125C11.875 2.125 10 1.34375 8 1.34375C6 1.34375 4.125 2.125 2.71875 3.53125C-0.1875 6.4375 -0.1875 11.1875 2.71875 14.0938C4.125 15.5 6 16.2813 8 16.2813C9.90625 16.2813 11.6875 15.5625 13.0938 14.2813L18.3125 18.5C18.4375 18.5938 18.5938 18.6563 18.75 18.6563C18.9688 18.6563 19.1562 18.5625 19.2812 18.4063C19.5312 18.0938 19.5 17.6563 19.1875 17.4063ZM8 14.875C6.375 14.875 4.875 14.25 3.71875 13.0938C1.34375 10.7188 1.34375 6.875 3.71875 4.53125C4.875 3.375 6.375 2.75 8 2.75C9.625 2.75 11.125 3.375 12.2812 4.53125C14.6562 6.90625 14.6562 10.75 12.2812 13.0938C11.1562 14.25 9.625 14.875 8 14.875Z"
+                fill=""
+              />
+            </svg>
+          </button>
+
+          <button
+            @click="modalNewsletter = true"
+            class="rounded-md text-white font-medium flex py-2.5 px-5.5 bg-dark hover:opacity-90 lg:transition-all lg:ease-linear lg:duration-200"
+          >
+            Subscribe
+          </button>
+        </div>
+        <!-- Button Links end -->
+      </div>
+      <!--=== Nav Right End ===-->
+    </div>
+  </div>
+</header>
+
+    <!-- ===== Header End ===== -->
+
+    <main>
+      <!-- ===== Hero Section Start ===== -->
+      <section>
+        <div class="mx-auto max-w-[1170px] px-4 sm:px-8 xl:px-0 pb-12.5 pt-34">
+          <div class="rounded-[20px] relative overflow-hidden z-10">
+            <!-- Hero BG Shapes Start -->
+            <div>
+              <div
+                class="absolute bottom-0 left-0 rounded-[20px] w-full h-full bg-gray"
+              ></div>
+              <div
+                class="absolute bottom-0 left-0 rounded-[20px] w-full h-full"
+              >
+                <img
+                  class="absolute bottom-0"
+                  src="images/hero-bg-02.svg"
+                  alt="hero"
+                />
+              </div>
+            </div>
+            <!-- Hero BG Shapes End -->
+
+            <!-- Hero Content Start -->
+            <div
+              class="max-w-[880px] mx-auto px-4 sm:px-8 lg:px-0 py-7.5 sm:py-10 lg:py-15 relative z-1"
+            >
+              <div
+                class="flex flex-col sm:flex-row items-center gap-7.5 lg:gap-15"
+              >
+                <div
+                  class="max-w-[277px] w-full h-[277px] rounded-full flex items-center justify-center border border-gray-3"
+                >
+                  <div
+                    class="max-w-[165px] w-full h-[165px] shadow-img rounded-full overflow-hidden"
+                  >
+                    <img src="images/user-04.png" alt="user" />
+                  </div>
+                </div>
+
+                <div class="max-w-[593px] w-full">
+                  <h1
+                    class="text-2xl sm:text-4xl lg:text-heading-3 xl:text-heading-2 text-dark mb-3.5"
+                  >
+                    Hey! I’m <span class="font-bold"> Smith</span>
+                  </h1>
+                  <p>
+                    Breakfast procuring no end happiness allowance assurance
+                    frank. Met simplicity nor difficulty unreserved who.
+                    Entreaties mr conviction dissimilar me astonished estimating
+                    cultivated.
+                  </p>
+
+                  <!-- Social Links start -->
+                  <div class="flex items-center gap-5 mt-7">
+                    <a
+                      href="#"
+                      class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark"
+                    >
+                      <svg
+                        class="fill-current"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M11 9.53985V6.75185C11 5.67256 11.8954 4.79763 13 4.79763H15V1.86631L12.285 1.67682C9.9695 1.51522 8 3.30709 8 5.57532V9.53985H5V12.4712H8V18.3334H11V12.4712H14L15 9.53985H11Z"
+                          fill=""
+                        />
+                      </svg>
+                    </a>
+                    <a
+                      href="#"
+                      class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark"
+                    >
+                      <svg
+                        class="fill-current"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M17.5312 4.78125L18.7188 3.28125C19.0625 2.875 19.1563 2.5625 19.1875 2.40625C18.25 2.96875 17.375 3.15625 16.8125 3.15625H16.5937L16.4688 3.03125C15.7188 2.375 14.7812 2.03125 13.7812 2.03125C11.5937 2.03125 9.875 3.84375 9.875 5.9375C9.875 6.0625 9.875 6.25 9.90625 6.375L10 7L9.34375 6.96875C5.34375 6.84375 2.0625 3.40625 1.53125 2.8125C0.65625 4.375 1.15625 5.875 1.6875 6.8125L2.75 8.5625L1.0625 7.625C1.09375 8.9375 1.59375 9.96875 2.5625 10.7187L3.40625 11.3437L2.5625 11.6875C3.09375 13.2813 4.28125 13.9375 5.15625 14.1875L6.3125 14.5L5.21875 15.25C3.46875 16.5 1.28125 16.4063 0.3125 16.3125C2.28125 17.6875 4.625 18 6.25 18C7.46875 18 8.375 17.875 8.59375 17.7813C17.3438 15.7188 17.75 7.90625 17.75 6.34375V6.125L17.9375 6C19 5 19.4375 4.46875 19.6875 4.15625C19.5937 4.1875 19.4688 4.25 19.3438 4.28125L17.5312 4.78125Z"
+                          fill=""
+                        />
+                      </svg>
+                    </a>
+                    <a
+                      href="#"
+                      class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark"
+                    >
+                      <svg
+                        class="fill-current"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.78357 4.16663C5.78326 4.84522 5.37157 5.45587 4.74262 5.71063C4.11367 5.9654 3.39306 5.8134 2.92059 5.32631C2.44811 4.83922 2.31813 4.11431 2.59192 3.49341C2.86572 2.87251 3.48862 2.4796 4.1669 2.49996C5.06779 2.527 5.78398 3.26533 5.78357 4.16663ZM5.83357 7.06663H2.50024V17.4999H5.83357V7.06663ZM11.1003 7.06663H7.78357V17.4999H11.0669V12.0249C11.0669 8.97494 15.0419 8.6916 15.0419 12.0249V17.4999H18.3336V10.8916C18.3336 5.74996 12.4503 5.94163 11.0669 8.4666L11.1003 7.06663Z"
+                          fill=""
+                        />
+                      </svg>
+                    </a>
+                    <a
+                      href="#"
+                      class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark"
+                    >
+                      <svg
+                        class="fill-current"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g clip-path="url(#clip0_678_4644)">
+                          <path
+                            d="M0.56313 10.0313C0.62563 12.9376 1.96938 15.8438 4.25062 17.5938C4.96937 18.1251 5.75062 18.4376 6.56312 18.7813C6.21937 16.5626 7.06312 14.3438 7.53187 12.1563C7.59437 11.9376 7.62562 11.6876 7.62562 11.4376C7.62562 11.0938 7.50062 10.7501 7.40687 10.4063C7.31312 9.84384 7.37562 9.25009 7.62562 8.71884C7.96937 8.00009 8.78187 7.43759 9.50062 7.71884C10.1569 7.96884 10.4069 8.84384 10.2819 9.53134C10.1569 10.2501 9.78187 10.8751 9.59437 11.5626C9.37562 12.2501 9.40687 13.0938 9.90687 13.5626C10.3756 14.0001 11.1256 14.0313 11.7194 13.7813C12.5944 13.4063 13.1569 12.5313 13.5006 11.6563C14.1256 10.0313 14.0006 7.96884 12.7194 6.78134C12.1881 6.25009 11.4381 5.90634 10.6256 5.78134C9.25062 5.56259 7.75062 5.96884 6.78187 6.96884C5.81312 7.96884 5.37562 9.50009 5.78187 10.8126C5.90687 11.2501 6.15687 11.6876 6.25062 12.1251C6.34437 12.5626 6.31312 13.1251 6.00062 13.4376C5.96937 13.4688 5.93812 13.5001 5.87562 13.5313C5.81312 13.5626 5.71937 13.5001 5.65687 13.4688C5.06312 13.0938 4.59437 12.5001 4.31312 11.8751C3.43812 9.96884 3.87562 7.59384 5.25062 6.03134C6.62562 4.46884 8.84437 3.71884 10.9069 4.00009C12.8444 4.25009 14.7506 5.40634 15.5631 7.18759C16.0631 8.25009 16.1569 9.46884 15.9694 10.6251C15.7819 11.8126 15.3131 12.9376 14.5319 13.8438C13.7506 14.7501 12.6256 15.3751 11.4381 15.4376C10.4694 15.5001 9.43812 15.1563 8.93812 14.3438C8.62562 16.0313 8.03187 17.6876 7.15687 19.1563C7.12562 19.2188 9.15687 19.6563 9.34437 19.6563C11.6569 19.8438 14.1256 18.9376 15.9381 17.5001C20.9381 13.5313 20.4069 5.93759 15.4694 2.1876C12.9069 0.218848 9.87562 -0.156152 6.87562 0.90635C5.96937 1.21885 5.12562 1.7501 4.34437 2.3126C3.09438 3.25009 2.09438 4.46884 1.43813 5.87509C0.78188 7.15634 0.53188 8.59384 0.56313 10.0313Z"
+                            fill=""
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_678_4644">
+                            <rect width="20" height="20" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </a>
+                    <a
+                      href="#"
+                      class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark"
+                    >
+                      <svg
+                        class="fill-current"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9.99967 6.45831C8.04367 6.45831 6.45801 8.04397 6.45801 9.99998C6.45801 11.956 8.04367 13.5416 9.99967 13.5416C11.9557 13.5416 13.5413 11.956 13.5413 9.99998C13.5413 8.04397 11.9557 6.45831 9.99967 6.45831Z"
+                          fill=""
+                        />
+                        <path
+                          d="M1.66699 5.83335C1.66699 3.53217 3.53248 1.66669 5.83366 1.66669H14.167C16.4682 1.66669 18.3337 3.53217 18.3337 5.83335V14.1667C18.3337 16.4679 16.4682 18.3334 14.167 18.3334H5.83366C3.53248 18.3334 1.66699 16.4679 1.66699 14.1667V5.83335ZM5.20866 10C5.20866 12.6464 7.35396 14.7917 10.0003 14.7917C12.6467 14.7917 14.792 12.6464 14.792 10C14.792 7.35365 12.6467 5.20835 10.0003 5.20835C7.35396 5.20835 5.20866 7.35365 5.20866 10ZM15.0003 5.83335C15.4606 5.83335 15.8337 5.46025 15.8337 5.00002C15.8337 4.53979 15.4606 4.16669 15.0003 4.16669C14.5401 4.16669 14.167 4.53979 14.167 5.00002C14.167 5.46025 14.5401 5.83335 15.0003 5.83335Z"
+                          fill=""
+                        />
+                      </svg>
+                    </a>
+                    <a
+                      href="#"
+                      class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark"
+                    >
+                      <svg
+                        class="fill-current"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19.2812 5.34369C19.0625 4.49994 18.4062 3.84369 17.5625 3.62494C16.0625 3.21869 10 3.21869 10 3.21869C10 3.21869 3.9375 3.21869 2.4375 3.62494C1.59375 3.84369 0.9375 4.49994 0.71875 5.34369C0.3125 6.87494 0.3125 9.99994 0.3125 9.99994C0.3125 9.99994 0.3125 13.1562 0.71875 14.6562C0.9375 15.4999 1.59375 16.1562 2.4375 16.3749C3.9375 16.7812 10 16.7812 10 16.7812C10 16.7812 16.0625 16.7812 17.5625 16.3749C18.4062 16.1562 19.0625 15.4999 19.2812 14.6562C19.6875 13.1562 19.6875 9.99994 19.6875 9.99994C19.6875 9.99994 19.6875 6.87494 19.2812 5.34369ZM8.0625 12.9062V7.09369L13.0938 9.99994L8.0625 12.9062Z"
+                          fill=""
+                        />
+                      </svg>
+                    </a>
+                    <a
+                      href="#"
+                      class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark"
+                    >
+                      <svg
+                        class="fill-current"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M18.5854 6.50137C18.5027 8.18235 17.3453 10.4696 15.0856 13.3631C12.7708 16.3944 10.7867 17.91 9.18843 17.91C8.22393 17.91 7.36966 17.0282 6.65317 15.1543C6.1847 13.5009 5.77135 11.7923 5.27532 10.0838C4.77929 8.26502 4.22815 7.32808 3.59434 7.32808C3.48411 7.32808 3.01564 7.60365 2.24404 8.15479L1.5 7.05251C2.35427 6.30847 3.18098 5.56443 4.03525 4.79283C5.16509 3.82833 5.96425 3.30475 6.5705 3.27719C7.89324 3.16696 8.6924 4.1039 9.02308 6.00534C9.32621 8.09968 9.57423 9.42242 9.71201 9.91845C10.0978 11.6545 10.5387 12.5088 10.9521 12.5088C11.3103 12.5088 11.8339 11.9577 12.5779 10.8278C13.322 9.69799 13.6527 8.81616 13.7353 8.23746C13.8456 7.27297 13.4322 6.74938 12.5779 6.74938C12.1921 6.74938 11.7512 6.83205 11.3379 7.05251C12.1646 4.2968 13.7353 2.94651 16.1053 3.00162C17.8414 3.08429 18.6681 4.24169 18.5854 6.50137Z"
+                          fill=""
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                  <!-- Social Links end -->
+                </div>
+              </div>
+            </div>
+            <!-- Hero Content End -->
+          </div>
+        </div>
+      </section>
+      <!-- ===== Hero Section End ===== -->
+
+      <!-- ====== Blog Section Start -->
+      <section class="pb-20">
+        <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+          <div class="flex flex-col gap-y-7.5 lg:gap-y-12.5">
+            <!-- blog item -->
+            <div
+              class="flex items-center flex-col lg:flex-row gap-10 lg:gap-15"
+            >
+              <div
+                class="max-w-[570px] w-full overflow-hidden transition-all hover:scale-105 rounded-[10px]"
+              >
+                <a href="blog-single.html">
+                  <img src="images/blog-13.png" alt="image" />
+                </a>
+              </div>
+
+              <div class="max-w-[540px] w-full">
+                <a
+                  href="category.html"
+                  class="inline-flex text-blue bg-blue/[0.08] font-medium text-custom-sm py-1 px-3 rounded-full"
+                  >Technology</a
+                >
+
+                <h4 class="mt-3.5 mb-4">
+                  <a
+                    href="blog-single.html"
+                    class="group text-dark font-bold text-xl sm:text-2xl xl:text-custom-4xl"
+                  >
+                    <span
+                      class="bg-gradient-to-r from-primary/40 to-primary/30 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
+                    >
+                      Start here for a quick overview of everything you need to
+                      know
+                    </span>
+                  </a>
+                </h4>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Erat
+                  ut facilisis rutrum donec tristique mauris est ac nunc....
+                </p>
+
+                <div class="flex items-center gap-2.5 mt-4.5">
+                  <p>Aug 28, 2025</p>
+
+                  <span
+                    class="flex w-[3px] h-[3px] rounded-full bg-dark-2"
+                  ></span>
+
+                  <p>1 min read</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- blog item -->
+            <div
+              class="flex items-center flex-col lg:flex-row gap-10 lg:gap-15"
+            >
+              <div
+                class="max-w-[570px] w-full overflow-hidden transition-all hover:scale-105 rounded-[10px]"
+              >
+                <a href="blog-single.html">
+                  <img src="images/blog-14.png" alt="image" />
+                </a>
+              </div>
+
+              <div class="max-w-[540px] w-full">
+                <a
+                  href="category.html"
+                  class="inline-flex text-green-dark bg-green/[0.08] font-medium text-custom-sm py-1 px-3 rounded-full"
+                  >Travel</a
+                >
+
+                <h4 class="mt-3.5 mb-4">
+                  <a
+                    href="blog-single.html"
+                    class="group text-dark font-bold text-xl sm:text-2xl xl:text-custom-4xl"
+                  >
+                    <span
+                      class="bg-gradient-to-r from-primary/40 to-primary/30 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
+                    >
+                      Customizing your brand and design settings
+                    </span>
+                  </a>
+                </h4>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Erat
+                  ut facilisis rutrum donec tristique mauris est ac nunc....
+                </p>
+
+                <div class="flex items-center gap-2.5 mt-4.5">
+                  <p>Sep 19, 2025</p>
+
+                  <span
+                    class="flex w-[3px] h-[3px] rounded-full bg-dark-2"
+                  ></span>
+
+                  <p>3 min read</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- blog item -->
+            <div
+              class="flex items-center flex-col lg:flex-row gap-10 lg:gap-15"
+            >
+              <div
+                class="max-w-[570px] w-full overflow-hidden transition-all hover:scale-105 rounded-[10px]"
+              >
+                <a href="blog-single.html">
+                  <img src="images/blog-15.png" alt="image" />
+                </a>
+              </div>
+
+              <div class="max-w-[540px] w-full">
+                <a
+                  href="category.html"
+                  class="inline-flex text-purple-dark bg-purple/[0.08] font-medium text-custom-sm py-1 px-3 rounded-full"
+                  >Lifestyle</a
+                >
+
+                <h4 class="mt-3.5 mb-4">
+                  <a
+                    href="blog-single.html"
+                    class="group text-dark font-bold text-xl sm:text-2xl xl:text-custom-4xl"
+                  >
+                    <span
+                      class="bg-gradient-to-r from-primary/40 to-primary/30 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
+                    >
+                      Writing and managing content in Clarity, an advanced guide
+                    </span>
+                  </a>
+                </h4>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Erat
+                  ut facilisis rutrum donec tristique mauris est ac nunc....
+                </p>
+
+                <div class="flex items-center gap-2.5 mt-4.5">
+                  <p>Nov 12, 2025</p>
+
+                  <span
+                    class="flex w-[3px] h-[3px] rounded-full bg-dark-2"
+                  ></span>
+
+                  <p>5 min read</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- blog item -->
+            <div
+              class="flex items-center flex-col lg:flex-row gap-10 lg:gap-15"
+            >
+              <div
+                class="max-w-[570px] w-full overflow-hidden transition-all hover:scale-105 rounded-[10px]"
+              >
+                <a href="blog-single.html">
+                  <img src="images/blog-16.png" alt="image" />
+                </a>
+              </div>
+
+              <div class="max-w-[540px] w-full">
+                <a
+                  href="category.html"
+                  class="inline-flex text-cyan-dark bg-cyan/[0.08] font-medium text-custom-sm py-1 px-3 rounded-full"
+                  >Culture</a
+                >
+
+                <h4 class="mt-3.5 mb-4">
+                  <a
+                    href="blog-single.html"
+                    class="group text-dark font-bold text-xl sm:text-2xl xl:text-custom-4xl"
+                  >
+                    <span
+                      class="bg-gradient-to-r from-primary/40 to-primary/30 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
+                    >
+                      Building your audience with subscriber signups
+                    </span>
+                  </a>
+                </h4>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Erat
+                  ut facilisis rutrum donec tristique mauris est ac nunc....
+                </p>
+
+                <div class="flex items-center gap-2.5 mt-4.5">
+                  <p>Mar 09, 2025</p>
+
+                  <span
+                    class="flex w-[3px] h-[3px] rounded-full bg-dark-2"
+                  ></span>
+
+                  <p>3 min read</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- blog item -->
+            <div
+              class="flex items-center flex-col lg:flex-row gap-10 lg:gap-15"
+            >
+              <div
+                class="max-w-[570px] w-full overflow-hidden transition-all hover:scale-105 rounded-[10px]"
+              >
+                <a href="blog-single.html">
+                  <img src="images/blog-17.png" alt="image" />
+                </a>
+              </div>
+
+              <div class="max-w-[540px] w-full">
+                <a
+                  href="category.html"
+                  class="inline-flex text-green-dark bg-green/[0.08] font-medium text-custom-sm py-1 px-3 rounded-full"
+                  >Travel</a
+                >
+
+                <h4 class="mt-3.5 mb-4">
+                  <a
+                    href="blog-single.html"
+                    class="group text-dark font-bold text-xl sm:text-2xl xl:text-custom-4xl"
+                  >
+                    <span
+                      class="bg-gradient-to-r from-primary/40 to-primary/30 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
+                    >
+                      Selling premium member ships with recurring revenue
+                    </span>
+                  </a>
+                </h4>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Erat
+                  ut facilisis rutrum donec tristique mauris est ac nunc....
+                </p>
+
+                <div class="flex items-center gap-2.5 mt-4.5">
+                  <p>Jan 15, 2025</p>
+
+                  <span
+                    class="flex w-[3px] h-[3px] rounded-full bg-dark-2"
+                  ></span>
+
+                  <p>7 min read</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- blog item -->
+            <div
+              class="flex items-center flex-col lg:flex-row gap-10 lg:gap-15"
+            >
+              <div
+                class="max-w-[570px] w-full overflow-hidden transition-all hover:scale-105 rounded-[10px]"
+              >
+                <a href="blog-single.html">
+                  <img src="images/blog-18.png" alt="image" />
+                </a>
+              </div>
+
+              <div class="max-w-[540px] w-full">
+                <a
+                  href="category.html"
+                  class="inline-flex text-teal-dark bg-teal/[0.08] font-medium text-custom-sm py-1 px-3 rounded-full"
+                  >Health</a
+                >
+
+                <h4 class="mt-3.5 mb-4">
+                  <a
+                    href="blog-single.html"
+                    class="group text-dark font-bold text-xl sm:text-2xl xl:text-custom-4xl"
+                  >
+                    <span
+                      class="bg-gradient-to-r from-primary/40 to-primary/30 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
+                    >
+                      How to grow your business around an audience
+                    </span>
+                  </a>
+                </h4>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Erat
+                  ut facilisis rutrum donec tristique mauris est ac nunc....
+                </p>
+
+                <div class="flex items-center gap-2.5 mt-4.5">
+                  <p>Jan 15, 2025</p>
+
+                  <span
+                    class="flex w-[3px] h-[3px] rounded-full bg-dark-2"
+                  ></span>
+
+                  <p>7 min read</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- blog item -->
+            <div
+              class="flex items-center flex-col lg:flex-row gap-10 lg:gap-15"
+            >
+              <div
+                class="max-w-[570px] w-full overflow-hidden transition-all hover:scale-105 rounded-[10px]"
+              >
+                <a href="blog-single.html">
+                  <img src="images/blog-19.png" alt="image" />
+                </a>
+              </div>
+
+              <div class="max-w-[540px] w-full">
+                <a
+                  href="category.html"
+                  class="inline-flex text-blue bg-blue/[0.08] font-medium text-custom-sm py-1 px-3 rounded-full"
+                  >Technology</a
+                >
+
+                <h4 class="mt-3.5 mb-4">
+                  <a
+                    href="blog-single.html"
+                    class="group text-dark font-bold text-xl sm:text-2xl xl:text-custom-4xl"
+                  >
+                    <span
+                      class="bg-gradient-to-r from-primary/40 to-primary/30 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]"
+                    >
+                      Setting up apps and custom integrations
+                    </span>
+                  </a>
+                </h4>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Erat
+                  ut facilisis rutrum donec tristique mauris est ac nunc....
+                </p>
+
+                <div class="flex items-center gap-2.5 mt-4.5">
+                  <p>Jan 15, 2025</p>
+
+                  <span
+                    class="flex w-[3px] h-[3px] rounded-full bg-dark-2"
+                  ></span>
+
+                  <p>7 min read</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Blog Show More BTN -->
+          <button
+            class="flex justify-center font-medium text-dark border border-dark rounded-md py-3 px-7.5 hover:bg-dark hover:text-white ease-in duration-200 mx-auto mt-10 lg:mt-15"
+          >
+            Show more...
+          </button>
+        </div>
+      </section>
+      <!-- ====== Blog Section End -->
+    </main>
+    <!-- ===== Footer Start ===== -->
+    <footer class="border-t border-gray-3 py-17.5">
+  <div class="max-w-[885px] mx-auto px-4 sm:px-8 xl:px-0 text-center">
+    <a href="index.html">
+      <img class="mx-auto" src="images/logo.svg" alt="logo" />
+    </a>
+
+    <!-- Social Links start -->
+    <div class="flex items-center justify-center gap-4 mt-10 lg:mt-15">
+      <a
+        href="#"
+        class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-2 transition-all duration-200 hover:text-dark"
+      >
+        <svg
+          class="fill-current"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 9.53985V6.75185C11 5.67256 11.8954 4.79763 13 4.79763H15V1.86631L12.285 1.67682C9.9695 1.51522 8 3.30709 8 5.57532V9.53985H5V12.4712H8V18.3334H11V12.4712H14L15 9.53985H11Z"
+            fill=""
+          />
+        </svg>
+      </a>
+      <a
+        href="#"
+        class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-2 transition-all duration-200 hover:text-dark"
+      >
+        <svg
+          class="fill-current"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M17.5312 4.78125L18.7188 3.28125C19.0625 2.875 19.1563 2.5625 19.1875 2.40625C18.25 2.96875 17.375 3.15625 16.8125 3.15625H16.5937L16.4688 3.03125C15.7188 2.375 14.7812 2.03125 13.7812 2.03125C11.5937 2.03125 9.875 3.84375 9.875 5.9375C9.875 6.0625 9.875 6.25 9.90625 6.375L10 7L9.34375 6.96875C5.34375 6.84375 2.0625 3.40625 1.53125 2.8125C0.65625 4.375 1.15625 5.875 1.6875 6.8125L2.75 8.5625L1.0625 7.625C1.09375 8.9375 1.59375 9.96875 2.5625 10.7187L3.40625 11.3437L2.5625 11.6875C3.09375 13.2813 4.28125 13.9375 5.15625 14.1875L6.3125 14.5L5.21875 15.25C3.46875 16.5 1.28125 16.4063 0.3125 16.3125C2.28125 17.6875 4.625 18 6.25 18C7.46875 18 8.375 17.875 8.59375 17.7813C17.3438 15.7188 17.75 7.90625 17.75 6.34375V6.125L17.9375 6C19 5 19.4375 4.46875 19.6875 4.15625C19.5937 4.1875 19.4688 4.25 19.3438 4.28125L17.5312 4.78125Z"
+            fill=""
+          />
+        </svg>
+      </a>
+      <a
+        href="#"
+        class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-2 transition-all duration-200 hover:text-dark"
+      >
+        <svg
+          class="fill-current"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5.78357 4.16663C5.78326 4.84522 5.37157 5.45587 4.74262 5.71063C4.11367 5.9654 3.39306 5.8134 2.92059 5.32631C2.44811 4.83922 2.31813 4.11431 2.59192 3.49341C2.86572 2.87251 3.48862 2.4796 4.1669 2.49996C5.06779 2.527 5.78398 3.26533 5.78357 4.16663ZM5.83357 7.06663H2.50024V17.4999H5.83357V7.06663ZM11.1003 7.06663H7.78357V17.4999H11.0669V12.0249C11.0669 8.97494 15.0419 8.6916 15.0419 12.0249V17.4999H18.3336V10.8916C18.3336 5.74996 12.4503 5.94163 11.0669 8.4666L11.1003 7.06663Z"
+            fill=""
+          />
+        </svg>
+      </a>
+      <a
+        href="#"
+        class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-2 transition-all duration-200 hover:text-dark"
+      >
+        <svg
+          class="fill-current"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clip-path="url(#clip0_790_1373)">
+            <path
+              d="M19.6562 6C19.625 5 19.4375 4.28125 19.2188 3.625C19 2.96875 18.6562 2.4375 18.125 1.90625C17.5938 1.375 17.0625 1.0625 16.4375 0.8125C15.8125 0.5625 15.125 0.40625 14.0625 0.375C12.9688 0.3125 12.6562 0.3125 10 0.3125C7.34375 0.3125 7.0625 0.3125 6 0.34375C4.9375 0.375 4.28125 0.5625 3.625 0.78125C2.96875 1 2.4375 1.375 1.90625 1.90625C1.375 2.4375 1.03125 2.96875 0.8125 3.625C0.5625 4.25 0.40625 4.9375 0.375 6C0.34375 7.0625 0.3125 7.34375 0.3125 10C0.3125 12.6562 0.3125 12.9375 0.34375 14C0.375 15.0625 0.5625 15.7188 0.78125 16.375C1 17.0312 1.34375 17.5625 1.875 18.0938C2.40625 18.625 2.96875 18.9688 3.59375 19.1875C4.21875 19.4062 4.90625 19.5938 5.96875 19.625C7.03125 19.6875 7.3125 19.6875 9.96875 19.6875C12.625 19.6875 12.9062 19.6875 13.9688 19.6562C15.0312 19.625 15.6875 19.4375 16.3438 19.2188C17 19 17.5312 18.6562 18.0625 18.125C18.5938 17.5938 18.9375 17.0312 19.1562 16.4062C19.375 15.7812 19.5625 15.0938 19.5938 14.0312C19.625 13.0312 19.625 12.7188 19.625 10.0625C19.625 7.40625 19.6875 7.0625 19.6562 6ZM17.9062 13.9062C17.875 14.8438 17.6875 15.3438 17.5625 15.7188C17.375 16.1562 17.1562 16.5 16.8125 16.8125C16.4688 17.1562 16.1562 17.3438 15.7188 17.5625C15.375 17.6875 14.875 17.875 13.9062 17.9062C12.9062 17.9062 12.5937 17.9062 10.0312 17.9062C7.46875 17.9062 7.125 17.9062 6.125 17.875C5.1875 17.8438 4.6875 17.6562 4.3125 17.5312C3.875 17.3438 3.53125 17.125 3.21875 16.7812C2.875 16.4375 2.6875 16.125 2.46875 15.6875C2.34375 15.3438 2.15625 14.8438 2.125 13.875C2.125 12.9063 2.125 12.5938 2.125 10C2.125 7.40625 2.125 7.09375 2.15625 6.09375C2.1875 5.15625 2.375 4.65625 2.5 4.28125C2.6875 3.84375 2.90625 3.5 3.21875 3.1875C3.5625 2.84375 3.875 2.65625 4.3125 2.46875C4.65625 2.34375 5.15625 2.15625 6.125 2.125C7.125 2.09375 7.4375 2.09375 10.0312 2.09375C12.625 2.09375 12.9375 2.09375 13.9375 2.125C14.875 2.15625 15.375 2.34375 15.75 2.46875C16.1875 2.65625 16.5312 2.875 16.8438 3.1875C17.1875 3.53125 17.375 3.84375 17.5938 4.28125C17.7188 4.625 17.9062 5.125 17.9375 6.09375C17.9688 7.09375 17.9688 7.40625 17.9688 10C17.9688 12.5938 17.9375 12.9062 17.9062 13.9062Z"
+              fill=""
+            />
+            <path
+              d="M10.001 5.03101C7.21973 5.03101 5.03223 7.28101 5.03223 9.99976C5.03223 12.781 7.28223 14.9685 10.001 14.9685C12.7197 14.9685 15.001 12.781 15.001 9.99976C15.001 7.21851 12.7822 5.03101 10.001 5.03101ZM10.001 13.2498C8.18848 13.2498 6.75098 11.781 6.75098 9.99976C6.75098 8.21851 8.21973 6.74976 10.001 6.74976C11.8135 6.74976 13.251 8.18726 13.251 9.99976C13.251 11.8123 11.8135 13.2498 10.001 13.2498Z"
+              fill=""
+            />
+            <path
+              d="M15.2188 5.96875C15.8573 5.96875 16.375 5.45106 16.375 4.8125C16.375 4.17391 15.8573 3.65625 15.2188 3.65625C14.5802 3.65625 14.0625 4.17391 14.0625 4.8125C14.0625 5.45106 14.5802 5.96875 15.2188 5.96875Z"
+              fill=""
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_790_1373">
+              <rect width="20" height="20" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </a>
+      <a
+        href="#"
+        class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-2 transition-all duration-200 hover:text-dark"
+      >
+        <svg
+          class="fill-current"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clip-path="url(#clip0_790_1380)">
+            <path
+              d="M0.56313 10.0313C0.62563 12.9375 1.96938 15.8438 4.25062 17.5938C4.96937 18.125 5.75062 18.4375 6.56312 18.7813C6.21937 16.5625 7.06312 14.3438 7.53187 12.1563C7.59437 11.9375 7.62562 11.6875 7.62562 11.4375C7.62562 11.0938 7.50062 10.75 7.40687 10.4063C7.31312 9.84378 7.37562 9.25003 7.62562 8.71878C7.96937 8.00003 8.78187 7.43753 9.50062 7.71878C10.1569 7.96878 10.4069 8.84378 10.2819 9.53128C10.1569 10.25 9.78187 10.875 9.59437 11.5625C9.37562 12.25 9.40687 13.0938 9.90687 13.5625C10.3756 14 11.1256 14.0313 11.7194 13.7813C12.5944 13.4063 13.1569 12.5313 13.5006 11.6563C14.1256 10.0313 14.0006 7.96878 12.7194 6.78128C12.1881 6.25003 11.4381 5.90628 10.6256 5.78128C9.25062 5.56253 7.75062 5.96878 6.78187 6.96878C5.81312 7.96878 5.37562 9.50003 5.78187 10.8125C5.90687 11.25 6.15687 11.6875 6.25062 12.125C6.34437 12.5625 6.31312 13.125 6.00062 13.4375C5.96937 13.4688 5.93812 13.5 5.87562 13.5313C5.81312 13.5625 5.71937 13.5 5.65687 13.4688C5.06312 13.0938 4.59437 12.5 4.31312 11.875C3.43812 9.96878 3.87562 7.59378 5.25062 6.03128C6.62562 4.46878 8.84437 3.71878 10.9069 4.00003C12.8444 4.25003 14.7506 5.40628 15.5631 7.18753C16.0631 8.25003 16.1569 9.46878 15.9694 10.625C15.7819 11.8125 15.3131 12.9375 14.5319 13.8438C13.7506 14.75 12.6256 15.375 11.4381 15.4375C10.4694 15.5 9.43812 15.1563 8.93812 14.3438C8.62562 16.0313 8.03187 17.6875 7.15687 19.1563C7.12562 19.2188 9.15687 19.6563 9.34437 19.6563C11.6569 19.8438 14.1256 18.9375 15.9381 17.5C20.9381 13.5313 20.4069 5.93753 15.4694 2.18754C12.9069 0.218787 9.87562 -0.156213 6.87562 0.906289C5.96937 1.21879 5.12562 1.75004 4.34437 2.31254C3.09438 3.25003 2.09438 4.46878 1.43813 5.87503C0.78188 7.15628 0.53188 8.59378 0.56313 10.0313Z"
+              fill=""
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_790_1380">
+              <rect width="20" height="20" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </a>
+      <a
+        href="#"
+        class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-2 transition-all duration-200 hover:text-dark"
+      >
+        <svg
+          class="fill-current"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M19.2812 5.34375C19.0625 4.5 18.4062 3.84375 17.5625 3.625C16.0625 3.21875 10 3.21875 10 3.21875C10 3.21875 3.9375 3.21875 2.4375 3.625C1.59375 3.84375 0.9375 4.5 0.71875 5.34375C0.3125 6.875 0.3125 10 0.3125 10C0.3125 10 0.3125 13.1562 0.71875 14.6562C0.9375 15.5 1.59375 16.1562 2.4375 16.375C3.9375 16.7812 10 16.7812 10 16.7812C10 16.7812 16.0625 16.7812 17.5625 16.375C18.4062 16.1562 19.0625 15.5 19.2812 14.6562C19.6875 13.1562 19.6875 10 19.6875 10C19.6875 10 19.6875 6.875 19.2812 5.34375ZM8.0625 12.9062V7.09375L13.0938 10L8.0625 12.9062Z"
+            fill=""
+          />
+        </svg>
+      </a>
+    </div>
+    <!-- Social Links end -->
+
+    <div class="w-full h-px gradient mt-9 mb-8"></div>
+
+    <div class="mb-4">
+      <ul class="flex flex-wrap items-center justify-center gap-2.5">
+        <li>
+          <a
+            href="privacy-policy.html"
+            class="group leading-none flex text-custom-sm ease-in duration-200 hover:text-dark"
+          >
+            <span
+              class="bg-gradient-to-r from-dark to-dark bg-[length:0px_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_1px]"
+              >Privacy Policy</span
+            >
+          </a>
+        </li>
+        <li>
+          <span class="flex w-[3px] h-[3px] rounded-full bg-dark-2"></span>
+        </li>
+        <li>
+          <a
+            href="privacy-policy.html"
+            class="group leading-none flex text-custom-sm ease-in duration-300 hover:text-dark"
+          >
+            <span
+              class="bg-gradient-to-r from-dark to-dark bg-[length:0px_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_1px]"
+              >Terms & Conditions</span
+            >
+          </a>
+        </li>
+        <li>
+          <span class="flex w-[3px] h-[3px] rounded-full bg-dark-2"></span>
+        </li>
+        <li>
+          <a
+            href="signup.html"
+            class="group leading-none flex text-custom-sm ease-in duration-300 hover:text-dark"
+          >
+            <span
+              class="bg-gradient-to-r from-dark to-dark bg-[length:0px_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_1px]"
+              >Contact</span
+            >
+          </a>
+        </li>
+        <li>
+          <span class="flex w-[3px] h-[3px] rounded-full bg-dark-2"></span>
+        </li>
+        <li>
+          <a
+            href="privacy-policy.html"
+            class="group leading-none flex text-custom-sm ease-in duration-300 hover:text-dark"
+          >
+            <span
+              class="bg-gradient-to-r from-dark to-dark bg-[length:0px_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_1px]"
+              >Contribute</span
+            >
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <p class="text-custom-sm">&copy; 2025 Clarity. All rights reserved</p>
+  </div>
+</footer>
+
+    <!-- ===== Footer End ===== -->
+
+    <!-- Modals start -->
+    <div
+  x-show="modalNewsletter"
+  :class="modalNewsletter && 'z-99999'"
+  class="fixed top-0 left-0 flex h-full min-h-screen w-full items-center justify-center bg-[#000]/25 backdrop-blur-sm px-4 py-5"
+>
+  <div
+    x-show="modalNewsletter"
+    x-transition
+    @click.outside="modalNewsletter = false"
+    class="w-full max-w-[600px] rounded-2xl shadow-box-2 bg-white p-4 sm:p-7.5 xl:p-12.5 relative transform transition-all scale-100"
+  >
+    <button
+      @click="modalNewsletter = false"
+      class="absolute top-6 right-6 flex items-center justify-center w-9 h-9 rounded-full ease-in duration-150 hover:text-dark hover:bg-gray-2"
+    >
+      <svg
+        class="fill-current"
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M1.22505 1.22474C1.46912 0.980668 1.86486 0.980668 2.10893 1.22474L10.0003 9.1161L17.8917 1.22474C18.1358 0.980668 18.5315 0.980668 18.7756 1.22474C19.0197 1.46882 19.0197 1.86455 18.7756 2.10863L10.8842 10L18.7756 17.8914C19.0197 18.1355 19.0197 18.5312 18.7756 18.7753C18.5315 19.0194 18.1358 19.0194 17.8917 18.7753L10.0003 10.8839L2.10893 18.7753C1.86486 19.0194 1.46912 19.0194 1.22505 18.7753C0.980973 18.5312 0.980973 18.1355 1.22505 17.8914L9.11641 10L1.22505 2.10863C0.980973 1.86455 0.980973 1.46882 1.22505 1.22474Z"
+          fill=""
+        />
+      </svg>
+    </button>
+    <h3 class="font-semibold text-dark text-heading-5 mb-1.5">Newsletter</h3>
+    <p>Subscribe to my newsletter to get updated posts</p>
+
+    <div class="mt-7.5">
+      <form>
+        <div class="mb-5.5">
+          <label for="email" class="block font-medium text-dark mb-2.5"
+            >Email</label
+          >
+          <input
+            type="email"
+            placeholder="Enter your email"
+            class="rounded-md border border-gray-4 bg-white placeholder:text-dark-3 w-full py-3.5 px-5 outline-none ease-in duration-300 focus:shadow-input focus:ring-2 focus:ring-dark-4/20 focus:border-transparent"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full rounded-md text-white font-medium flex justify-center py-3.5 px-5 bg-primary hover:opacity-90 lg:transition-all lg:ease-linear lg:duration-300"
+        >
+          Subscribe
+        </button>
+
+        <p class="text-center mt-4.5">Don't worry, I don't spam</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+    <div
+  x-show="modalSearch"
+  :class="modalSearch && 'z-99999'"
+  class="fixed inset-0 flex items-center justify-center px-4 py-5"
+>
+  <div
+    class="fixed inset-0 bg-[#000]/25 backdrop-blur-sm transition-opacity"
+  ></div>
+  <div
+    x-show="modalSearch"
+    x-transition
+    @click.outside="modalSearch = false"
+    class="w-full max-w-[700px] rounded-lg overflow-hidden shadow-box-2 bg-white relative ease-in duration-200"
+  >
+    <div class="">
+      <form>
+        <div class="relative">
+          <button
+            class="flex items-center justify-center absolute left-0 top-0 pl-7 pr-3 py-6.5"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19.1875 17.4063L14.0313 13.2188C16.1563 10.3125 15.9375 6.15625 13.2813 3.53125C11.875 2.125 10 1.34375 8 1.34375C6 1.34375 4.125 2.125 2.71875 3.53125C-0.1875 6.4375 -0.1875 11.1875 2.71875 14.0938C4.125 15.5 6 16.2813 8 16.2813C9.90625 16.2813 11.6875 15.5625 13.0938 14.2813L18.3125 18.5C18.4375 18.5938 18.5938 18.6563 18.75 18.6563C18.9688 18.6563 19.1563 18.5625 19.2813 18.4063C19.5313 18.0938 19.5 17.6563 19.1875 17.4063ZM8 14.875C6.375 14.875 4.875 14.25 3.71875 13.0938C1.34375 10.7188 1.34375 6.875 3.71875 4.53125C4.875 3.375 6.375 2.75 8 2.75C9.625 2.75 11.125 3.375 12.2813 4.53125C14.6563 6.90625 14.6563 10.75 12.2813 13.0938C11.1563 14.25 9.625 14.875 8 14.875Z"
+                fill="#15171A"
+              />
+            </svg>
+          </button>
+
+          <input
+            type="search"
+            name="search"
+            id="search"
+            placeholder="Search posts, tags and authors"
+            autocomplete="off"
+            class="w-full rounded-t-lg bg-white text-body pl-15 pr-3 py-6 outline-none ease-in duration-300 placeholder:text-dark-3"
+          />
+
+          <button
+            @click="modalSearch = false"
+            class="absolute top-4.5 right-7 flex items-center justify-center w-9 h-9 rounded-full ease-in duration-150 hover:text-dark hover:bg-gray-2"
+          >
+            <svg
+              class="fill-current"
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_724_5430)">
+                <path
+                  d="M7.7001 6.99998L13.0376 1.66248C13.2345 1.4656 13.2345 1.15935 13.0376 0.962476C12.8407 0.765601 12.5345 0.765601 12.3376 0.962476L7.0001 6.29998L1.6626 0.962476C1.46572 0.765601 1.15947 0.765601 0.962598 0.962476C0.765723 1.15935 0.765723 1.4656 0.962598 1.66248L6.3001 6.99998L0.962598 12.3375C0.765723 12.5344 0.765723 12.8406 0.962598 13.0375C1.0501 13.125 1.18135 13.1906 1.3126 13.1906C1.44385 13.1906 1.5751 13.1469 1.6626 13.0375L7.0001 7.69998L12.3376 13.0375C12.4251 13.125 12.5563 13.1906 12.6876 13.1906C12.8188 13.1906 12.9501 13.1469 13.0376 13.0375C13.2345 12.8406 13.2345 12.5344 13.0376 12.3375L7.7001 6.99998Z"
+                  fill=""
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_724_5430">
+                  <rect width="14" height="14" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <div class="border-y border-gray-3 py-3 lg:py-4.5 px-4 lg:px-7">
+        <h5 class="font-medium text-dark">Posts</h5>
+      </div>
+
+      <div class="py-3.5">
+        <div
+          class="cursor-pointer ease-in duration-300 hover:bg-gray py-3.5 px-4 lg:px-7"
+        >
+          <h6 class="font-medium text-dark mb-1.5">
+            Writing and managing content in Clarity, an advanced guide
+          </h6>
+          <p class="text-custom-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing...
+          </p>
+        </div>
+
+        <div
+          class="cursor-pointer ease-in duration-300 hover:bg-gray py-3.5 px-4 lg:px-7"
+        >
+          <h6 class="font-medium text-dark mb-1.5">
+            Writing and managing content in Clarity, an advanced guide
+          </h6>
+          <p class="text-custom-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing...
+          </p>
+        </div>
+
+        <div
+          class="cursor-pointer ease-in duration-300 hover:bg-gray py-3.5 px-4 lg:px-7"
+        >
+          <h6 class="font-medium text-dark mb-1.5">
+            Writing and managing content in Clarity, an advanced guide
+          </h6>
+          <p class="text-custom-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing...
+          </p>
+        </div>
+
+        <div
+          class="cursor-pointer ease-in duration-300 hover:bg-gray py-3.5 px-4 lg:px-7"
+        >
+          <h6 class="font-medium text-dark mb-1.5">
+            Writing and managing content in Clarity, an advanced guide
+          </h6>
+          <p class="text-custom-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing...
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Modals end -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <button
+  class="hidden items-center justify-center w-10 h-10 rounded-[4px] shadow-solid-5 bg-dark hover:opacity-95 fixed bottom-8 right-8 z-999"
+  @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+  @scroll.window="scrollTop = (window.pageYOffset > 50) ? true : false"
+  :class="{ '!flex' : scrollTop }"
+>
+  <svg
+    class="fill-white w-5 h-5"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 512 512"
+  >
+    <path
+      d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
+    />
+  </svg>
+</button>
+
+    <!-- ====== Back To Top End ===== -->
+  <script defer src="bundle.js"></script></body>
+</html>

@@ -1,0 +1,33 @@
+@startuml
+
+!define RECTANGLE class
+
+RECTANGLE Frontend {
+    Browser
+}
+
+RECTANGLE Backend {
+    Django Application : Core Business Logic
+    Django Application : CampusFlow App
+    Django Application : Authentication (USN, Password)
+    Django Application : API Endpoints
+    Django Application : Admin Panel
+}
+
+RECTANGLE Database {
+    PostgreSQL
+}
+
+RECTANGLE ExternalServices {
+    NotificationService : Email Service
+    CloudStorage : AWS S3 (for images)
+}
+
+Frontend --> Backend : HTTP Requests
+Backend --> Database : Read/Write Data
+Backend --> ExternalServices : Email Verification
+Backend --> ExternalServices : Image Storage
+Database --> Backend : Serve Data
+Backend --> Frontend : Serve HTML (Jinja) or JSON (API)
+
+@enduml

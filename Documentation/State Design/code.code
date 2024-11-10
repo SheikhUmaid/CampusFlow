@@ -1,0 +1,28 @@
+@startuml
+
+[*] --> Unregistered
+
+Unregistered --> Registered : Registration approved
+Registered --> PendingApproval : Awaiting admin approval
+PendingApproval --> Active : Admin approves registration
+PendingApproval --> Unregistered : Admin rejects registration
+
+Active --> LoggedIn : Login
+LoggedIn --> Active : Logout
+LoggedIn --> PostCreation : Create post
+PostCreation --> Active : Post created successfully
+LoggedIn --> FollowRequest : Send follow request
+FollowRequest --> Active : Follow request successful
+LoggedIn --> JoinCommunity : Join community
+JoinCommunity --> Active : Successfully joined community
+LoggedIn --> AdvertiseEvent : Advertise event
+AdvertiseEvent --> Active : Event successfully advertised
+LoggedIn --> CommentOnPost : Comment on post
+CommentOnPost --> Active : Comment posted successfully
+
+' Admin Moderation Flow
+Admin --> ContentFlagged : View flagged content
+ContentFlagged --> ContentModerated : Approve/Reject content
+ContentModerated --> [*] : Content actioned (Approved/Rejected)
+
+@enduml

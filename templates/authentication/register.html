@@ -1,217 +1,365 @@
-{% extends "base/base.html" %}
-{% load static %}
+{% extends "base/base.html" %} {% load static %} {% block main %}
 
+<main>
+  <!-- ===== SignUp Form Start ===== -->
+  <section class="pt-34 lg:pt-39 pb-15 lg:pb-20 bg-gray">
+    <div class="max-w-[520px] mx-auto px-4 sm:px-8 xl:px-0">
+      <div class="rounded-xl bg-white shadow-box p-4 sm:p-7.5 xl:p-12.5">
+        <div class="text-center mb-9">
+          <h1
+            class="font-bold text-heading-6 sm:text-heading-4 lg:text-heading-3 text-dark mb-3.5"
+          >
+            Sign up
+          </h1>
+          <p class="text-body">Create your account</p>
+        </div>
 
-
-
-{% block body %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(145deg, black, #333); 
-            background: rgb(66,0,115);
-            background: linear-gradient(45deg, rgba(66,0,115,1) 0%, rgba(35,14,51,1) 13%, rgba(85,50,111,1) 31%, rgba(101,60,130,1) 45%, rgba(0,0,0,1) 62%, rgba(103,67,130,1) 89%, rgba(211,150,255,1) 99%);
-            color: white; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            padding: 20px;
-        }
-        
-        .form-container {
-            background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(50px); 
-            padding: 30px;
-            margin: 30px 30px;
-            border-radius: 10px;
-            border: 2px solid white; 
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6), 
-                        -5px -5px 15px rgba(255, 255, 255, 0.1); 
-            max-width: 400px;
-            width: 100%;
-            
-            
-        }
-        
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: white; 
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #ccc;
-        }
-        
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px; 
-            border-radius: 10px;
-            background: #1a1a1a; 
-            color: white;
-            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5),
-                        inset -2px -2px 5px rgba(255, 255, 255, 0.1); 
-            border: none; 
-            appearance: none; 
-            position: relative; 
-            z-index: 1; 
-        }
-        
-        input::placeholder {
-            color: #aaa;
-        }
-        
-        select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 15px;
-        }
-        
-        
-        select {
-            margin-bottom: 20px; 
-            z-index: 1; 
-        }
-        
-        button {
-            width: 100%;
-            padding: 10px;
-            background: linear-gradient(145deg, indigo, #4b0082); 
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5), 
-                        -3px -3px 8px rgba(255, 255, 255, 0.1); 
-        }
-        
-        button:hover {
-            background: linear-gradient(145deg, #4b0082, indigo); 
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7), 
-                        -5px -5px 10px rgba(255, 255, 255, 0.2); 
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-        
-            .form-container {
-                padding: 20px;
-                width: 90%;
-            }
-        
-            input, select, button {
-                font-size: 14px;
-                padding: 8px;
-            }
-        
-            h2 {
-                font-size: 24px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .form-container {
-                padding: 15px;
-                width: 100%;
-            }
-        
-            input, select, button {
-                font-size: 12px;
-                padding: 6px;
-            }
-        
-            h2 {
-                font-size: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    {% if messages %}
-     {% for message in messages %}
-        <p>{{message}}</p>
-     {% endfor %}
-    {% endif %}
-    <div class="form-container">
-        <form class="register-form" method="POST" enctype="multipart/form-data">
-            <h2>Register</h2>
+        <div class="mt-6">
+          <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            
-            <label for="usn">USN</label>
-            <input type="text" id="usn" placeholder="Enter your USN" name="usn" required>
-            
-            <label for="full-name">Full Name</label>
-            <input type="text" name="name" id="full-name" placeholder="Enter your name" required>
-            
-            <label for="phone-number">Phone Number</label>
-            <input type="text" name="phone_number" id="phone-number" placeholder="Enter your phone number" required>
-            
-            <label for="location">Location</label>
-            <select id="location" name="location" required>
+            <div class="mb-4">
+              <label
+                for="usn"
+                class="block font-medium text-dark text-custom-sm mb-3"
+                >University Seat Number</label
+              >
+              <input
+                type="usn"
+                placeholder="Enter your USN"
+                class="rounded-md border border-gray-4 bg-white placeholder:text-dark-2 w-full py-3.5 px-6 outline-none duration-200 focus:shadow-input focus:ring-2 focus:ring-dark-4/20 focus:border-transparent"
+                pattern="^[0-9]{1}[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{3}$"
+                name="usn"
+                required
+
+              />
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="name"
+                class="block font-medium text-dark text-custom-sm mb-3"
+                >Full Name</label
+              >
+              <input
+                type="name"
+                placeholder="Enter your name"
+                class="rounded-md border border-gray-4 bg-white placeholder:text-dark-2 w-full py-3.5 px-6 outline-none duration-200 focus:shadow-input focus:ring-2 focus:ring-dark-4/20 focus:border-transparent"
+                name="name"
+                required
+              />
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="email"
+                class="block font-medium text-dark text-custom-sm mb-3"
+                >Mobile Number</label
+              >
+              <input
+                type="number"
+                placeholder="Enter your Mobile Number"
+                class="rounded-md border border-gray-4 bg-white placeholder:text-dark-2 w-full py-3.5 px-6 outline-none duration-200 focus:shadow-input focus:ring-2 focus:ring-dark-4/20 focus:border-transparent"
+                name="phone_number"
+                required
+              />
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="location"
+                class="block font-medium text-dark text-custom-sm mb-3"
+                >Location</label
+              >
+              <select
+                id="location"
+                name="location"
+                class="rounded-md border border-gray-4 bg-white placeholder:text-dark-2 w-full py-3.5 px-6 outline-none duration-200 focus:shadow-input focus:ring-2 focus:ring-dark-4/20 focus:border-transparent"
+                required
+              >
                 <option value="" disabled selected>Select your state</option>
                 {% for code, name in state_choices %}
-                    <option value="{{ code }}">
-                        {{ name }}
-                    </option>
+                <option value="{{ code }}">{{ name }}</option>
                 {% endfor %}
-            </select>
-            
-            <label for="password">Password</label>
-            <input type="password" name="password1" id="password" placeholder="Enter your password" required>
-            
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" name="password2" id="confirm-password" placeholder="Confirm your password" required>
-            
-            <button type="submit">Register</button>
-            <a href="{%url 'login' %}">login</a>
-        </form>
+              </select>
+            </div>
+
+            <div class="mb-6">
+                <label
+                  for="password"
+                  class="block font-medium text-dark text-custom-sm mb-3"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  placeholder="Enter your password"
+                  class="rounded-md border border-gray-4 bg-white placeholder:text-dark-2 w-full py-3.5 px-6 outline-none duration-200 focus:shadow-input focus:ring-2 focus:ring-dark-4/20 focus:border-transparent"
+                  name="password1"
+                  required
+                />
+              </div>
+
+            <div class="mb-6">
+                <label
+                  for="password"
+                  class="block font-medium text-dark text-custom-sm mb-3"
+                  > Confirm Password</label
+                >
+                <input
+                  type="password"
+                  placeholder="Confirm password"
+                  class="rounded-md border border-gray-4 bg-white placeholder:text-dark-2 w-full py-3.5 px-6 outline-none duration-200 focus:shadow-input focus:ring-2 focus:ring-dark-4/20 focus:border-transparent"
+                  name="password2"
+                  required
+                />
+              </div>
+
+
+            {% comment %} done till here {% endcomment %}
+
+            <button
+              type="submit"
+              class="w-full rounded-md text-white font-medium flex justify-center py-3.5 px-5 bg-dark hover:opacity-90 transition-all duration-200"
+            >
+              Sign up
+            </button>
+
+            <p class="text-center mt-5">
+              Already a member?
+              <a href="{% url 'login'  %}" class="text-dark">Sign in</a>
+            </p>
+          </form>
+        </div>
+      </div>
     </div>
-</body>
+  </section>
+  <!-- ===== SignUp Form End ===== -->
+</main>
+
+{% endblock main %} {% comment %} {% block main %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(145deg, black, #333);
+        background: rgb(66, 0, 115);
+        background: linear-gradient(
+          45deg,
+          rgba(66, 0, 115, 1) 0%,
+          rgba(35, 14, 51, 1) 13%,
+          rgba(85, 50, 111, 1) 31%,
+          rgba(101, 60, 130, 1) 45%,
+          rgba(0, 0, 0, 1) 62%,
+          rgba(103, 67, 130, 1) 89%,
+          rgba(211, 150, 255, 1) 99%
+        );
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
+      }
+
+      .form-container {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(50px);
+        padding: 30px;
+        margin: 30px 30px;
+        border-radius: 10px;
+        border: 2px solid white;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6),
+          -5px -5px 15px rgba(255, 255, 255, 0.1);
+        max-width: 400px;
+        width: 100%;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: white;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #ccc;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        background: #1a1a1a;
+        color: white;
+        box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5),
+          inset -2px -2px 5px rgba(255, 255, 255, 0.1);
+        border: none;
+        appearance: none;
+        position: relative;
+        z-index: 1;
+      }
+
+      input::placeholder {
+        color: #aaa;
+      }
+
+      select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 15px;
+      }
+
+      select {
+        margin-bottom: 20px;
+        z-index: 1;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background: linear-gradient(145deg, indigo, #4b0082);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5),
+          -3px -3px 8px rgba(255, 255, 255, 0.1);
+      }
+
+      button:hover {
+        background: linear-gradient(145deg, #4b0082, indigo);
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7),
+          -5px -5px 10px rgba(255, 255, 255, 0.2);
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        body {
+          padding: 10px;
+        }
+
+        .form-container {
+          padding: 20px;
+          width: 90%;
+        }
+
+        input,
+        select,
+        button {
+          font-size: 14px;
+          padding: 8px;
+        }
+
+        h2 {
+          font-size: 24px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .form-container {
+          padding: 15px;
+          width: 100%;
+        }
+
+        input,
+        select,
+        button {
+          font-size: 12px;
+          padding: 6px;
+        }
+
+        h2 {
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    {% if messages %} {% for message in messages %}
+    <p>{{message}}</p>
+    {% endfor %} {% endif %}
+    <div class="form-container">
+      <form class="register-form" method="POST" enctype="multipart/form-data">
+        <h2>Register</h2>
+        {% csrf_token %}
+
+        <label for="usn">USN</label>
+        <input
+          type="text"
+          id="usn"
+          placeholder="Enter your USN"
+          name="usn"
+          required
+        />
+
+        <label for="full-name">Full Name</label>
+        <input
+          type="text"
+          name="name"
+          id="full-name"
+          placeholder="Enter your name"
+          required
+        />
+
+        <label for="phone-number">Phone Number</label>
+        <input
+          type="text"
+          name="phone_number"
+          id="phone-number"
+          placeholder="Enter your phone number"
+          required
+        />
+
+        <label for="location">Location</label>
+        <select id="location" name="location" required>
+          <option value="" disabled selected>Select your state</option>
+          {% for code, name in state_choices %}
+          <option value="{{ code }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password1"
+          id="password"
+          placeholder="Enter your password"
+          required
+        />
+
+        <label for="confirm-password">Confirm Password</label>
+        <input
+          type="password"
+          name="password2"
+          id="confirm-password"
+          placeholder="Confirm your password"
+          required
+        />
+
+        <button type="submit">Register</button>
+        <a href="{%url 'login' %}">login</a>
+      </form>
+    </div>
+  </body>
 </html>
 
-
-{% endblock body %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+{% endblock main %} {% endcomment %}
 
 <!-- 
 <!DOCTYPE html>

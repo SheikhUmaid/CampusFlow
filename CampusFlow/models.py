@@ -23,16 +23,15 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=10,unique=True, validators=[PHONE_NUMBER_VALIDATOR])
     email = models.EmailField(max_length=254, blank=True)
     join_date = models.DateField(auto_now_add=True)
-    location = models.CharField(max_length=2, choices=STATE_CHOICES, blank=True)
+    location = models.CharField(max_length=2, choices=STATE_CHOICES, default="OC")
     rapport = models.ManyToManyField('self', blank=True, symmetrical=True)
-    # Rapport = models.ManyToManyField('self', blank=True, symmetrical=True)
-    # test = models.CharField(max_length=35, blank=True )
     exclusive = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.usn} - {self.name}"
 
 class Post(models.Model):
+    title = models.CharField(max_length=100, default="", blank=True, )
     user = models.ForeignKey(to=Profile, on_delete=models.CASCADE)
     image = models.ImageField(upload_to = get_post_image_upload_path)
     caption = models.TextField(blank=True)
@@ -40,20 +39,7 @@ class Post(models.Model):
     location = models.CharField(max_length=2,choices=CAMPUS_LOCATIONS, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
 
-        img = Image.open(self.image.path)
-
-        # Define a maximum size, e.g., 800x800
-        max_size = (800, 800)
-
-        # Resize the image, keeping the aspect ratio
-        img.thumbnail(max_size)
-
-        # Save the resized image
-        img.save(self.image.path)
-        
         
     def delete(self, *args, **kwargs):
         # Delete the image file from the filesystem

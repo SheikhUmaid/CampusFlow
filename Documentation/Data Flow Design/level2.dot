@@ -1,0 +1,60 @@
+digraph SDM_CampusFlow_DFD_Level2 {
+    // Graph settings
+    graph [fontsize=10 fontname="Helvetica" compound=true];
+
+    // Main Processes
+    subgraph cluster_UserManagement {
+        label = "User Management";
+        color = lightgrey;
+        Register [label="Register User" shape=ellipse style=filled color=white];
+        Login [label="Login User" shape=ellipse style=filled color=white];
+        EditProfile [label="Edit Profile" shape=ellipse style=filled color=white];
+        Rapport [label="Manage Rapport (Friends)" shape=ellipse style=filled color=white];
+    }
+
+    subgraph cluster_ContentManagement {
+        label = "Content Management";
+        color = lightgrey;
+        CreatePost [label="Create Post" shape=ellipse style=filled color=white];
+        LikeComment [label="Like/Comment" shape=ellipse style=filled color=white];
+        ViewPosts [label="View Posts" shape=ellipse style=filled color=white];
+    }
+
+    // External Entities
+    Users [label="Users (Students/Faculty)" shape=rect style=filled color=lightblue];
+    Admin [label="Admin" shape=rect style=filled color=lightblue];
+
+    // Data Stores
+    UserDB [label="User Database" shape=cylinder style=filled color=lightyellow];
+    PostDB [label="Post Database" shape=cylinder style=filled color=lightyellow];
+    NotificationDB [label="Notification Database" shape=cylinder style=filled color=lightyellow];
+    RapportDB [label="Rapport Database" shape=cylinder style=filled color=lightyellow];
+
+    // User Management Data Flows
+    Users -> Register [label="Registration Details"];
+    Register -> UserDB [label="Store User Data"];
+    Users -> Login [label="Credentials"];
+    Login -> UserDB [label="Authenticate"];
+    Users -> EditProfile [label="Profile Updates"];
+    EditProfile -> UserDB [label="Update Profile Data"];
+    Users -> Rapport [label="Add Friend"];
+    Rapport -> RapportDB [label="Store Rapport Data"];
+    
+    // Content Management Data Flows
+    Users -> CreatePost [label="Post Content"];
+    CreatePost -> PostDB [label="Store Post Data"];
+    Users -> LikeComment [label="Like/Comment"];
+    LikeComment -> PostDB [label="Update Post Interactions"];
+    Users -> ViewPosts [label="View Posts"];
+    ViewPosts -> PostDB [label="Retrieve Posts"];
+
+    // Notifications Flow
+    Register -> NotificationDB [label="Notify on New Registration"];
+    Rapport -> NotificationDB [label="Notify on New Rapport"];
+    CreatePost -> NotificationDB [label="Notify Followers"];
+    LikeComment -> NotificationDB [label="Notify Post Owner"];
+
+    // Admin Interactions
+    Admin -> UserDB [label="Verify/Manage User"];
+    Admin -> PostDB [label="Manage Posts"];
+}
