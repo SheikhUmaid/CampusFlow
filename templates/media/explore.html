@@ -1,37 +1,74 @@
-{% extends "base/base.html" %} {% block body %}
+{% extends "base/base.html" %}
+
+{% block main %}
+
+<div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+<form style="border-radius: 4px; border:2px solid black">
+  <div class="relative">
+    <button class="flex items-center justify-center absolute left-0 top-0 pl-7 pr-3 py-6.5">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M19.1875 17.4063L14.0313 13.2188C16.1563 10.3125 15.9375 6.15625 13.2813 3.53125C11.875 2.125 10 1.34375 8 1.34375C6 1.34375 4.125 2.125 2.71875 3.53125C-0.1875 6.4375 -0.1875 11.1875 2.71875 14.0938C4.125 15.5 6 16.2813 8 16.2813C9.90625 16.2813 11.6875 15.5625 13.0938 14.2813L18.3125 18.5C18.4375 18.5938 18.5938 18.6563 18.75 18.6563C18.9688 18.6563 19.1563 18.5625 19.2813 18.4063C19.5313 18.0938 19.5 17.6563 19.1875 17.4063ZM8 14.875C6.375 14.875 4.875 14.25 3.71875 13.0938C1.34375 10.7188 1.34375 6.875 3.71875 4.53125C4.875 3.375 6.375 2.75 8 2.75C9.625 2.75 11.125 3.375 12.2813 4.53125C14.6563 6.90625 14.6563 10.75 12.2813 13.0938C11.1563 14.25 9.625 14.875 8 14.875Z"
+          fill="#15171A" />
+      </svg>
+    </button>
+    <input
+    style="
+    
+    background-color: rgb(248, 248, 248);
+    "
+    name="q" value="{{query}}" type="search" placeholder="Search Your Firends Here..."
+    aria-label="Search" class="w-full rounded-t-lg bg-white text-body pl-15 pr-3 py-6 outline-none ease-in duration-300 placeholder:text-dark-3" />
+
+    <button
+      class="absolute top-4.5 right-7 flex items-center justify-center w-9 h-9 rounded-full ease-in duration-150 hover:text-dark hover:bg-gray-2">
+      <svg class="fill-current" width="14" height="14" viewBox="0 0 14 14" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_724_5430)">
+          <path
+            d="M7.7001 6.99998L13.0376 1.66248C13.2345 1.4656 13.2345 1.15935 13.0376 0.962476C12.8407 0.765601 12.5345 0.765601 12.3376 0.962476L7.0001 6.29998L1.6626 0.962476C1.46572 0.765601 1.15947 0.765601 0.962598 0.962476C0.765723 1.15935 0.765723 1.4656 0.962598 1.66248L6.3001 6.99998L0.962598 12.3375C0.765723 12.5344 0.765723 12.8406 0.962598 13.0375C1.0501 13.125 1.18135 13.1906 1.3126 13.1906C1.44385 13.1906 1.5751 13.1469 1.6626 13.0375L7.0001 7.69998L12.3376 13.0375C12.4251 13.125 12.5563 13.1906 12.6876 13.1906C12.8188 13.1906 12.9501 13.1469 13.0376 13.0375C13.2345 12.8406 13.2345 12.5344 13.0376 12.3375L7.7001 6.99998Z"
+            fill="" />
+        </g>
+        <defs>
+          <clipPath id="clip0_724_5430">
+            <rect width="14" height="14" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </button>
+  </div>
+</form>
+</div>
+</div>
 
 
-<div class="container m-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <form class="d-flex" method="get" action="{% url 'user_search' %}">
-          <input class="form-control me-2" name="q"  value="{{query}}" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
+
+
+<div class="mb-12.5 text-center">
+  <h2 class="text-dark mb-3.5 text-2xl font-bold sm:text-4xl xl:text-heading-3">
+    Explore Something New
+  </h2>
+  <p>You can make new rapports here by similar interests</p>
 </div>
 
 {% if posts %}
+<div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-11 gap-x-7.5">
 
-<div class="container">
-  <div class="row">
-    {% for post in posts %}
-    <div class="col-md-4 col-sm-6">
-      <div class="card">
-        <img src="{{post.image.url}}" class="card-img-top" alt="Card image" />
-        <div class="card-body">
-          <h5 class="card-title">by {{post.user.name}}</h5>
-          <p class="card-text">
-            {{post.bio}}
-          </p>
-          <a href="{% url 'profile_view' post.pk %}" class="btn btn-primary">Read Post</a>
-        </div>
-      </div>
+
+
+      {% for post in posts %}
+      {% include "base/post_card.html" %}
+      {% endfor %}
+
+
+
+
     </div>
-    {% endfor %}
   </div>
 </div>
+
 {% else %}
 <h1>No Results Found</h1>
-{% endif %} {% endblock body %}
+{% endif %} 
+{% endblock main %}

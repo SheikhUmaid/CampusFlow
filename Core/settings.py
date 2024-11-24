@@ -30,6 +30,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://294e-2409-408c-adcf-e3b8-a3c5-f218-eba-218.ngrok-free.app',
     'https://ngrok-free.app',
     'http://192.168.24.112',
+    'https://35xmvrfh-8000.inc1.devtunnels.ms/'
+    
 ]
 
 

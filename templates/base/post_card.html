@@ -1,0 +1,40 @@
+
+
+
+
+<div class="group">
+    <div class="mb-6 overflow-hidden rounded-[10px] transition-all group-hover:scale-105">
+      <a href="{% url 'post_detail' post.pk %}">
+        <img src="{{post.image.url}}" alt="image" class="w-full" />
+      </a>
+    </div>
+
+    <h3>
+      <a href="{% url 'post_detail' post.pk %}" class="block text-dark font-bold text-xl mb-3.5">
+        <span
+          class="bg-gradient-to-r from-primary/50 to-primary/40 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]">
+          {{post.title}}
+        </span>
+      </a>
+    </h3>
+    <p>
+      {{post.caption  | truncatewords:6}}
+    </p>
+
+    <div class="flex flex-wrap gap-3 items-center justify-between mt-4.5">
+      <div class="flex items-center gap-2.5">
+        <a href="{% url 'profile_view' post.user.pk  %}" class="flex items-center gap-3">
+          <div class="flex w-6 h-6 rounded-full overflow-hidden">
+            <img src="{{post.user.profile_picture.url}}" alt="user" />
+          </div>
+          <p class="text-sm">{{post.user.name}}</p>
+        </a>
+
+        <span class="flex w-[3px] h-[3px] rounded-full bg-dark-2"></span>
+
+        <p class="text-sm">{{post.created_at}}</p>
+      </div>
+      <a href="category.html"
+        class="inline-flex text-blue bg-blue/[0.08] font-medium text-sm py-1 px-3 rounded-full">{{post.get_location_display}}</a>
+    </div>
+  </div>

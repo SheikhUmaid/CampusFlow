@@ -32,14 +32,16 @@ class Profile(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=100, default="", blank=True, )
-    user = models.ForeignKey(to=Profile, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=Profile, on_delete=models.CASCADE, related_name="posts")
     image = models.ImageField(upload_to = get_post_image_upload_path)
     caption = models.TextField(blank=True)
     likes = models.ManyToManyField(User, related_name="liked_posts",blank=True)
     location = models.CharField(max_length=2,choices=CAMPUS_LOCATIONS, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
-
+    def __str__(self):
+        return f"post by {self.user.name} usn {self.user.usn} pk {self.user.pk}"
+    
         
     def delete(self, *args, **kwargs):
         # Delete the image file from the filesystem

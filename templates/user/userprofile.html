@@ -1,0 +1,194 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block main %}
+<main>
+    <!-- ===== Hero Section Start ===== -->
+    <section>
+        <div class="mx-auto max-w-[1170px] px-4 sm:px-8 xl:px-0 pb-12.5 pt-34">
+            <div class="rounded-[20px] relative overflow-hidden z-10">
+                <!-- Hero BG Shapes Start -->
+                <div>
+                    <div class="absolute bottom-0 left-0 rounded-[20px] w-full h-full bg-gray"></div>
+                    
+                </div>
+                <!-- Hero BG Shapes End -->
+
+                <!-- Hero Content Start -->
+                <div class="max-w-[880px] mx-auto px-4 sm:px-8 lg:px-0 py-7.5 sm:py-10 lg:py-15 relative z-1">
+                    <div class="flex flex-col sm:flex-row items-center gap-7.5 lg:gap-15">
+                        <div
+                            class="max-w-[277px] w-full h-[277px] rounded-full flex items-center justify-center border border-gray-3">
+                            <div class="max-w-[165px] w-full h-[165px] shadow-img rounded-full overflow-hidden">
+                                <img src="{{profile.profile_picture.url}}" alt="user" />
+                            </div>
+                        </div>
+
+                        <div class="max-w-[593px] w-full">
+                            <h1 class="text-2xl sm:text-4xl lg:text-heading-3 xl:text-heading-2 text-dark mb-3.5">
+                                Hey! I’m <span class="font-bold">{{profile.name}}</span>
+                            </h1>
+                            <p>
+                                {{profile.bio}}
+                            </p>
+
+                            <!-- Social Links start -->
+                            <div class="flex items-center gap-5 mt-7">
+                                <a href="#"
+                                    class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark">
+                                    <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M11 9.53985V6.75185C11 5.67256 11.8954 4.79763 13 4.79763H15V1.86631L12.285 1.67682C9.9695 1.51522 8 3.30709 8 5.57532V9.53985H5V12.4712H8V18.3334H11V12.4712H14L15 9.53985H11Z"
+                                            fill="" />
+                                    </svg>
+                                </a>
+                                <a href="#"
+                                    class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark">
+                                    <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M17.5312 4.78125L18.7188 3.28125C19.0625 2.875 19.1563 2.5625 19.1875 2.40625C18.25 2.96875 17.375 3.15625 16.8125 3.15625H16.5937L16.4688 3.03125C15.7188 2.375 14.7812 2.03125 13.7812 2.03125C11.5937 2.03125 9.875 3.84375 9.875 5.9375C9.875 6.0625 9.875 6.25 9.90625 6.375L10 7L9.34375 6.96875C5.34375 6.84375 2.0625 3.40625 1.53125 2.8125C0.65625 4.375 1.15625 5.875 1.6875 6.8125L2.75 8.5625L1.0625 7.625C1.09375 8.9375 1.59375 9.96875 2.5625 10.7187L3.40625 11.3437L2.5625 11.6875C3.09375 13.2813 4.28125 13.9375 5.15625 14.1875L6.3125 14.5L5.21875 15.25C3.46875 16.5 1.28125 16.4063 0.3125 16.3125C2.28125 17.6875 4.625 18 6.25 18C7.46875 18 8.375 17.875 8.59375 17.7813C17.3438 15.7188 17.75 7.90625 17.75 6.34375V6.125L17.9375 6C19 5 19.4375 4.46875 19.6875 4.15625C19.5937 4.1875 19.4688 4.25 19.3438 4.28125L17.5312 4.78125Z"
+                                            fill="" />
+                                    </svg>
+                                </a>
+                                <a href="#"
+                                    class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark">
+                                    <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M5.78357 4.16663C5.78326 4.84522 5.37157 5.45587 4.74262 5.71063C4.11367 5.9654 3.39306 5.8134 2.92059 5.32631C2.44811 4.83922 2.31813 4.11431 2.59192 3.49341C2.86572 2.87251 3.48862 2.4796 4.1669 2.49996C5.06779 2.527 5.78398 3.26533 5.78357 4.16663ZM5.83357 7.06663H2.50024V17.4999H5.83357V7.06663ZM11.1003 7.06663H7.78357V17.4999H11.0669V12.0249C11.0669 8.97494 15.0419 8.6916 15.0419 12.0249V17.4999H18.3336V10.8916C18.3336 5.74996 12.4503 5.94163 11.0669 8.4666L11.1003 7.06663Z"
+                                            fill="" />
+                                    </svg>
+                                </a>
+                                <a href="#"
+                                    class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark">
+                                    <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_678_4644)">
+                                            <path
+                                                d="M0.56313 10.0313C0.62563 12.9376 1.96938 15.8438 4.25062 17.5938C4.96937 18.1251 5.75062 18.4376 6.56312 18.7813C6.21937 16.5626 7.06312 14.3438 7.53187 12.1563C7.59437 11.9376 7.62562 11.6876 7.62562 11.4376C7.62562 11.0938 7.50062 10.7501 7.40687 10.4063C7.31312 9.84384 7.37562 9.25009 7.62562 8.71884C7.96937 8.00009 8.78187 7.43759 9.50062 7.71884C10.1569 7.96884 10.4069 8.84384 10.2819 9.53134C10.1569 10.2501 9.78187 10.8751 9.59437 11.5626C9.37562 12.2501 9.40687 13.0938 9.90687 13.5626C10.3756 14.0001 11.1256 14.0313 11.7194 13.7813C12.5944 13.4063 13.1569 12.5313 13.5006 11.6563C14.1256 10.0313 14.0006 7.96884 12.7194 6.78134C12.1881 6.25009 11.4381 5.90634 10.6256 5.78134C9.25062 5.56259 7.75062 5.96884 6.78187 6.96884C5.81312 7.96884 5.37562 9.50009 5.78187 10.8126C5.90687 11.2501 6.15687 11.6876 6.25062 12.1251C6.34437 12.5626 6.31312 13.1251 6.00062 13.4376C5.96937 13.4688 5.93812 13.5001 5.87562 13.5313C5.81312 13.5626 5.71937 13.5001 5.65687 13.4688C5.06312 13.0938 4.59437 12.5001 4.31312 11.8751C3.43812 9.96884 3.87562 7.59384 5.25062 6.03134C6.62562 4.46884 8.84437 3.71884 10.9069 4.00009C12.8444 4.25009 14.7506 5.40634 15.5631 7.18759C16.0631 8.25009 16.1569 9.46884 15.9694 10.6251C15.7819 11.8126 15.3131 12.9376 14.5319 13.8438C13.7506 14.7501 12.6256 15.3751 11.4381 15.4376C10.4694 15.5001 9.43812 15.1563 8.93812 14.3438C8.62562 16.0313 8.03187 17.6876 7.15687 19.1563C7.12562 19.2188 9.15687 19.6563 9.34437 19.6563C11.6569 19.8438 14.1256 18.9376 15.9381 17.5001C20.9381 13.5313 20.4069 5.93759 15.4694 2.1876C12.9069 0.218848 9.87562 -0.156152 6.87562 0.90635C5.96937 1.21885 5.12562 1.7501 4.34437 2.3126C3.09438 3.25009 2.09438 4.46884 1.43813 5.87509C0.78188 7.15634 0.53188 8.59384 0.56313 10.0313Z"
+                                                fill="" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_678_4644">
+                                                <rect width="20" height="20" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </a>
+                                <a href="#"
+                                    class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark">
+                                    <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M9.99967 6.45831C8.04367 6.45831 6.45801 8.04397 6.45801 9.99998C6.45801 11.956 8.04367 13.5416 9.99967 13.5416C11.9557 13.5416 13.5413 11.956 13.5413 9.99998C13.5413 8.04397 11.9557 6.45831 9.99967 6.45831Z"
+                                            fill="" />
+                                        <path
+                                            d="M1.66699 5.83335C1.66699 3.53217 3.53248 1.66669 5.83366 1.66669H14.167C16.4682 1.66669 18.3337 3.53217 18.3337 5.83335V14.1667C18.3337 16.4679 16.4682 18.3334 14.167 18.3334H5.83366C3.53248 18.3334 1.66699 16.4679 1.66699 14.1667V5.83335ZM5.20866 10C5.20866 12.6464 7.35396 14.7917 10.0003 14.7917C12.6467 14.7917 14.792 12.6464 14.792 10C14.792 7.35365 12.6467 5.20835 10.0003 5.20835C7.35396 5.20835 5.20866 7.35365 5.20866 10ZM15.0003 5.83335C15.4606 5.83335 15.8337 5.46025 15.8337 5.00002C15.8337 4.53979 15.4606 4.16669 15.0003 4.16669C14.5401 4.16669 14.167 4.53979 14.167 5.00002C14.167 5.46025 14.5401 5.83335 15.0003 5.83335Z"
+                                            fill="" />
+                                    </svg>
+                                </a>
+                                <a href="#"
+                                    class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark">
+                                    <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M19.2812 5.34369C19.0625 4.49994 18.4062 3.84369 17.5625 3.62494C16.0625 3.21869 10 3.21869 10 3.21869C10 3.21869 3.9375 3.21869 2.4375 3.62494C1.59375 3.84369 0.9375 4.49994 0.71875 5.34369C0.3125 6.87494 0.3125 9.99994 0.3125 9.99994C0.3125 9.99994 0.3125 13.1562 0.71875 14.6562C0.9375 15.4999 1.59375 16.1562 2.4375 16.3749C3.9375 16.7812 10 16.7812 10 16.7812C10 16.7812 16.0625 16.7812 17.5625 16.3749C18.4062 16.1562 19.0625 15.4999 19.2812 14.6562C19.6875 13.1562 19.6875 9.99994 19.6875 9.99994C19.6875 9.99994 19.6875 6.87494 19.2812 5.34369ZM8.0625 12.9062V7.09369L13.0938 9.99994L8.0625 12.9062Z"
+                                            fill="" />
+                                    </svg>
+                                </a>
+                                <a href="#"
+                                    class="flex lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark">
+                                    <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M18.5854 6.50137C18.5027 8.18235 17.3453 10.4696 15.0856 13.3631C12.7708 16.3944 10.7867 17.91 9.18843 17.91C8.22393 17.91 7.36966 17.0282 6.65317 15.1543C6.1847 13.5009 5.77135 11.7923 5.27532 10.0838C4.77929 8.26502 4.22815 7.32808 3.59434 7.32808C3.48411 7.32808 3.01564 7.60365 2.24404 8.15479L1.5 7.05251C2.35427 6.30847 3.18098 5.56443 4.03525 4.79283C5.16509 3.82833 5.96425 3.30475 6.5705 3.27719C7.89324 3.16696 8.6924 4.1039 9.02308 6.00534C9.32621 8.09968 9.57423 9.42242 9.71201 9.91845C10.0978 11.6545 10.5387 12.5088 10.9521 12.5088C11.3103 12.5088 11.8339 11.9577 12.5779 10.8278C13.322 9.69799 13.6527 8.81616 13.7353 8.23746C13.8456 7.27297 13.4322 6.74938 12.5779 6.74938C12.1921 6.74938 11.7512 6.83205 11.3379 7.05251C12.1646 4.2968 13.7353 2.94651 16.1053 3.00162C17.8414 3.08429 18.6681 4.24169 18.5854 6.50137Z"
+                                            fill="" />
+                                    </svg>
+                                </a>
+                            </div>
+                            <!-- Social Links end -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Hero Content End -->
+            </div>
+        </div>
+    </section>
+    <!-- ===== Hero Section End ===== -->
+    <div class="mb-12.5 text-center">
+        <h2 class="text-dark mb-3.5 text-2xl font-bold sm:text-4xl xl:text-heading-3">
+          Posts By {{profile.name}}
+        </h2>
+        <p>You can make new rapports here by similar interests</p>
+      </div>
+      
+    <!-- ====== Blog Section Start -->
+    <section class="pb-20">
+        <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+            <div class="flex flex-col gap-y-7.5 lg:gap-y-12.5">
+                <!-- blog item -->
+
+                {% for post in profile.posts.all %}
+                
+                
+                <div class="flex items-center flex-col lg:flex-row gap-10 lg:gap-15">
+                    <div class="max-w-[570px] w-full overflow-hidden transition-all hover:scale-105 rounded-[10px]">
+                        <a href="blog-single.html">
+                            <img src="{{post.image.url}}" alt="image" />
+                        </a>
+                    </div>
+
+                    <div class="max-w-[540px] w-full">
+                        <a href="category.html"
+                            class="inline-flex text-blue bg-blue/[0.08] font-medium text-custom-sm py-1 px-3 rounded-full">Technology</a>
+                            
+                            <h4 class="mt-3.5 mb-4">
+                            <a href="blog-single.html"
+                                class="group text-dark font-bold text-xl sm:text-2xl xl:text-custom-4xl">
+                                <span
+                                    class="bg-gradient-to-r from-primary/40 to-primary/30 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]">
+                                    Start here for a quick overview of everything you need to
+                                    know
+                                </span>
+                            </a>
+                        </h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Erat
+                            ut facilisis rutrum donec tristique mauris est ac nunc....
+                        </p>
+                        
+                        <div class="flex items-center gap-2.5 mt-4.5">
+                            <p>Aug 28, 2025</p>
+                            
+                            
+                            <span class="flex w-[3px] h-[3px] rounded-full bg-dark-2"></span>
+                            
+                            <p>1 min read</p>
+                        </div>
+                    </div>
+                </div>
+                
+                {% endfor %}
+
+
+
+            </div>
+
+
+
+
+
+            <!-- Blog Show More BTN -->
+            <button
+                class="flex justify-center font-medium text-dark border border-dark rounded-md py-3 px-7.5 hover:bg-dark hover:text-white ease-in duration-200 mx-auto mt-10 lg:mt-15">
+                Show more...
+            </button>
+        </div>
+    </section>
+    <!-- ====== Blog Section End -->
+</main>
+
+
+{% endblock main %}

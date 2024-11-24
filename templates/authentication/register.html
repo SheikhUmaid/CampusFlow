@@ -13,7 +13,7 @@
           </h1>
           <p class="text-body">Create your account</p>
         </div>
-
+        {% include "base/message.html" %}
         <div class="mt-6">
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}

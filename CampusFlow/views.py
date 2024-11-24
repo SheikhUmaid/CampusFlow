@@ -170,7 +170,7 @@ def home_view(request):
     print(rapports)
     posts = Post.objects.filter(user__in=rapports)
     ads = Advertisement.objects.all()
-    context={"posts":posts, "ads":ads}
+    context={"posts":posts, "ads":ads , "locations":CAMPUS_LOCATIONS}
     return render(request, "base/home_page.html", context)
 
 @login_required
@@ -324,12 +324,12 @@ def profile_page_view(request, user_id):
     friend_status = 1 if is_friend else 0
 
     context = {
-        "user": target_user,
+        "profile": target_user,
         "existing_request": request_exists,
         "is_friend": friend_status,
     }
     
-    return render(request, "user/profile.html", context)
+    return render(request, "user/userprofile.html", context)
 
 @login_required
 def notifications_view(request):
