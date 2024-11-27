@@ -422,7 +422,7 @@ def user_search_view(request):
 
 
 
-
+@login_required
 def explore_view(request):
     # public_profiles = Profile.objects.filter(exclusive=False)
     # random_posts = Post.objects.filter(user__in=public_profiles)
