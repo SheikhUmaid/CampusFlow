@@ -91,12 +91,16 @@
 
               <!-- Dropdown Start -->
               <ul class="dropdown" :class="{ 'flex': dropdown }">
+                {% if request.user.is_authenticated %}
                 <li>
-                  <a href="blog-single.html" class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
+                  <a href="{% url 'profile_view' request.user.profile.pk %}" class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
                     :class="{ 'text-primary bg-gray': page === 'blog-single' }">Profile</a>
                 </li>
+                  
+                  {% else %}
+                  {% endif %}
                 <li>
-                  <a href="blog-single-2.html"
+                  <a href="blog"
                     class="flex rounded-md text-sm hover:text-primary hover:bg-gray py-2 px-4"
                     :class="{ 'text-primary bg-gray': page === 'blog-single-2' }">Deactivate</a>
                 </li>

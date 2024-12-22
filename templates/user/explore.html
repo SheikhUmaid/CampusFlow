@@ -1,0 +1,132 @@
+{% extends "base/base.html" %}
+
+{% block main %}
+
+<div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+<form style="border-radius: 4px; border:2px solid black">
+  <div class="relative">
+    <button class="flex items-center justify-center absolute left-0 top-0 pl-7 pr-3 py-6.5">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M19.1875 17.4063L14.0313 13.2188C16.1563 10.3125 15.9375 6.15625 13.2813 3.53125C11.875 2.125 10 1.34375 8 1.34375C6 1.34375 4.125 2.125 2.71875 3.53125C-0.1875 6.4375 -0.1875 11.1875 2.71875 14.0938C4.125 15.5 6 16.2813 8 16.2813C9.90625 16.2813 11.6875 15.5625 13.0938 14.2813L18.3125 18.5C18.4375 18.5938 18.5938 18.6563 18.75 18.6563C18.9688 18.6563 19.1563 18.5625 19.2813 18.4063C19.5313 18.0938 19.5 17.6563 19.1875 17.4063ZM8 14.875C6.375 14.875 4.875 14.25 3.71875 13.0938C1.34375 10.7188 1.34375 6.875 3.71875 4.53125C4.875 3.375 6.375 2.75 8 2.75C9.625 2.75 11.125 3.375 12.2813 4.53125C14.6563 6.90625 14.6563 10.75 12.2813 13.0938C11.1563 14.25 9.625 14.875 8 14.875Z"
+          fill="#15171A" />
+      </svg>
+    </button>
+    <input
+    style="
+    
+    background-color: rgb(248, 248, 248);
+    "
+    name="q" value="{{query}}" type="search" placeholder="Search Your Firends Here..."
+    aria-label="Search" class="w-full rounded-t-lg bg-white text-body pl-15 pr-3 py-6 outline-none ease-in duration-300 placeholder:text-dark-3" />
+
+    <button
+      class="absolute top-4.5 right-7 flex items-center justify-center w-9 h-9 rounded-full ease-in duration-150 hover:text-dark hover:bg-gray-2">
+      <svg class="fill-current" width="14" height="14" viewBox="0 0 14 14" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_724_5430)">
+          <path
+            d="M7.7001 6.99998L13.0376 1.66248C13.2345 1.4656 13.2345 1.15935 13.0376 0.962476C12.8407 0.765601 12.5345 0.765601 12.3376 0.962476L7.0001 6.29998L1.6626 0.962476C1.46572 0.765601 1.15947 0.765601 0.962598 0.962476C0.765723 1.15935 0.765723 1.4656 0.962598 1.66248L6.3001 6.99998L0.962598 12.3375C0.765723 12.5344 0.765723 12.8406 0.962598 13.0375C1.0501 13.125 1.18135 13.1906 1.3126 13.1906C1.44385 13.1906 1.5751 13.1469 1.6626 13.0375L7.0001 7.69998L12.3376 13.0375C12.4251 13.125 12.5563 13.1906 12.6876 13.1906C12.8188 13.1906 12.9501 13.1469 13.0376 13.0375C13.2345 12.8406 13.2345 12.5344 13.0376 12.3375L7.7001 6.99998Z"
+            fill="" />
+        </g>
+        <defs>
+          <clipPath id="clip0_724_5430">
+            <rect width="14" height="14" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </button>
+  </div>
+</form>
+</div>
+</div>
+
+
+
+
+<div class="mb-12.5 text-center">
+  <h2 class="text-dark mb-3.5 text-2xl font-bold sm:text-4xl xl:text-heading-3">
+    USERS
+  </h2>
+  <p>You can make new rapports here by similar interests</p>
+</div>
+
+
+{% if results %}
+
+
+<section class="pb-15">
+  <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+    <div class="flex flex-wrap items-center justify-between gap-8 mb-6">
+      <h2 class="font-semibold text-heading-5 text-dark">Some results</h2>
+      <a href="#" class="group text-dark leading-none">
+        <span
+          class="flex items-center gap-2 bg-gradient-to-r from-dark to-dark bg-[length:0px_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_1px]">
+          Mutuals
+
+          <svg class="fill-current group-hover:rotate-45 transition-all" width="18" height="18" viewBox="0 0 18 18"
+            fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_675_6418)">
+              <path
+                d="M13.7734 3.59902L5.48035 3.53935C5.12237 3.53935 4.84395 3.81778 4.84395 4.17575C4.84395 4.53372 5.12237 4.81215 5.48035 4.81215L12.2222 4.87181L3.77003 13.3239C3.53138 13.5626 3.53138 13.9603 3.77003 14.199C4.00868 14.4376 4.42632 14.4575 4.66496 14.2189L13.1569 5.72696L13.2165 12.5483C13.2165 12.9063 13.495 13.1847 13.8529 13.1847C14.012 13.1847 14.1711 13.1052 14.2905 12.9859C14.4098 12.8665 14.4893 12.7074 14.4694 12.5284L14.4098 4.23541C14.4098 3.87744 14.1314 3.59902 13.7734 3.59902Z"
+                fill="" />
+            </g>
+            <defs>
+              <clipPath id="clip0_675_6418">
+                <rect width="18" height="18" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+        </span>
+      </a>
+    </div>
+
+    <div class="pt-14 border-t border-gray-3">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-11 gap-x-7.5">
+        <!-- Author Item -->
+        
+        {% for result in results %}
+        
+        <a href="{% url 'profile_view' result.pk %}" class="group">
+          <div
+            class="border border-gray-3 rounded-[20px] bg-gray p-5 group-hover:bg-white group-hover:drop-shadow-1 group-hover:-translate-y-2 transition-all">
+            <div class="flex flex-wrap items-center gap-8">
+              <div class="w-25 h-25 rounded-full overflow-hidden">
+                <img src="{{result.profile_picture.url}}" alt="user" />
+              </div>
+
+              <div>
+                <h3 class="font-semibold text-custom-xl text-dark mb-1">
+                  {{result.name}}
+                </h3>
+                <p>{{result.bio}}</p>
+                <span class="flex items-center gap-2 text-custom-sm mt-2.5">
+                  <svg class="fill-current" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M5.775 14.4501H2.575C2.325 14.4501 2.125 14.2501 2.125 14.0001V2.00009C2.125 1.75009 2.325 1.55009 2.575 1.55009H8.225V4.75009C8.225 5.05009 8.475 5.32509 8.8 5.32509H11.975V7.00009C11.975 7.30009 12.225 7.57509 12.55 7.57509C12.875 7.57509 13.125 7.32509 13.125 7.00009V4.90009C13.125 4.62509 13 4.35009 12.8 4.15009L9.3 0.750091C9.1 0.550091 8.825 0.450091 8.55 0.450091H2.55C1.7 0.425091 1 1.15009 1 2.00009V14.0001C1 14.8501 1.7 15.5751 2.575 15.5751H5.8C6.1 15.5751 6.375 15.3251 6.375 15.0001C6.375 14.6751 6.1 14.4501 5.775 14.4501ZM9.325 2.35009L11.2 4.20009H9.325V2.35009Z"
+                      fill="" />
+                    <path
+                      d="M14.7996 9.40015C14.5996 9.20015 14.3996 9.00015 14.1996 8.80015C14.0246 8.62515 13.8496 8.42515 13.6496 8.25015C13.5496 8.12515 13.3996 8.02515 13.2246 8.00015C13.0246 7.97515 12.8246 8.02515 12.6746 8.15015L8.32461 12.4751C8.19961 12.6001 8.12461 12.7251 8.07461 12.8751L7.44961 14.7751L7.34961 15.0751L7.52461 15.3001C7.59961 15.4001 7.74961 15.5501 8.02461 15.5501H8.12461L10.0996 14.9001C10.2496 14.8501 10.3996 14.7751 10.4996 14.6501L14.7996 10.3751C14.9246 10.2501 14.9996 10.0751 14.9996 9.87515C14.9996 9.70015 14.9246 9.52515 14.7996 9.40015ZM13.1246 9.30015C13.2246 9.40015 13.3246 9.50015 13.3996 9.60015C13.4996 9.70015 13.5996 9.80015 13.6996 9.90015L13.4246 10.1751L12.8496 9.60015L13.1246 9.30015ZM9.72461 13.8501L8.84961 14.1251L9.12461 13.2501L12.0246 10.3501L12.5996 10.9251L9.72461 13.8501Z"
+                      fill="" />
+                  </svg>
+                  03 Published posts
+                </span>
+              </div>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+
+      
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% else %}
+<h1> No Results Found</h1>
+{% endif %}
+
+{% endblock main %}

@@ -34,23 +34,18 @@
     {% endif %}
        
         </div>
+        <a href="{% url 'accept_rapport' rapport_request.pk %}">
         <button class="inline-flex justify-center font-medium text-dark border border-dark rounded-md py-3 px-7.5 hover:bg-dark hover:text-white ease-in duration-200">
-          Browse all Posts
+          Accept
+        </button></a>
+        <a href="{% url 'reject_rapport' rapport_request.pk %}">
+        <button class="inline-flex justify-center font-medium text-dark border border-dark rounded-md py-3 px-7.5 hover:bg-dark hover:text-white ease-in duration-200">
+          Reject
         </button>
+        </a>
       </div>
     </div>
 
 {% endfor %}
 {% endblock main %}
 
-
- <div class="alert alert-primary" role="alert">
-
-
-    You have a Rapport Request from {{rapport_request.by_user.name}}
-    {% if rapport_request.subject %}
-        <p>{{rapport_request.subject}}</p>
-    {% endif %}
-    <a href="{% url 'accept_rapport' rapport_request.pk %}"><button type="button" class="btn btn-success">Accept</button></a>
-    <a href="{% url 'reject_rapport' rapport_request.pk %}"><button type="button" class="btn btn-danger">Reject</button></a>
-</div> 

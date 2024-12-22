@@ -316,6 +316,9 @@ def profile_page_view(request, user_id):
         by_user=request.user.profile, to_user=target_user, status='pending'
     ).exists()
 
+    # give list of profiles who are followed by this user
+    mutuals = target_user.user.profile.rapport.all()
+    
     # Check if the current user and the target user are already friends
     is_friend = request.user.profile in target_user.rapport.all()
 
@@ -327,6 +330,7 @@ def profile_page_view(request, user_id):
         "profile": target_user,
         "existing_request": request_exists,
         "is_friend": friend_status,
+        "mutuals": mutuals,
     }
     
     return render(request, "user/userprofile.html", context)
@@ -418,7 +422,7 @@ def user_search_view(request):
     }
     
 # <<<<<<< HEAD
-    return render(request, "user/search.html",context)
+    return render(request, "user/explore.html",context)
 
 
 
@@ -426,6 +430,15 @@ def user_search_view(request):
 def explore_view(request):
     # public_profiles = Profile.objects.filter(exclusive=False)
     # random_posts = Post.objects.filter(user__in=public_profiles)
+    if (request.GET.get("q")):
+        query = request.GET.get("q")
+        results = Profile.objects.filter(
+            Q(name__icontains=query) |
+            Q(usn__icontains=query)
+        )
+        print(results)
+        context = {"results": results, "query": query}
+        return render(request, "user/explore.html", context)
     
 
     public_profiles = Profile.objects.filter(exclusive=False)
